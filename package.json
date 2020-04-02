@@ -19,6 +19,7 @@
 	},
 	"homepage": "https://github.com/scalipsum/FRE#readme",
 	"dependencies": {
+		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.19.0",
 		"cookie-session": "^1.4.0",
 		"cors": "^2.8.5",
