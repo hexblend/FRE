@@ -1,5 +1,6 @@
 const express = require('express');
 require('dotenv').config();
+const bodyParser = require('body-parser');
 const helmet = require('helmet'); // Disable express headers
 const cors = require('cors'); // Limits requests from only specified clients
 const rateLimit = require('express-rate-limit'); // Limits requests per IP
@@ -18,6 +19,8 @@ mongoose
 	.catch(err => console.log(err));
 
 // Middlewares
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
 const limiter = rateLimit({
@@ -43,6 +46,7 @@ app.use(session);
 const users = require('./routes/users');
 // Routes
 app.use('/api/users/', users);
+// Route not found
 app.use((req, res) => {
 	const error = new Error(`${req.originalUrl} - Not found`);
 	res.status(404);

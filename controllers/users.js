@@ -9,7 +9,21 @@ const getSingleUser = async (req, res, next) => {
 };
 
 const createUser = async (req, res, next) => {
-	res.send('Create user');
+	const { name, email, password, type } = req.body;
+	const user = new User({ name, email, password, type });
+	user.save(error => {
+		if (error) {
+			res.status(500);
+			return res.json({
+				message: 'Error! User could not be created',
+				error
+			});
+		}
+		return res.json({
+			message: 'Success! User added successfully',
+			user
+		});
+	});
 };
 
 const updateUser = async (req, res, next) => {
