@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const controller = require('../controllers/users');
+const controller = require('../controllers/UserController');
 
 // Middleware: /api/users/
 router.get('/', controller.getAllUsers);
 router.get('/get', controller.getSingleUser);
-router.post('/register', controller.registerUser);
-router.post('/login', controller.loginUser);
+router.post('/register', controller.createUser);
 router.patch('/update', controller.updateUser);
 router.delete('/delete', controller.deleteUser);
 

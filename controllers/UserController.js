@@ -1,6 +1,5 @@
-const bcrypt = require('bcryptjs');
-
 const User = require('../models/User');
+const bcrypt = require('bcryptjs');
 
 const getAllUsers = async (req, res, next) => {
 	res.send('All users');
@@ -10,30 +9,24 @@ const getSingleUser = async (req, res, next) => {
 	res.send('Single user');
 };
 
-const registerUser = async (req, res, next) => {
+const createUser = async (req, res, next) => {
 	const { name, email, password, type } = req.body;
-
-	const salt = bcrypt.genSaltSync(10);
-	const hashedPassword = bcrypt.hashSync(password, salt);
+	const hashedPassword = await bcrypt.hash(password, 10);
 
 	const user = new User({ name, email, password: hashedPassword, type });
 
-	await user.save(error => {
+	await user.save((error) => {
 		if (error) {
 			return res.status(500).json({
 				message: 'Error! User could not be created',
-				error
+				error,
 			});
 		}
 		return res.json({
 			message: 'Success! User added successfully',
-			user
+			user,
 		});
 	});
-};
-
-const loginUser = async (req, res, next) => {
-	res.send('User logged in');
 };
 
 const updateUser = async (req, res, next) => {
@@ -47,8 +40,7 @@ const deleteUser = async (req, res, next) => {
 module.exports = {
 	getAllUsers,
 	getSingleUser,
-	registerUser,
-	loginUser,
+	createUser,
 	updateUser,
-	deleteUser
+	deleteUser,
 };

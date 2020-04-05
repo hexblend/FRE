@@ -5,22 +5,23 @@ const userSchema = mongoose.Schema(
 		name: {
 			type: String,
 			required: true,
-			min: 4
+			min: 4,
 		},
 		email: {
 			type: String,
-			required: true
+			required: true,
+			unique: true,
 		},
 		password: {
 			type: String,
 			required: true,
-			min: 6
+			min: 6,
 		},
 		type: {
 			type: String,
 			required: true,
-			enum: ['admin', 'jobseeker', 'employer']
-		}
+			enum: ['admin', 'jobseeker', 'employer'],
+		},
 	},
 	{ timestamps: true }
 );
