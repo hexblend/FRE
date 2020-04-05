@@ -15,12 +15,11 @@ const createUser = async (req, res, next) => {
 
 	const user = new User({ name, email, password: hashedPassword, type });
 
-	await user.save((error) => {
-		if (error) {
-			return res.status(500).json({
-				message: 'Error! User could not be created',
-				error,
-			});
+	await user.save((err) => {
+		if (err) {
+			const error = new Error('User could not be created');
+			error.status = 406;
+			return next(err, error);
 		}
 		return res.json({
 			message: 'Success! User added successfully',

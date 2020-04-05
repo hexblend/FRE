@@ -44,7 +44,7 @@ app.use(morgan('combined'));
 app.use(
 	session({
 		name: 'session-id',
-		secret: 'secret',
+		secret: process.env.APP_SECRET,
 		saveUninitialized: false,
 		resave: false,
 		cookie: {
@@ -52,29 +52,37 @@ app.use(
 		},
 	})
 );
-
+// Passport init
 app.use(passport.initialize());
 app.use(passport.session());
 authConfig(passport);
 
+// Routes
 const auth = require('./routes/auth');
 const users = require('./routes/users');
-// Routes
 app.use('/api/', auth);
 app.use('/api/users/', users);
 
-// Route not found
-app.use((req, res) => {
+// 404 Catcher
+app.use((req, res, next) => {
 	const error = new Error(`${req.originalUrl} - Not found`);
-	res.status(404);
-	res.json({ error: error.message });
+	error.status = 404;
+	next(error);
 });
 
-// Default 500 Error
-// app.use((req, res, error) => {
-// 	const error = new Error(error);
-// 	res.status(500).json({ error });
-// });
+// Error handling
+if (process.env.ENVIRONMENT === 'development') {
+	app.use((error, req, res, next) => {
+		res.status(error.status || 500);
+		res.send({ message: `Error! ${error.message}`, error });
+	});
+}
+if (process.env.ENVIRONMENT === 'production') {
+	app.use((error, req, res, next) => {
+		res.status(error.status || 500);
+		res.send({ message: `Error! ${error.message}`, error: {} });
+	});
+}
 
 // Run server
 const port = process.env.PORT || 5000;
