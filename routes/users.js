@@ -9,6 +9,6 @@ router.get('/type/:type', controller.getUsersByType);
 router.get('/get', controller.getSingleUser);
 router.post('/register', controller.createUser);
 router.patch('/update', controller.updateUser);
-router.delete('/delete', controller.deleteUser);
+router.delete('/', controller.deleteUser);
 
 module.exports = router;

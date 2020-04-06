@@ -83,7 +83,18 @@ const updateUser = async (req, res, next) => {
 };
 
 const deleteUser = async (req, res, next) => {
-	res.send('Delete user');
+	try {
+		const user = await User.deleteOne({ _id: req.body.id });
+		res.json({
+			message: 'Success! A user with the specified ID has been DELETED.',
+			user,
+		});
+	} catch (err) {
+		const error = new Error('A user with the specified ID could not be found');
+		error.status = 404;
+		error.error = err;
+		next(error);
+	}
 };
 
 module.exports = {
