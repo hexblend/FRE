@@ -51,7 +51,7 @@ const createUser = async (req, res, next) => {
 	try {
 		const user = new User({ name, email, password: hashedPassword, type });
 		const savedUser = await user.save();
-		return res.json({ message: 'Success! User added successfully', user });
+		return res.json({ message: 'Success! User added successfully', savedUser });
 	} catch (err) {
 		const error = new Error('User could not be created.');
 		error.error = err;
@@ -60,7 +60,26 @@ const createUser = async (req, res, next) => {
 };
 
 const updateUser = async (req, res, next) => {
-	res.send('Update user');
+	const { id, name, email, password, type } = req.body;
+
+	const updatedFields = {};
+	if (name) updatedFields.name = name;
+	if (email) updatedFields.email = email;
+	if (password) updatedFields.password = password;
+	if (type) updatedFields.type = type;
+
+	try {
+		const updatedUser = await User.updateOne({ _id: id }, updatedFields);
+		return res.json({
+			message: 'Success! The specified user has been updated',
+			updatedFields,
+			updatedUser,
+		});
+	} catch (err) {
+		const error = new Error('A user with the specified ID could not be found');
+		error.status = 404;
+		next(error);
+	}
 };
 
 const deleteUser = async (req, res, next) => {
