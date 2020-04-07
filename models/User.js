@@ -20,14 +20,13 @@ const experienceSchema = mongoose.Schema({
 	ending_date: {
 		type: String,
 		trim: true,
-		minLength: 4,
+		minLength: 4, // "mmyy"
 		maxLength: 4,
 	},
 	long_description: {
 		type: String,
 	},
 });
-const experienceModel = mongoose.model('Experience', experienceSchema);
 
 const projectsSchema = mongoose.Schema({
 	title: {
@@ -45,15 +44,42 @@ const projectsSchema = mongoose.Schema({
 		trim: true,
 	},
 });
-const projectsModel = mongoose.model('Projects', projectsSchema);
+
+const favouritesSchema = mongoose.Schema({
+	profile: mongoose.Schema.Types.ObjectId,
+});
+
+const sentMessagesSchema = mongoose.Schema({
+	to: mongoose.Schema.Types.ObjectId,
+	body: {
+		type: String,
+		min: 1,
+	},
+});
+
+const receivedMessagesSchema = mongoose.Schema({
+	from: mongoose.Schema.Types.ObjectId,
+	body: {
+		type: String,
+		min: 1,
+	},
+});
 
 const userSchema = mongoose.Schema(
 	{
-		name: {
-			type: String,
-			required: true,
-			minLength: 4,
-			maxLength: 24,
+		full_name: {
+			first_name: {
+				type: String,
+				required: true,
+				minLength: 1,
+				maxLength: 10,
+			},
+			last_name: {
+				type: String,
+				required: true,
+				minLength: 1,
+				maxLength: 10,
+			},
 		},
 		email: {
 			type: String,
@@ -72,6 +98,10 @@ const userSchema = mongoose.Schema(
 			type: String,
 			required: true,
 			enum: ['admin', 'jobseeker', 'employer'],
+		},
+		inactiveAccount: {
+			type: Boolean,
+			default: false,
 		},
 		status: {
 			type: String,
@@ -142,9 +172,12 @@ const userSchema = mongoose.Schema(
 				trim: true,
 			},
 		},
+		favourites: [favouritesSchema],
+		sent_messages: [sentMessagesSchema],
+		received_messages: [receivedMessagesSchema],
 	},
 	{ timestamps: true }
 );
 
 const userModel = mongoose.model('User', userSchema);
-module.exports = { userModel, experienceModel, projectsModel };
+module.exports = userModel;
