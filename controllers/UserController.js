@@ -85,6 +85,42 @@ const addToFavourites = async (req, res, next) => {
 	}
 };
 
+const makeInactive = async (req, res, next) => {
+	try {
+		const updatedUser = await User.updateOne(
+			{ _id: req.body.id },
+			{ inactiveAccount: true }
+		);
+		return res.json({
+			message:
+				'Success! User is now inactive and will not appear in the search results',
+			updatedUser,
+		});
+	} catch (err) {
+		const error = new Error('User could not be updated');
+		error.error = err;
+		next(err);
+	}
+};
+
+const makeActive = async (req, res, next) => {
+	try {
+		const updatedUser = await User.updateOne(
+			{ _id: req.body.id },
+			{ inactiveAccount: false }
+		);
+		return res.json({
+			message:
+				'Success! User is now active and will appear in the search results',
+			updatedUser,
+		});
+	} catch (err) {
+		const error = new Error('User could not be updated');
+		error.error = err;
+		next(err);
+	}
+};
+
 const updateUser = async (req, res, next) => {
 	const { id, name, email, password, type } = req.body;
 
@@ -130,5 +166,7 @@ module.exports = {
 	createUser,
 	updateUser,
 	addToFavourites,
+	makeInactive,
+	makeActive,
 	deleteUser,
 };

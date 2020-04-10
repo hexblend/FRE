@@ -10,6 +10,8 @@ router.get('/get', controller.getSingleUser);
 router.post('/register', controller.createUser);
 router.patch('/update', controller.updateUser);
 router.patch('/addToFavs', controller.addToFavourites);
+router.patch('/makeInactive', controller.makeInactive);
+router.patch('/makeActive', controller.makeActive);
 router.delete('/', controller.deleteUser);
 
 module.exports = router;
