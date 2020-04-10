@@ -1,5 +1,4 @@
-const models = require('../models/User');
-const User = models.userModel;
+const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 
 const getAllUsers = async (req, res, next) => {
@@ -47,10 +46,10 @@ const getSingleUser = async (req, res, next) => {
 };
 
 const createUser = async (req, res, next) => {
-	const { name, email, password, type } = req.body;
+	const { full_name, email, password, type } = req.body;
 	const hashedPassword = await bcrypt.hash(password, 10);
 	try {
-		const user = new User({ name, email, password: hashedPassword, type });
+		const user = new User({ full_name, email, password: hashedPassword, type });
 		const savedUser = await user.save();
 		return res.json({ message: 'Success! User added successfully', savedUser });
 	} catch (err) {
