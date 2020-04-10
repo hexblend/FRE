@@ -15,7 +15,7 @@ const getAllUsers = async (req, res, next) => {
 
 const getUsersByType = async (req, res, next) => {
 	try {
-		const users = await User.find({ type: req.params.type });
+		const users = await User.find({ type: req.body.type });
 		if (users.length === 0) throw err;
 		res.json({
 			message: `Success! All users with the type of '${req.params.type}' have been queried.`,
