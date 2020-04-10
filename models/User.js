@@ -46,11 +46,17 @@ const projectsSchema = mongoose.Schema({
 });
 
 const favouritesSchema = mongoose.Schema({
-	profile: mongoose.Schema.Types.ObjectId,
+	profile: {
+		type: String,
+		trim: true,
+	},
 });
 
 const sentMessagesSchema = mongoose.Schema({
-	to: mongoose.Schema.Types.ObjectId,
+	to: {
+		type: String,
+		trim: true,
+	},
 	body: {
 		type: String,
 		min: 1,
@@ -58,7 +64,10 @@ const sentMessagesSchema = mongoose.Schema({
 });
 
 const receivedMessagesSchema = mongoose.Schema({
-	from: mongoose.Schema.Types.ObjectId,
+	from: {
+		type: String,
+		trim: true,
+	},
 	body: {
 		type: String,
 		min: 1,
