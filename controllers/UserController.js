@@ -33,6 +33,7 @@ const getUsersByType = async (req, res, next) => {
 const getSingleUser = async (req, res, next) => {
 	try {
 		const user = await User.findById(req.body.id);
+		console.log(user.favourites);
 		res.json({
 			message: 'Success! A user with the specified ID has been queried.',
 			user,
@@ -56,6 +57,31 @@ const createUser = async (req, res, next) => {
 		const error = new Error('User could not be created.');
 		error.error = err;
 		return next(error);
+	}
+};
+
+const addToFavourites = async (req, res, next) => {
+	const { currentUserID, profileID } = req.body;
+	try {
+		const currUser = await User.findById(currentUserID);
+		const userToBeAdded = await User.findById(profileID);
+
+		if (currUser.favourites.includes(profileID))
+			throw 'User already at favourites';
+
+		const updatedUser = await User.updateOne(
+			{ _id: currUser._id },
+			{ $addToSet: { favourites: userToBeAdded._id } }
+		);
+
+		return res.json({
+			message: 'Success! User added to favourites',
+			updatedUser,
+		});
+	} catch (err) {
+		const error = new Error('Could not add to favourites');
+		error.error = err;
+		next(error);
 	}
 };
 
@@ -103,5 +129,6 @@ module.exports = {
 	getSingleUser,
 	createUser,
 	updateUser,
+	addToFavourites,
 	deleteUser,
 };

@@ -45,21 +45,16 @@ const projectsSchema = mongoose.Schema({
 	},
 });
 
-const favouritesSchema = mongoose.Schema({
-	profile: {
-		type: String,
-		trim: true,
-	},
-});
-
 const sentMessagesSchema = mongoose.Schema({
 	to: {
 		type: String,
 		trim: true,
+		minLength: 1,
 	},
 	body: {
 		type: String,
 		min: 1,
+		minLength: 1,
 	},
 });
 
@@ -67,10 +62,12 @@ const receivedMessagesSchema = mongoose.Schema({
 	from: {
 		type: String,
 		trim: true,
+		minLength: 1,
 	},
 	body: {
 		type: String,
 		min: 1,
+		minLength: 1,
 	},
 });
 
@@ -125,6 +122,7 @@ const userSchema = mongoose.Schema(
 		job_title: {
 			type: String,
 			trim: true,
+			minLength: 1,
 		},
 		location: {
 			type: {
@@ -181,7 +179,13 @@ const userSchema = mongoose.Schema(
 				trim: true,
 			},
 		},
-		favourites: [favouritesSchema],
+		favourites: [
+			{
+				type: String,
+				trim: true,
+				minLength: 1,
+			},
+		],
 		sent_messages: [sentMessagesSchema],
 		received_messages: [receivedMessagesSchema],
 	},
