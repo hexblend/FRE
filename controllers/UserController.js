@@ -77,17 +77,18 @@ const createUser = async (req, res, next) => {
 };
 
 const addToFavourites = async (req, res, next) => {
-	const { currentUserID, profileID } = req.body;
 	try {
-		const currUser = await User.findById(currentUserID);
-		const userToBeAdded = await User.findById(profileID);
+		const currUser = await User.findById(req.params.id);
+		const userToBeAdded = await User.findById(req.body.profileID);
 
-		if (currUser.favourites.includes(profileID))
+		if (!currUser || !userToBeAdded)
+			throw 'One of the IDs is not in the datbase.';
+		if (currUser.favourites.includes(req.body.profileID))
 			throw 'User already at favourites';
 
 		const updatedUser = await User.updateOne(
-			{ _id: currUser._id },
-			{ $addToSet: { favourites: userToBeAdded._id } }
+			{ _id: req.params.id },
+			{ $addToSet: { favourites: req.body.profileID } }
 		);
 
 		return res.json({
@@ -104,7 +105,7 @@ const addToFavourites = async (req, res, next) => {
 const makeInactive = async (req, res, next) => {
 	try {
 		const updatedUser = await User.updateOne(
-			{ _id: req.body.id },
+			{ _id: req.params.id },
 			{ inactiveAccount: true }
 		);
 		return res.json({
@@ -122,7 +123,7 @@ const makeInactive = async (req, res, next) => {
 const makeActive = async (req, res, next) => {
 	try {
 		const updatedUser = await User.updateOne(
-			{ _id: req.body.id },
+			{ _id: req.params.id },
 			{ inactiveAccount: false }
 		);
 		return res.json({
@@ -138,10 +139,6 @@ const makeActive = async (req, res, next) => {
 };
 
 const updateUser = async (req, res, next) => {
-	const { id, name, email, password, type } = req.body;
-
-	const updatedFields = {};
-
 	try {
 	} catch (err) {
 		const error = new Error('User could not be updated');
