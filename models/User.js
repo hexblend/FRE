@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validate = require('mongoose-validator');
 
 const experienceSchema = mongoose.Schema({
 	company_name: {
@@ -91,9 +92,13 @@ const userSchema = mongoose.Schema(
 			type: String,
 			required: true,
 			unique: true,
-			trim: true,
-			minLength: 6,
+			minLength: 5,
 			maxLength: 50,
+			trim: true,
+			validate: validate({
+				validator: 'isEmail',
+				message: 'Email is not valid',
+			}),
 		},
 		password: {
 			type: String,

@@ -38,16 +38,13 @@ const getUsersByType = async (req, res, next) => {
 const getSingleUser = async (req, res, next) => {
 	try {
 		const user = await User.findOne({ _id: req.params.id });
-		console.log(user.favourites);
+		if (user === null) throw 'A user with the specified ID could not be found';
 		res.json({
-			message:
-				'Success! A user with the specified ID has been queried.',
+			message: 'Success! A user with the specified ID has been queried.',
 			user,
 		});
 	} catch (err) {
-		const error = new Error(
-			'A user with the specified ID could not be found'
-		);
+		const error = new Error('A user with the specified ID could not be found');
 		error.status = 404;
 		error.error = err;
 		next(error);
@@ -139,7 +136,35 @@ const makeActive = async (req, res, next) => {
 };
 
 const updateUser = async (req, res, next) => {
+	const {
+		full_name,
+		email,
+		status,
+		job_title,
+		location,
+		remote_worker,
+		years_of_activity,
+		higher_education,
+		description,
+		avatar,
+		key_abilities,
+		experience,
+		projects,
+		social_media,
+	} = req.body;
 	try {
+		const user = await User.update(
+			{ _id: req.params.id },
+			{ email },
+			{ runValidators: true }
+		);
+
+		// if (full_name.first_name) user.full_name.first_name = full_name.first_name;
+		// if (full_name.last_name) user.full_name.last_name = full_name.last_name;
+		// if (email) user.email = email;
+
+		// user.save();
+		res.json({ message: 'Success! The user details have been updated!', user });
 	} catch (err) {
 		const error = new Error('User could not be updated');
 		error.error = err;
@@ -151,14 +176,11 @@ const deleteUser = async (req, res, next) => {
 	try {
 		const user = await User.deleteOne({ _id: req.params.id });
 		res.json({
-			message:
-				'Success! A user with the specified ID has been DELETED.',
+			message: 'Success! A user with the specified ID has been DELETED.',
 			user,
 		});
 	} catch (err) {
-		const error = new Error(
-			'A user with the specified ID could not be found'
-		);
+		const error = new Error('A user with the specified ID could not be found');
 		error.status = 404;
 		error.error = err;
 		next(error);
