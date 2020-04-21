@@ -117,12 +117,14 @@ const userSchema = mongoose.Schema(
 		status: {
 			type: String,
 			enum: [
+				'none',
 				'waiting for offers',
 				'interviewing',
 				'employed',
 				'hiring',
 				'not hiring',
 			],
+			default: 'none',
 		},
 		job_title: {
 			type: String,

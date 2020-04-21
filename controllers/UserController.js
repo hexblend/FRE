@@ -136,35 +136,70 @@ const makeActive = async (req, res, next) => {
 };
 
 const updateUser = async (req, res, next) => {
-	const {
-		full_name,
-		email,
-		status,
-		job_title,
-		location,
-		remote_worker,
-		years_of_activity,
-		higher_education,
-		description,
-		avatar,
-		key_abilities,
-		experience,
-		projects,
-		social_media,
-	} = req.body;
+	// const {
+	// 	full_name,
+	// 	email,
+	// 	password,
+	// 	type,
+	// 	inactiveAccount,
+	// 	status,
+	// 	job_title,
+	// 	location,
+	// 	remote_worker,
+	// 	years_of_activity,
+	// 	higher_education,
+	// 	description,
+	// 	avatar,
+	// 	key_abilities,
+	// 	experience,
+	// 	projects,
+	// 	social_media,
+	// } = req.body;
 	try {
-		const user = await User.update(
-			{ _id: req.params.id },
-			{ email },
-			{ runValidators: true }
-		);
+		// General fields:
+		// - email, password, type, inactiveAccount, status, job_title, remote_worker, years_of_activity, higher_education, description, avatar
 
-		// if (full_name.first_name) user.full_name.first_name = full_name.first_name;
-		// if (full_name.last_name) user.full_name.last_name = full_name.last_name;
-		// if (email) user.email = email;
+		// Sub-object fields:
+		// - full_name (first_name, last_name), location(type, coordinates), key_abilities(array with obj, same as favs), social_media(facebook, twitter, instagram, linkedin, github)
 
-		// user.save();
-		res.json({ message: 'Success! The user details have been updated!', user });
+		// Fields with schemas:
+		// - experience, projects, sent_messages, received_messages
+		const user = await User.findOne({ _id: req.params.id });
+
+		const updateStringField = (field, specialValue = null) => {
+			const reqValue = req['body'][field];
+
+			if (reqValue.length !== 0) {
+				if (specialValue) {
+					user[field] = specialValue;
+				} else {
+					user[field] = reqValue;
+				}
+			} else {
+				throw `${field} must not be empty!`;
+			}
+		};
+
+		const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+		updateStringField('email');
+		updateStringField('password', hashedPassword);
+		updateStringField('type');
+		updateStringField('inactiveAccount');
+		updateStringField('status');
+		updateStringField('job_title');
+		updateStringField('remote_worker');
+		updateStringField('years_of_activity');
+		updateStringField('higher_education');
+		updateStringField('description');
+		updateStringField('avatar');
+
+		await user.save();
+
+		res.json({
+			message: 'Success! The user details have been updated!',
+			user,
+		});
 	} catch (err) {
 		const error = new Error('User could not be updated');
 		error.error = err;
