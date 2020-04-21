@@ -135,9 +135,11 @@ const userSchema = mongoose.Schema(
 			type: {
 				type: String,
 				enum: ['Point'],
+				default: 'Point',
 			},
 			coordinates: {
 				type: [Number],
+				default: [],
 			},
 		},
 		remote_worker: {
@@ -168,22 +170,42 @@ const userSchema = mongoose.Schema(
 			facebook: {
 				type: String,
 				trim: true,
+				validate: validate({
+					validator: 'isURL',
+					message: 'URL is not valid',
+				}),
 			},
 			twitter: {
 				type: String,
 				trim: true,
+				validate: validate({
+					validator: 'isURL',
+					message: 'URL is not valid',
+				}),
 			},
 			instagram: {
 				type: String,
 				trim: true,
+				validate: validate({
+					validator: 'isURL',
+					message: 'URL is not valid',
+				}),
 			},
 			linkedin: {
 				type: String,
 				trim: true,
+				validate: validate({
+					validator: 'isURL',
+					message: 'URL is not valid',
+				}),
 			},
 			github: {
 				type: String,
 				trim: true,
+				validate: validate({
+					validator: 'isURL',
+					message: 'URL is not valid',
+				}),
 			},
 		},
 		favourites: [

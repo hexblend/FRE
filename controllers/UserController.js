@@ -136,25 +136,6 @@ const makeActive = async (req, res, next) => {
 };
 
 const updateUser = async (req, res, next) => {
-	// const {
-	// 	full_name,
-	// 	email,
-	// 	password,
-	// 	type,
-	// 	inactiveAccount,
-	// 	status,
-	// 	job_title,
-	// 	location,
-	// 	remote_worker,
-	// 	years_of_activity,
-	// 	higher_education,
-	// 	description,
-	// 	avatar,
-	// 	key_abilities,
-	// 	experience,
-	// 	projects,
-	// 	social_media,
-	// } = req.body;
 	try {
 		// General fields:
 		// - email, password, type, inactiveAccount, status, job_title, remote_worker, years_of_activity, higher_education, description, avatar
@@ -182,6 +163,7 @@ const updateUser = async (req, res, next) => {
 
 		const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
+		// Single Object Fields
 		updateStringField('email');
 		updateStringField('password', hashedPassword);
 		updateStringField('type');
@@ -194,6 +176,39 @@ const updateUser = async (req, res, next) => {
 		updateStringField('description');
 		updateStringField('avatar');
 
+		// Nested Objects Fields
+		updateStringField('full_name');
+
+		// Location
+		const coordinates = req.body.location.coordinates;
+		if (coordinates && coordinates.length !== 0) {
+			user.location.coordinates = coordinates;
+		} else {
+			throw 'Your coordinates must not be empty';
+		}
+
+		// Key abilities
+		const new_abilities = req.body.key_abilities;
+		const old_abilities = user.key_abilities;
+		if (new_abilities.length !== 0) {
+			const final_abilities = [
+				...new Set([...old_abilities, ...new_abilities]), // New array without duplicates
+			];
+			user.key_abilities = final_abilities;
+		} else {
+			throw 'Abilities array must not be empty';
+		}
+
+		// Social Media
+		const socialMediaObj = req.body.social_media;
+		const { facebook, twitter, instagram, linkedin, github } = socialMediaObj;
+		facebook && (user.social_media.facebook = facebook);
+		twitter && (user.social_media.twitter = twitter);
+		instagram && (user.social_media.instagram = instagram);
+		linkedin && (user.social_media.linkedin = linkedin);
+		github && (user.social_media.github = github);
+
+		// Save
 		await user.save();
 
 		res.json({
