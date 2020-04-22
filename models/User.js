@@ -4,25 +4,17 @@ const validate = require('mongoose-validator');
 const experienceSchema = mongoose.Schema({
 	company_name: {
 		type: String,
-		trim: true,
-		minLength: 5,
+		minLength: 1,
 	},
 	job_title: {
 		type: String,
-		trim: true,
-		minLength: 5,
+		minLength: 1,
 	},
 	starting_date: {
-		type: String,
-		trim: true,
-		minLength: 4, // "mmyy"
-		maxLength: 4,
+		type: Date,
 	},
 	ending_date: {
-		type: String,
-		trim: true,
-		minLength: 4, // "mmyy"
-		maxLength: 4,
+		type: Date,
 	},
 	long_description: {
 		type: String,
@@ -43,6 +35,10 @@ const projectsSchema = mongoose.Schema({
 	link: {
 		type: String,
 		trim: true,
+		validate: validate({
+			validator: 'isURL',
+			message: 'Link must be a valid URL',
+		}),
 	},
 });
 
@@ -202,10 +198,6 @@ const userSchema = mongoose.Schema(
 			github: {
 				type: String,
 				trim: true,
-				validate: validate({
-					validator: 'isURL',
-					message: 'URL is not valid',
-				}),
 			},
 		},
 		favourites: [

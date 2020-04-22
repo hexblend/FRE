@@ -137,14 +137,6 @@ const makeActive = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
 	try {
-		// General fields:
-		// - email, password, type, inactiveAccount, status, job_title, remote_worker, years_of_activity, higher_education, description, avatar
-
-		// Sub-object fields:
-		// - full_name (first_name, last_name), location(type, coordinates), key_abilities(array with obj, same as favs), social_media(facebook, twitter, instagram, linkedin, github)
-
-		// Fields with schemas:
-		// - experience, projects, sent_messages, received_messages
 		const user = await User.findOne({ _id: req.params.id });
 
 		const updateStringField = (field, specialValue = null) => {
@@ -207,6 +199,57 @@ const updateUser = async (req, res, next) => {
 		instagram && (user.social_media.instagram = instagram);
 		linkedin && (user.social_media.linkedin = linkedin);
 		github && (user.social_media.github = github);
+
+		// Fields with Subdocuments
+
+		// Experiences
+		const new_experience = req.body.experience;
+		if (new_experience.length !== 0) {
+			new_experience.forEach((exp) => {
+				if (!exp.id) {
+					// Add new experiences
+					user.experience.unshift(exp);
+				} else {
+					// Update an existing one
+					const singleExp = user.experience.id(exp.id);
+					const {
+						company_name,
+						job_title,
+						starting_date,
+						ending_date,
+						long_description,
+					} = exp;
+					company_name && (singleExp.company_name = company_name);
+					job_title && (singleExp.job_title = job_title);
+					starting_date && (singleExp.starting_date = starting_date);
+					ending_date && (singleExp.ending_date = ending_date);
+					long_description && (singleExp.long_description = long_description);
+				}
+			});
+		} else {
+			throw 'Experience array must not be empty';
+		}
+
+		// Projects
+		const new_projects = req.body.projects;
+		if (new_projects.length !== 0) {
+			new_projects.forEach((proj) => {
+				if (!proj.id) {
+					// Add new experiences
+					user.projects.unshift(proj);
+				} else {
+					// Update an existing one
+					const singleProj = user.projects.id(proj.id);
+					const { title, description, accomplishments, link } = proj;
+					title && (singleProj.title = title);
+					description && (singleProj.description = description);
+					accomplishments && (singleProj.accomplishments = accomplishments);
+					link && (singleProj.link = link);
+				}
+			});
+		} else {
+			throw 'Projects array must not be empty';
+		}
 
 		// Save
 		await user.save();
