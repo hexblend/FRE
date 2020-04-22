@@ -101,10 +101,10 @@ const addToFavourites = async (req, res, next) => {
 
 const makeInactive = async (req, res, next) => {
 	try {
-		const updatedUser = await User.updateOne(
-			{ _id: req.params.id },
-			{ inactiveAccount: true }
-		);
+		const user = await User.findOne({ _id: req.params.id });
+		user.inactiveAccount = true;
+		await user.save();
+
 		return res.json({
 			message:
 				'Success! User is now inactive and will not appear in the search results',
@@ -119,10 +119,10 @@ const makeInactive = async (req, res, next) => {
 
 const makeActive = async (req, res, next) => {
 	try {
-		const updatedUser = await User.updateOne(
-			{ _id: req.params.id },
-			{ inactiveAccount: false }
-		);
+		const user = await User.findOne({ _id: req.params.id });
+		user.inactiveAccount = false;
+		await user.save();
+
 		return res.json({
 			message:
 				'Success! User is now active and will appear in the search results',
