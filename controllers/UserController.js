@@ -6,6 +6,7 @@ const getAllUsers = async (req, res, next) => {
 		const users = await User.find({
 			type: ['jobseeker', 'employer'],
 		});
+		if (users.length === 0) throw err;
 		return res.json({
 			message: 'Success! All users have been queried',
 			users,
@@ -28,10 +29,37 @@ const getUsersByType = async (req, res, next) => {
 		});
 	} catch (err) {
 		const error = new Error(
-			`'${req.params.type}' user type could not be ound.`
+			`'${req.params.type}' user type could not be found.`
 		);
 		error.status = 404;
 		next(error);
+	}
+};
+
+const getUsersByJob = async (req, res, next) => {
+	const job = req.params.job;
+	try {
+		const users = await User.find({ type: ['jobseeker'] });
+
+		const matchUsers = [];
+		users.forEach((user) => {
+			const found = user.job_title.toLowerCase().includes(job.toLowerCase());
+			if (found) matchUsers.push(user);
+		});
+
+		if (matchUsers.length === 0) throw err;
+
+		return res.json({
+			message: 'Success! Users with the specified job title were found!',
+			users: matchUsers,
+		});
+	} catch (err) {
+		const error = new Error(
+			'There are no users in the database with that job title'
+		);
+		error.status = 404;
+		error.error = err;
+		return next(error);
 	}
 };
 
@@ -283,6 +311,7 @@ const deleteUser = async (req, res, next) => {
 module.exports = {
 	getAllUsers,
 	getUsersByType,
+	getUsersByJob,
 	getSingleUser,
 	createUser,
 	updateUser,
