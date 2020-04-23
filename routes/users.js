@@ -11,7 +11,7 @@ router
 	.put(controller.updateUser)
 	.delete(controller.deleteUser);
 router.get('/type/:type', controller.getUsersByType);
-router.get('/job/:job', controller.getUsersByJob);
+router.get('/job/:job1/:job2?/:job3?', controller.getUsersByJob);
 router.post('/register', controller.createUser);
 router.patch('/addToFavs/:id', controller.addToFavourites);
 router.patch('/makeInactive/:id', controller.makeInactive);

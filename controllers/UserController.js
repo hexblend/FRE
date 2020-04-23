@@ -37,13 +37,22 @@ const getUsersByType = async (req, res, next) => {
 };
 
 const getUsersByJob = async (req, res, next) => {
-	const job = req.params.job;
+	const job1 = req.params.job1;
+	const job2 = req.params.job2;
+	const job3 = req.params.job3;
 	try {
 		const users = await User.find({ type: ['jobseeker'] });
 
 		const matchUsers = [];
 		users.forEach((user) => {
-			const found = user.job_title.toLowerCase().includes(job.toLowerCase());
+			const search = (job) =>
+				user.job_title.toLowerCase().includes(job.toLowerCase());
+
+			let found;
+			if (job2 && job3) found = search(job1) || search(job2) || search(job3);
+			else if (job2 && !job3) found = search(job1) || search(job2);
+			else seach(job1);
+
 			if (found) matchUsers.push(user);
 		});
 
