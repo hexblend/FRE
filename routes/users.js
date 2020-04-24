@@ -42,4 +42,5 @@ router.patch('/addToFavs/:id', controller.addToFavourites);
 router.patch('/makeInactive/:id', controller.makeInactive);
 router.patch('/makeActive/:id', controller.makeActive);
 
+router.post('/send_message/:id', controller.sendMessage);
 module.exports = router;

@@ -336,6 +336,37 @@ const deleteUser = async (req, res, next) => {
 	}
 };
 
+const sendMessage = async (req, res, next) => {
+	const to = req.params.id;
+	const from = req.body.from;
+	const message = req.body.message;
+	try {
+		const receiver = await User.findOne({ _id: to });
+		const sender = await User.findOne({ _id: from });
+
+		if (message.length !== 0) {
+			receiver.received_messages.unshift({
+				from: sender._id,
+				body: message,
+			});
+			sender.sent_messages.unshift({ to: receiver._id, body: message });
+			await receiver.save();
+			await sender.save();
+
+			return res.json({
+				message: 'Success! Message succesfully sent.',
+				text: { sent_to: to, sent_by: from, body: message },
+			});
+		} else {
+			throw 'You cannot send an empty message';
+		}
+	} catch (err) {
+		const error = new Error('The message could not be send');
+		error.error = err;
+		next(error);
+	}
+};
+
 module.exports = {
 	getAllUsers,
 	getUsersByType,
@@ -348,4 +379,5 @@ module.exports = {
 	makeInactive,
 	makeActive,
 	deleteUser,
+	sendMessage,
 };
