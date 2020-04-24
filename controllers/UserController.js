@@ -367,6 +367,32 @@ const sendMessage = async (req, res, next) => {
 	}
 };
 
+const viewMessages = async (req, res, next) => {
+	const { id1, id2 } = req.params;
+	try {
+		const user1 = await User.findOne({ _id: id1 });
+		const user2 = await User.findOne({ _id: id2 });
+
+		const sentMess = user1.sent_messages.filter(
+			(message) => message.to === id2
+		);
+		const recMess = user1.received_messages.filter(
+			(message) => message.from === id2
+		);
+		const allMess = [...sentMess, ...recMess];
+		const sortedMessages = allMess.sort((a, b) => a.createdAt - b.createdAt);
+		return res.json({
+			success: `All messages between ${user1.full_name.first_name} ${user1.full_name.last_name} & ${user2.full_name.first_name} ${user2.full_name.last_name} have been queried.`,
+			conversation: sortedMessages,
+		});
+	} catch (err) {
+		const error = new Error('A user with the specified ID could not be found');
+		error.status = 404;
+		error.error = err;
+		next(error);
+	}
+};
+
 module.exports = {
 	getAllUsers,
 	getUsersByType,
@@ -380,4 +406,5 @@ module.exports = {
 	makeActive,
 	deleteUser,
 	sendMessage,
+	viewMessages,
 };

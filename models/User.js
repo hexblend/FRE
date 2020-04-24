@@ -42,31 +42,37 @@ const projectsSchema = mongoose.Schema({
 	},
 });
 
-const sentMessagesSchema = mongoose.Schema({
-	to: {
-		type: String,
-		trim: true,
-		minLength: 1,
+const sentMessagesSchema = mongoose.Schema(
+	{
+		to: {
+			type: String,
+			trim: true,
+			minLength: 1,
+		},
+		body: {
+			type: String,
+			min: 1,
+			minLength: 1,
+		},
 	},
-	body: {
-		type: String,
-		min: 1,
-		minLength: 1,
-	},
-});
+	{ timestamps: true }
+);
 
-const receivedMessagesSchema = mongoose.Schema({
-	from: {
-		type: String,
-		trim: true,
-		minLength: 1,
+const receivedMessagesSchema = mongoose.Schema(
+	{
+		from: {
+			type: String,
+			trim: true,
+			minLength: 1,
+		},
+		body: {
+			type: String,
+			min: 1,
+			minLength: 1,
+		},
 	},
-	body: {
-		type: String,
-		min: 1,
-		minLength: 1,
-	},
-});
+	{ timestamps: true }
+);
 
 const userSchema = mongoose.Schema(
 	{

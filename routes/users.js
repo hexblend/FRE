@@ -43,4 +43,5 @@ router.patch('/makeInactive/:id', controller.makeInactive);
 router.patch('/makeActive/:id', controller.makeActive);
 
 router.post('/send_message/:id', controller.sendMessage);
+router.get('/view_messages/:id1/:id2', controller.viewMessages);
 module.exports = router;
