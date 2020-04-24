@@ -109,6 +109,26 @@ const createUser = async (req, res, next) => {
 		return next(error);
 	}
 };
+const changeAvatar = async (req, res, next) => {
+	const avatarURL = req.file.url;
+	try {
+		const user = await User.findOne({ _id: req.params.id });
+		user.avatar = avatarURL;
+		await user.save();
+
+		return res.json({
+			message: 'Success! The avatar has been successfully changed.',
+			user: {
+				id: user._id,
+				newAvatar: user.avatar,
+			},
+		});
+	} catch (err) {
+		const error = new Error('Avatar could not be changed.');
+		error.error = err;
+		next(err);
+	}
+};
 
 const addToFavourites = async (req, res, next) => {
 	try {
@@ -203,7 +223,6 @@ const updateUser = async (req, res, next) => {
 		updateStringField('years_of_activity');
 		updateStringField('higher_education');
 		updateStringField('description');
-		updateStringField('avatar');
 
 		// Nested Objects Fields
 		updateStringField('full_name');
@@ -324,6 +343,7 @@ module.exports = {
 	getSingleUser,
 	createUser,
 	updateUser,
+	changeAvatar,
 	addToFavourites,
 	makeInactive,
 	makeActive,

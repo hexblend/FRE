@@ -153,6 +153,10 @@ const userSchema = mongoose.Schema(
 		avatar: {
 			type: String,
 			trim: true,
+			validate: validate({
+				validator: 'isURL',
+			}),
+			default: 'https://vectorified.com/images/default-avatar-icon-40.png',
 		},
 		key_abilities: [
 			{
