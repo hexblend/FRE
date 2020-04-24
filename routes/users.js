@@ -33,7 +33,7 @@ router.get('/job/:job1/:job2?/:job3?', controller.getUsersByJob);
 
 router.post('/register', controller.createUser);
 
-router.put(
+router.patch(
 	'/changeAvatar/:id',
 	parser.single('image'),
 	controller.changeAvatar
