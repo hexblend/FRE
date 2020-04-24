@@ -51,7 +51,7 @@ const getUsersByJob = async (req, res, next) => {
 			let found;
 			if (job2 && job3) found = search(job1) || search(job2) || search(job3);
 			else if (job2 && !job3) found = search(job1) || search(job2);
-			else seach(job1);
+			else found = search(job1);
 
 			if (found) matchUsers.push(user);
 		});
@@ -165,7 +165,7 @@ const makeInactive = async (req, res, next) => {
 		return res.json({
 			message:
 				'Success! User is now inactive and will not appear in the search results',
-			updatedUser,
+			user,
 		});
 	} catch (err) {
 		const error = new Error('User could not be updated');
@@ -315,7 +315,7 @@ const updateUser = async (req, res, next) => {
 		}
 
 		// Available Positions
-		const availPos = req.body.availablePositions;
+		const availPos = req.body.available_positions;
 		if (availPos.length !== 0) {
 			availPos.forEach((pos) => {
 				if (!pos.id) {
