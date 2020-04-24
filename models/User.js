@@ -24,7 +24,7 @@ const experienceSchema = mongoose.Schema({
 const projectsSchema = mongoose.Schema({
 	title: {
 		type: String,
-		trim: true,
+		minLength: 1,
 	},
 	description: {
 		type: String,
@@ -39,6 +39,27 @@ const projectsSchema = mongoose.Schema({
 			validator: 'isURL',
 			message: 'Link must be a valid URL',
 		}),
+	},
+});
+
+const availablePositionsSchema = mongoose.Schema({
+	job_title: {
+		type: String,
+		minLength: 1,
+	},
+	type_of_worker: {
+		type: String,
+		enum: ['remote', 'office', 'any'],
+	},
+	years_of_experience: {
+		type: Number,
+	},
+	skills: {
+		type: String,
+		minLength: 1,
+	},
+	benefits: {
+		type: String,
 	},
 });
 
@@ -112,6 +133,23 @@ const userSchema = mongoose.Schema(
 			required: true,
 			enum: ['admin', 'jobseeker', 'employer'],
 		},
+		company: {
+			name: {
+				type: String,
+				minLength: 1,
+			},
+			type: {
+				type: String,
+				minLength: 1,
+			},
+			website: {
+				type: String,
+				validate: validate({
+					validator: 'isURL',
+					message: 'Company website must be a valid URL',
+				}),
+			},
+		},
 		inactiveAccount: {
 			type: Boolean,
 			default: false,
@@ -161,6 +199,7 @@ const userSchema = mongoose.Schema(
 			trim: true,
 			validate: validate({
 				validator: 'isURL',
+				message: 'Your avatar must be a valid URL',
 			}),
 			default: 'https://vectorified.com/images/default-avatar-icon-40.png',
 		},
@@ -172,6 +211,7 @@ const userSchema = mongoose.Schema(
 		],
 		experience: [experienceSchema],
 		projects: [projectsSchema],
+		available_positions: [availablePositionsSchema],
 		social_media: {
 			facebook: {
 				type: String,

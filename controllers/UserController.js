@@ -247,6 +247,13 @@ const updateUser = async (req, res, next) => {
 			throw 'Abilities array must not be empty';
 		}
 
+		// Company
+		const company = req.body.company;
+		const { name, type, website } = company;
+		name && (user.company.name = name);
+		type && (user.company.type = type);
+		website && (user.company.website = website);
+
 		// Social Media
 		const socialMediaObj = req.body.social_media;
 		const { facebook, twitter, instagram, linkedin, github } = socialMediaObj;
@@ -305,6 +312,34 @@ const updateUser = async (req, res, next) => {
 			});
 		} else {
 			throw 'Projects array must not be empty';
+		}
+
+		// Available Positions
+		const availPos = req.body.availablePositions;
+		if (availPos.length !== 0) {
+			availPos.forEach((pos) => {
+				if (!pos.id) {
+					user.available_positions.unshift(pos);
+				} else {
+					const singlePos = user.available_positions.id(pos.id);
+					const {
+						job_title,
+						type_of_worker,
+						years_of_experience,
+						skills,
+						benefits,
+					} = pos;
+
+					job_title && (singlePos.job_title = job_title);
+					type_of_worker && (singlePos.type_of_worker = type_of_worker);
+					years_of_experience &&
+						(singlePos.years_of_experience = years_of_experience);
+					skills && (singlePos.skills = skills);
+					benefits && (singlePos.benefits = benefits);
+				}
+			});
+		} else {
+			throw 'Available Positions array must not be empty';
 		}
 
 		// Save
