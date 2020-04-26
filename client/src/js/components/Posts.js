@@ -8,14 +8,17 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = { getData };
 
-const ConnectedPosts = (props) => {
-	useEffect(() => {
-		props.getData();
-	}, []);
+const ConnectedPosts = ({ getData, articles }) => {
+	useEffect(
+		() => {
+			getData();
+		},
+		[ getData ] // Only rerun if the getData changes
+	);
 
 	return (
 		<ul>
-			{props.articles.map((article) => (
+			{articles.map((article) => (
 				<li key={article.id}>{article.title}</li>
 			))}
 		</ul>
