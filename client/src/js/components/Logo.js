@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const Logo = ({ color, text }) => {
 	return (
 		<div className="logo">
-			<svg className="logo_symbol" viewBox="0 0 247 157"  xmlns="http://www.w3.org/2000/svg" fill={color === 'white' ? '#fff' : '#124B6B'}>
+			<svg className="logo_symbol" fill={color === 'white' ? '#fff' : '#124B6B'} viewBox="0 0 247 157"  xmlns="http://www.w3.org/2000/svg">
 				<g clipPath="url(#clip0)">
 					<path d="M20.6653 70.7516V17.1008H97.0811V0.221802H0V156.762H20.6653V93.4642H62.5003V76.609H20.6653V70.7516Z"/>
 					<path d="M162.995 156.976H162.932L162.98 157.004L162.995 156.976Z" />
@@ -21,7 +21,13 @@ const Logo = ({ color, text }) => {
 				</defs>
 			</svg>
 
-			{ text && <div className="logo_text" style={{color: color === 'white' ? '#fff' : '#414141' }}>Find the Right Employee</div> }
+			{ text && (
+				<div 
+					className="logo_text" 
+					style={{color: color === 'white' ? '#fff' : '#414141' }}>
+					Find the Right Employee
+				</div>
+			)}
 		</div>
 	);
 };

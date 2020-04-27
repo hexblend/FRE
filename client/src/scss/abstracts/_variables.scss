@@ -9,10 +9,19 @@ $paragraphs-font-stack: 'Lato', sans-serif;
 /// Code (monospace) font family
 $code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Monaco', monospace !default;
 
+/// Font Sizes
+$h1-desktop: 4rem;
+$h2-desktop: 3.2rem;
+$h3-desktop: 2.8rem;
+$h4-desktop: 2.4rem;
+$h5-desktop: 2rem;
+$h6-desktop: 1.6rem;
+
+$p-desktop: 1.8rem;
+$p-small-desktop: 1.6rem;
+
 
 /// Colors
-
-// Non-Colors
 $white: #FFFFFF;
 $black: #000000;
 
