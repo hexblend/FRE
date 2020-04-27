@@ -25,11 +25,7 @@ html {
  * Basic styles for links
  */
 a {
-  color: $brand-color;
+  color: $dark-blue;
   text-decoration: none;
-
-  @include on-event {
-    color: $text-color;
-    text-decoration: underline;
-  }
+  border-bottom: 1px solid $dark-blue;
 }

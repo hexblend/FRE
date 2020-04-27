@@ -2,48 +2,44 @@
 // This file contains all application-wide Sass variables.
 // -----------------------------------------------------------------------------
 
-
-
-
-
 /// Regular font family
-/// @type List
-$text-font-stack: 'Open Sans', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
+$headings-font-stack: 'PT Sans', sans-serif;
+$paragraphs-font-stack: 'Lato', sans-serif;
 
 /// Code (monospace) font family
-/// @type List
 $code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Monaco', monospace !default;
 
 
+/// Colors
 
+// Non-Colors
+$white: #FFFFFF;
+$black: #000000;
 
+// Grays
+$lightest-gray: #F9F9F9;
+$gray: #E5E5E5;
+$dark-gray: #ABABAB;
+$darkest-gray: #414141;
 
-/// Copy text color
-/// @type Color
-$text-color: rgb(34, 34, 34) !default;
+// Blues
+$dark-blue: #124B6B;
+$blue: #17597E;
+$light-blue: #26B6BD;
+$dark-light-blue-gradient: linear-gradient(45deg, #16587D 0%, #2686BD 100%);
 
-/// Main brand color
-/// @type Color
-$brand-color: rgb(229, 0, 80) !default;
+// Greens
+$green: #13903E;
 
-/// Light grey
-/// @type Color
-$light-grey: rgb(237, 237, 237) !default;
+// Reds
+$red: #B91515;
 
-/// Medium grey
-/// @type Color
-$mid-grey: rgb(153, 153, 153) !default;
-
-/// Dark grey
-/// @type Color
-$dark-grey: rgb(68, 68, 68) !default;
 
 
 
 
 
 /// Container's maximum width
-/// @type Length
 $max-width: 1180px !default;
 
 
