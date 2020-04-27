@@ -1,23 +1,24 @@
-import React from 'react';
-import List from './List';
-import Form from './Form';
-import Posts from './Posts';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
-const App = () => (
-	<div className="App">
-		<div>
-			<h2>Articles</h2>
-			<List />
-		</div>
-		<div>
-			<h2>Add new article</h2>
-			<Form />
-		</div>
-		<div>
-			<h2>API Posts</h2>
-			<Posts />
-		</div>
-	</div>
-);
+import Nav from '../components/Nav';
+import Home from '../pages/Home';
+import About from '../pages/About';
 
-export default App;
+export default function App() {
+  return (
+    <Router>
+      <>
+        <Nav />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/about" component={About} />
+        </Switch>
+      </>
+    </Router>
+  );
+}
