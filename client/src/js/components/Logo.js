@@ -22,11 +22,11 @@ const Logo = ({ color, text }) => {
 			</svg>
 
 			{ text && (
-				<div 
-					className="logo_text" 
+				<p 
+					className="logo_text small" 
 					style={{color: color === 'white' ? '#fff' : '#414141' }}>
 					Find the Right Employee
-				</div>
+				</p>
 			)}
 		</div>
 	);
