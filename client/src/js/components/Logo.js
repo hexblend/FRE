@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
-const Logo = ({ color, text }) => {
+function Logo({ color, text }) {
 	return (
 		<div className="logo">
 			<svg className="logo_symbol" fill={color === 'white' ? '#fff' : '#124B6B'} viewBox="0 0 247 157"  xmlns="http://www.w3.org/2000/svg">

@@ -5,7 +5,7 @@ import Posts from '../components/Posts';
 
 import HomeHeader from '../layout/HomeHeader';
 
-const Home = () => {
+function Home() {
 	return (
 		<div className="Home">
 			<HomeHeader />

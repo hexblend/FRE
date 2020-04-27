@@ -1,13 +1,16 @@
 import React from 'react';
 
 import Logo from '../components/Logo';
+import AuthNavbar from '../components/AuthNavbar';
+import Search from '../components/Search';
 
-const HomeHeader = () => {
+function HomeHeader() {
+    const isLogged = true;
     return (
         <div className="homeHeader">
-            {/* <Navbar type="not-logged" borders={false} /> */}
+            {isLogged && <AuthNavbar borders={true} />}
 			<Logo color="white" text={true} />
-			{/* <Search /> */}
+			<Search />
         </div>
     );
 }
