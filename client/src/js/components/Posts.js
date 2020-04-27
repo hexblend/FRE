@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getData } from '../actions/index';
+import { getData } from '../redux/actions/index';
 
 const mapStateToProps = (state) => ({
 	articles: state.remoteArticles.slice(0, 10)
