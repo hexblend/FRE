@@ -3,10 +3,13 @@ import List from '../components/List';
 import Form from '../components/Form';
 import Posts from '../components/Posts';
 
+import HomeHeader from '../layout/HomeHeader';
+
 const Home = () => {
 	return (
 		<div className="Home">
-			<div>
+			<HomeHeader />
+			{/* <div>
 				<h2>Articles</h2>
 				<List />
 			</div>
@@ -17,7 +20,7 @@ const Home = () => {
 			<div>
 				<h2>API Posts</h2>
 				<Posts />
-			</div>
+			</div> */}
 		</div>
 	);
 };
