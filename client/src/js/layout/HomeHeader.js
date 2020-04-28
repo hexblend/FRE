@@ -9,8 +9,10 @@ function HomeHeader() {
 	return (
 		<div className="homeHeader">
 			{!isLogged && <AuthNavbar />}
-			<Logo color="white" text={true} />
-			<Search />
+			<div className="homeHeader__midElems">
+				<Logo color="white" text={true} />
+				<Search />
+			</div>
 		</div>
 	);
 }

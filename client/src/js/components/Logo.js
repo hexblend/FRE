@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Logo({ color, text }) {
+function Logo({ color, text, size }) {
 	return (
-		<div className="logo">
+		<div className={`logo ${size === 'small' && 'small'}`}>
 			<svg
 				className="logo_symbol"
 				fill={color === 'white' ? '#fff' : '#124B6B'}
@@ -27,7 +27,7 @@ function Logo({ color, text }) {
 
 			{text && (
 				<p
-					className="logo_text small"
+					className="logo_text"
 					style={{ color: color === 'white' ? '#fff' : '#414141' }}
 				>
 					Find the Right Employee
@@ -40,6 +40,7 @@ function Logo({ color, text }) {
 Logo.propTypes = {
 	color: PropTypes.string,
 	text: PropTypes.bool,
+	size: PropTypes.string,
 };
 
 export default Logo;

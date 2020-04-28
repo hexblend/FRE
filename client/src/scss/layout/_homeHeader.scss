@@ -1,5 +1,16 @@
 .homeHeader {
-	height: 600px;
+	height: 60rem;
 	width: 100%;
 	background: image('home_header.jpg') no-repeat center center / cover;
+}
+.homeHeader__midElems {
+	height: calc(100% - 10rem);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+	.logo {
+		margin-bottom: 10rem;
+	}
 }
