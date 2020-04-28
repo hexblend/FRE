@@ -5,14 +5,14 @@ import AuthNavbar from '../components/AuthNavbar';
 import Search from '../components/Search';
 
 function HomeHeader() {
-    const isLogged = true;
-    return (
-        <div className="homeHeader">
-            {isLogged && <AuthNavbar borders={true} />}
+	const isLogged = false;
+	return (
+		<div className="homeHeader">
+			{!isLogged && <AuthNavbar />}
 			<Logo color="white" text={true} />
 			<Search />
-        </div>
-    );
+		</div>
+	);
 }
 
 export default HomeHeader;

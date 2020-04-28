@@ -1,4 +1,6 @@
 // -----------------------------------------------------------------------------
 // This file contains all application-wide Sass mixins.
 // -----------------------------------------------------------------------------
-
+@mixin text-trans {
+	transition: 0.175s ease-in-out color;
+}

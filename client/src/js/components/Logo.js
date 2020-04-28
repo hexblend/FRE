@@ -4,9 +4,14 @@ import PropTypes from 'prop-types';
 function Logo({ color, text }) {
 	return (
 		<div className="logo">
-			<svg className="logo_symbol" fill={color === 'white' ? '#fff' : '#124B6B'} viewBox="0 0 247 157"  xmlns="http://www.w3.org/2000/svg">
+			<svg
+				className="logo_symbol"
+				fill={color === 'white' ? '#fff' : '#124B6B'}
+				viewBox="0 0 247 157"
+				xmlns="http://www.w3.org/2000/svg"
+			>
 				<g clipPath="url(#clip0)">
-					<path d="M20.6653 70.7516V17.1008H97.0811V0.221802H0V156.762H20.6653V93.4642H62.5003V76.609H20.6653V70.7516Z"/>
+					<path d="M20.6653 70.7516V17.1008H97.0811V0.221802H0V156.762H20.6653V93.4642H62.5003V76.609H20.6653V70.7516Z" />
 					<path d="M162.995 156.976H162.932L162.98 157.004L162.995 156.976Z" />
 					<path d="M151.926 156.865C151.948 156.865 156.157 156.865 162.778 156.865V156.96C162.829 156.964 162.881 156.964 162.932 156.96C162.899 156.933 162.851 156.901 162.785 156.857C187.383 156.834 245.229 156.727 245.229 156.727V139.594L165.37 139.349L151.926 156.865Z" />
 					<path d="M160.594 0.0158687C175.861 3.37424 184.235 15.5008 185.523 17.085H247.018V0.158447C247.018 0.158447 160.211 -0.0593778 160.594 0.0158687Z" />
@@ -20,20 +25,21 @@ function Logo({ color, text }) {
 				</defs>
 			</svg>
 
-			{ text && (
-				<p 
-					className="logo_text small" 
-					style={{color: color === 'white' ? '#fff' : '#414141' }}>
+			{text && (
+				<p
+					className="logo_text small"
+					style={{ color: color === 'white' ? '#fff' : '#414141' }}
+				>
 					Find the Right Employee
 				</p>
 			)}
 		</div>
 	);
-};
+}
 
 Logo.propTypes = {
 	color: PropTypes.string,
-	text: PropTypes.bool
+	text: PropTypes.bool,
 };
 
 export default Logo;

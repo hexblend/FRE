@@ -4,12 +4,12 @@ import { addArticle } from '../redux/actions/index';
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addArticle: (article) => dispatch(addArticle(article))
+		addArticle: (article) => dispatch(addArticle(article)),
 	};
 };
 
 function ConnectedForm(props) {
-	const [ title, setTitle ] = useState('');
+	const [title, setTitle] = useState('');
 
 	const handleSubmit = (e) => {
 		e.preventDefault();

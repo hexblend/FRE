@@ -6,7 +6,7 @@
  * Set up a decent box model on the root element
  */
 html {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 /**
@@ -18,14 +18,16 @@ html {
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+	box-sizing: inherit;
 }
 
 /**
  * Basic styles for links
  */
 a {
-  color: $dark-blue;
-  text-decoration: none;
-  border-bottom: 1px solid $dark-blue;
+	color: $dark-blue;
+	text-decoration: none;
+	border-bottom: 1px solid $dark-blue;
+	font-size: $p-small-desktop;
+	color: $black;
 }
