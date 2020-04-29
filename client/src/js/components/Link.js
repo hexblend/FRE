@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
@@ -10,29 +12,26 @@ const iconList = Object.keys(Icons)
 	.map((icon) => Icons[icon]);
 library.add(...iconList);
 
-function Button({ type, wide, icon, text }) {
+function CustomLink({ to, text, type, border, icon }) {
 	return (
-		<div>
-			<button
-				className={`btn 
-				${type === 'secondary' && 'btn-secondary'}
-				${type === 'full-width' && 'btn-full-width'}
-				${!type && 'btn-primary'}
-				${wide ? 'btn-wide' : ''}
-				`}
-			>
-				{icon && <FontAwesomeIcon icon={icon} className="btn-icon" />}
-				{text}
-			</button>
-		</div>
+		<Link
+			class={`link 
+				${type === 'gray' && 'gray-link'} 
+				${type === 'blue' && 'blue-link'} 
+				${type === 'red' && 'red-link'}
+				${!type && 'link-primary'}
+				${!border && 'no-border'}
+			`}
+			to={to}
+		>
+			{text}{' '}
+			{icon && <FontAwesomeIcon icon={icon} className="link-icon" />}
+		</Link>
 	);
 }
 
-Button.propTypes = {
-	type: PropTypes.string,
-	wide: PropTypes.bool,
-	icon: PropTypes.string,
+CustomLink.propTypes = {
 	text: PropTypes.string.isRequired,
 };
 
-export default Button;
+export default CustomLink;

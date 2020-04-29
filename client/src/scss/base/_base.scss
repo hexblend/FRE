@@ -10,7 +10,6 @@ html {
 }
 body {
 	background: $lightest-gray;
-	padding: 0 20px;
 }
 
 /**
@@ -29,9 +28,7 @@ body {
  * Basic styles for links
  */
 a {
-	color: $dark-blue;
 	text-decoration: none;
-	border-bottom: 1px solid $dark-blue;
 	font-size: $p-small-desktop;
 	color: $black;
 }
