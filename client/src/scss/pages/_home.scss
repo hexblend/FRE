@@ -4,3 +4,54 @@
 .Home {
 	text-align: center;
 }
+.Home__alreadyMember {
+	margin: 6.4rem;
+	h3 {
+		color: $darkest-gray;
+	}
+}
+.Home__alreadyMember--buttons {
+	@include flex-center;
+	margin-top: 3.2rem;
+	.btn:first-child {
+		margin-right: 2.4rem;
+	}
+}
+.Home__bigCard {
+	background: #f4f4f4;
+	border-radius: 0.8rem;
+	max-width: 100%;
+	height: 40rem;
+	display: flex;
+	position: relative;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
+	img {
+		height: 100%;
+		width: auto;
+	}
+	.text-side {
+		padding: 0 3.2rem;
+		text-align: left;
+		h3 {
+			font-size: $h1-desktop;
+			margin-top: 7.2rem;
+			margin-bottom: 4.8rem;
+		}
+		.btn {
+			position: absolute;
+			bottom: 2.4rem;
+		}
+	}
+	&.job {
+		margin-bottom: 4.8rem;
+		.btn {
+			right: 3.2rem;
+		}
+	}
+	&.staff {
+		margin-bottom: 12.2rem;
+		.btn {
+			left: 3.2rem;
+		}
+	}
+}

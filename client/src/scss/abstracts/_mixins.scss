@@ -7,3 +7,8 @@
 @mixin trans {
 	transition: 0.175s ease-in-out all;
 }
+@mixin flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
