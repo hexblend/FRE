@@ -15,7 +15,7 @@ library.add(...iconList);
 function CustomLink({ to, text, type, border, icon }) {
 	return (
 		<Link
-			class={`link 
+			className={`link 
 				${type === 'gray' && 'gray-link'} 
 				${type === 'blue' && 'blue-link'} 
 				${type === 'red' && 'red-link'}
@@ -24,8 +24,7 @@ function CustomLink({ to, text, type, border, icon }) {
 			`}
 			to={to}
 		>
-			{text}{' '}
-			{icon && <FontAwesomeIcon icon={icon} className="link-icon" />}
+			{text} {icon && <FontAwesomeIcon icon={icon} className="link-icon" />}
 		</Link>
 	);
 }
