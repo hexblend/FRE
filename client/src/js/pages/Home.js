@@ -9,6 +9,7 @@ function Home() {
 	return (
 		<div className="Home">
 			<HomeHeader />
+			<div className="text-center"></div>
 			{/* <div>
 				<h2>Articles</h2>
 				<List />

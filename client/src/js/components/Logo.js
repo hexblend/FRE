@@ -26,12 +26,12 @@ function Logo({ color, text, size }) {
 			</svg>
 
 			{text && (
-				<p
+				<h1
 					className="logo_text"
 					style={{ color: color === 'white' ? '#fff' : '#414141' }}
 				>
 					Find the Right Employee
-				</p>
+				</h1>
 			)}
 		</div>
 	);
