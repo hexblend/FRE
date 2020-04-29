@@ -11,14 +11,14 @@ function Home() {
 	return (
 		<div className="Home">
 			<HomeHeader />
-			<h2>Buttons</h2>
+			<h2 className="mt-5 mb-4">Buttons</h2>
 			<Button
 				icon="check"
 				type="secondary"
 				text="Finish editing"
 				wide={true}
 			/>
-			<h2>Links</h2>
+			<h2 className="mt-5 mb-4">Links</h2>
 			<Link
 				to="/about"
 				text="Delete"
