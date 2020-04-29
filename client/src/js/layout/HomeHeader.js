@@ -2,7 +2,7 @@ import React from 'react';
 
 import Logo from '../components/Logo';
 import AuthNavbar from '../components/AuthNavbar';
-import Search from '../components/Search';
+import HomeSearch from '../components/pages/home/Search';
 
 function HomeHeader() {
 	const isLogged = false;
@@ -11,7 +11,7 @@ function HomeHeader() {
 			{!isLogged && <AuthNavbar />}
 			<div className="homeHeader__midElems">
 				<Logo color="white" text={true} />
-				<Search />
+				<HomeSearch />
 			</div>
 		</div>
 	);

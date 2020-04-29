@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-import Button from '../components/Button';
-import Link from '../components/Link';
-import Input from '../components/Input';
-import Tag from '../components/Tag';
+import Button from '../components/elements/Button';
+import Link from '../components/elements/Link';
+import Input from '../components/elements/Input';
+import Tag from '../components/elements/Tag';
 
 function StyleGuide() {
 	const [inputValue, setInputValue] = useState('');

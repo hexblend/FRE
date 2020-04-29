@@ -4,13 +4,20 @@
 	background: image('home_header.jpg') no-repeat center center / cover;
 }
 .homeHeader__midElems {
-	height: calc(100% - 10rem);
+	height: calc(100% - 5rem);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-
 	.logo {
 		margin-bottom: 10rem;
+	}
+	.homeHeader__search {
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		.customInput {
+			margin-right: 3.2rem;
+		}
 	}
 }

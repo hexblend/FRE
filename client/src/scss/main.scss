@@ -22,10 +22,11 @@
 // 5. Components
 @import 'components/logo';
 @import 'components/authNavbar';
-@import 'components/button';
-@import 'components/link';
-@import 'components/input';
-@import 'components/tag';
+// Elements
+@import 'components/elements/button';
+@import 'components/elements/link';
+@import 'components/elements/input';
+@import 'components/elements/tag';
 
 // 6. Page-specific styles
 @import 'pages/home';
