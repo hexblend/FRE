@@ -31,6 +31,10 @@ function CustomLink({ to, text, type, border, icon }) {
 
 CustomLink.propTypes = {
 	text: PropTypes.string.isRequired,
+	to: PropTypes.string.isRequired,
+	type: PropTypes.string,
+	border: PropTypes.bool,
+	icon: PropTypes.string,
 };
 
 export default CustomLink;

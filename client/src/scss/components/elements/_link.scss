@@ -15,6 +15,9 @@
 .gray-link {
 	color: $dark-gray;
 	border-color: $dark-gray;
+	&:hover {
+		color: $black;
+	}
 }
 .red-link {
 	color: $red;
