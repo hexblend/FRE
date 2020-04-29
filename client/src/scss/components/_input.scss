@@ -23,6 +23,13 @@
 }
 .customLabel {
 	font-size: 1.4rem;
+	&.whiteLabel {
+		display: block;
+		color: $white;
+		font-size: $p-desktop;
+		font-weight: 300;
+		margin-bottom: 1.6rem;
+	}
 }
 .customTextarea {
 	display: block;

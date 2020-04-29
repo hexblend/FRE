@@ -8,13 +8,18 @@ function Input({
 	placeholder,
 	noBG,
 	noShadow,
+	whiteLabel,
+	minWidth,
 	value,
 	handleChange,
 }) {
 	return (
 		<div className="customInput__wrapper">
 			{label && (
-				<label htmlFor={id} className="customLabel">
+				<label
+					htmlFor={id}
+					className={`customLabel ${whiteLabel && 'whiteLabel'}`}
+				>
 					{label}
 				</label>
 			)}
@@ -30,6 +35,7 @@ function Input({
                                 ${noBG && 'noBG'} 
                                 ${noShadow && 'noShadow'}
                               `}
+					style={{ minWidth: `${minWidth}px` }}
 				/>
 			)}
 			{type === 'textarea' && (
@@ -55,6 +61,8 @@ Input.propTypes = {
 	placeholder: PropTypes.string,
 	noBG: PropTypes.bool,
 	noShadow: PropTypes.bool,
+	whiteLabel: PropTypes.bool,
+	minWidth: PropTypes.number,
 	value: PropTypes.string,
 	handleChange: PropTypes.func,
 };
