@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import Input from '../../elements/Input';
 import Button from '../../elements/Button';
 
@@ -28,7 +28,9 @@ function Search() {
 				value={location}
 				handleChange={setLocation}
 			/>
-			<Button text="Search for candidates" />
+			<Link to="/search">
+				<Button text="Search for candidates" />
+			</Link>
 		</div>
 	);
 }
