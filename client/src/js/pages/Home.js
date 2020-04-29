@@ -7,6 +7,7 @@ import HomeHeader from '../layout/HomeHeader';
 import Button from '../components/Button';
 import Link from '../components/Link';
 import Input from '../components/Input';
+import Tag from '../components/Tag';
 
 function Home() {
 	const [inputValue, setInputValue] = useState('');
@@ -27,6 +28,9 @@ function Home() {
 				value={inputValue}
 				handleChange={setInputValue}
 			/>
+			<h2 className="mt-5 mb-4">Checkmark</h2>
+			<h2 className="mt-5 mb-4">Tag</h2>
+			<Tag content="HTML" />
 			{/* <div>
 				<h2>Articles</h2>
 				<List />
