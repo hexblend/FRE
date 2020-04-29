@@ -1,7 +1,50 @@
 /**
  * Basic typography style for copy text
  */
+html {
+	font-size: 62.5%;
+}
 body {
-  color: $text-color;
-  font: normal 125% / 1.4 $text-font-stack;
+	color: $black;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: $headings-font-stack;
+}
+p,
+a,
+ul,
+li,
+label,
+button,
+div {
+	font-family: $paragraphs-font-stack;
+}
+h1 {
+	font-size: $h1-desktop;
+}
+h2 {
+	font-size: $h2-desktop;
+}
+h3 {
+	font-size: $h3-desktop;
+}
+h4 {
+	font-size: $h4-desktop;
+}
+h5 {
+	font-size: $h5-desktop;
+}
+h6 {
+	font-size: $h6-desktop;
+}
+p {
+	font-size: $p-desktop;
+	&.small {
+		font-size: $p-small-desktop;
+	}
 }

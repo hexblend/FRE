@@ -2,70 +2,65 @@
 // This file contains all application-wide Sass variables.
 // -----------------------------------------------------------------------------
 
-
-
-
-
 /// Regular font family
-/// @type List
-$text-font-stack: 'Open Sans', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
+$headings-font-stack: 'PT Sans', sans-serif;
+$paragraphs-font-stack: 'Lato', sans-serif;
 
 /// Code (monospace) font family
-/// @type List
-$code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Monaco', monospace !default;
+$code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono',
+	'Monaco', monospace !default;
 
+/// Font Sizes
+$h1-desktop: 4rem;
+$h2-desktop: 3.2rem;
+$h3-desktop: 2.8rem;
+$h4-desktop: 2.4rem;
+$h5-desktop: 2rem;
+$h6-desktop: 1.6rem;
 
+$p-desktop: 1.8rem;
+$p-small-desktop: 1.6rem;
 
+/// Colors
+$transparent: rgba(0, 0, 0, 0);
+$white: #ffffff;
+$black: #000000;
 
+// Grays
+$lightest-gray: #f9f9f9;
+$gray: #e5e5e5;
+$dark-gray: #ababab;
+$darkest-gray: #414141;
 
-/// Copy text color
-/// @type Color
-$text-color: rgb(34, 34, 34) !default;
+// Blues
+$dark-blue: #124b6b;
+$blue: #17597e;
+$light-blue: #26b6bd;
+$dark-light-blue-gradient: linear-gradient(45deg, #16587d 0%, #2686bd 100%);
 
-/// Main brand color
-/// @type Color
-$brand-color: rgb(229, 0, 80) !default;
+// Greens
+$green: #13903e;
 
-/// Light grey
-/// @type Color
-$light-grey: rgb(237, 237, 237) !default;
+// Reds
+$red: #b91515;
 
-/// Medium grey
-/// @type Color
-$mid-grey: rgb(153, 153, 153) !default;
-
-/// Dark grey
-/// @type Color
-$dark-grey: rgb(68, 68, 68) !default;
-
-
-
-
+/// Margins / Paddings
+$nav-padding: 16px 40px;
 
 /// Container's maximum width
-/// @type Length
-$max-width: 1180px !default;
-
-
-
-
+$max-width: 1600px !default;
 
 /// Breakpoints map
 /// @prop {String} keys - Keys are identifiers mapped to a given length
 /// @prop {Map} values - Values are actual breakpoints expressed in pixels
 $breakpoints: (
-  'small': 320px,
-  'medium': 768px,
-  'large': 1024px,
+	'small': 320px,
+	'medium': 768px,
+	'large': 1024px,
 ) !default;
-
-
-
-
-
 
 /// Relative or absolute URL where all assets are served from
 /// @type String
 /// @example scss - When using a CDN
-///   $base-url: 'http://cdn.example.com/assets/';
+/// $base-url: 'http://domain.com/assets/';
 $base-url: '/assets/' !default;

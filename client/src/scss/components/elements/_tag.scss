@@ -1,0 +1,37 @@
+.tag {
+	background: $dark-blue;
+	display: inline-block;
+	padding: 0.5rem;
+	font-weight: 300;
+	color: $white;
+	font-size: $p-small-desktop;
+	position: relative;
+	&::after,
+	&::before {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: -1.3rem;
+		width: 2.5rem;
+		background: $dark-blue;
+		border-radius: 50%;
+		z-index: -1;
+	}
+	&::before {
+		left: -1.3rem;
+		z-index: -1;
+	}
+}
+.tag__text {
+	&:hover {
+		cursor: default;
+	}
+}
+.tag__icon {
+	padding-left: 1.6rem;
+	&:hover {
+		cursor: pointer;
+	}
+}

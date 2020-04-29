@@ -1,19 +1,33 @@
 @charset "UTF-8";
 
 // 1. Configuration and helpers
+@import 'abstracts/variables';
+@import 'abstracts/functions';
 @import 'abstracts/mixins';
 
 // 2. Vendors
 @import 'vendors/normalize';
+@import 'vendors/reset';
+@import 'vendors/bootstrapUtility';
 
 // 3. Base stuff
+@import 'base/base';
+@import 'base/fonts';
 @import 'base/helpers';
+@import 'base/typography';
 
 // 4. Layout-related sections
+@import 'layout/homeHeader';
 @import 'layout/footer';
 
 // 5. Components
-@import 'components/button';
+@import 'components/logo';
+@import 'components/authNavbar';
+// Elements
+@import 'components/elements/button';
+@import 'components/elements/link';
+@import 'components/elements/input';
+@import 'components/elements/tag';
 
 // 6. Page-specific styles
 @import 'pages/home';

@@ -1,0 +1,53 @@
+.customInput__wrapper {
+	text-align: left;
+}
+.customInput {
+	display: block;
+	font-size: $p-small-desktop;
+	color: $darkest-gray;
+	padding: 1.2rem 2rem;
+	border: 0;
+	border-radius: 0.5rem;
+	margin-top: 0.8rem;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
+	&::placeholder {
+		color: $dark-gray;
+		font-weight: 300;
+	}
+	&.noBG {
+		background: $transparent;
+	}
+	&.noShadow {
+		box-shadow: none;
+	}
+}
+.customLabel {
+	font-size: 1.4rem;
+	&.whiteLabel {
+		display: block;
+		color: $white;
+		font-size: $p-desktop;
+		font-weight: 300;
+		margin-bottom: 1.6rem;
+	}
+}
+.customTextarea {
+	display: block;
+	border: 0;
+	border-radius: 0.5rem;
+	padding: 1.6rem;
+	font-size: $p-small-desktop;
+	font-weight: 300;
+	margin-top: 0.8rem;
+	color: $darkest-gray;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
+	&::placeholder {
+		color: $dark-gray;
+	}
+	&.noBG {
+		background: $transparent;
+	}
+	&.noShadow {
+		box-shadow: none;
+	}
+}

@@ -1,0 +1,44 @@
+.link {
+	border-bottom: 2px solid $dark-blue;
+	padding-bottom: 0.3rem;
+	@include text-trans;
+	&:hover {
+		border-color: $black;
+	}
+}
+.link-primary {
+	color: $dark-blue;
+	&:hover {
+		color: $black;
+	}
+}
+.gray-link {
+	color: $dark-gray;
+	border-color: $dark-gray;
+	&:hover {
+		color: $black;
+	}
+}
+.red-link {
+	color: $red;
+	border-bottom: 2px solid $transparent;
+	&:hover {
+		color: $red;
+		border-color: $red;
+	}
+}
+.blue-link {
+	color: $dark-blue;
+	border-bottom: 2px solid $transparent;
+	&:hover {
+		color: $dark-blue;
+		border-color: $dark-blue;
+	}
+}
+.no-border {
+	border-bottom: 0;
+}
+.link-icon {
+	margin-left: 0.2rem;
+	font-size: $p-small-desktop;
+}

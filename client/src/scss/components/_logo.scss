@@ -1,0 +1,21 @@
+.logo_symbol {
+	display: block;
+	width: 19rem;
+	height: auto;
+	margin: 0 auto;
+}
+.logo_text {
+	font-family: $paragraphs-font-stack;
+	font-weight: 300;
+	margin-top: 2.4rem;
+	font-size: $h4-desktop;
+}
+.small {
+	.logo_symbol {
+		width: 13rem;
+	}
+	.logo_text {
+		font-size: $p-small-desktop;
+		margin-top: 1.6rem;
+	}
+}
