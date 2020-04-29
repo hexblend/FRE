@@ -32,7 +32,7 @@ function Home() {
 							It’s that easy. Just create a profile as Candidate, upload all
 							your information that is needed for an employer to make a good
 							idea about you and sit tight! At any moment, somebody may pick
-							your details and get in touch with you?
+							your details and get in touch with you.
 						</p>
 						<Link to="/candidate/register">
 							<Button text="Register as Candidate" type="secondary" />

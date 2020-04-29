@@ -6,7 +6,7 @@ function Footer() {
 		<div className="footer">
 			<p>Copyright &copy;{new Date().getFullYear()} Find the Right Employee</p>
 			<div className="footer__rightLinks">
-				<Link to="/contact" type="gray" text="Contact Us" />
+				<Link to="/contact-us" type="gray" text="Contact Us" />
 				<Link
 					to="/terms-and-conditions"
 					type="gray"

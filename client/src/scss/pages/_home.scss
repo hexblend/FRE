@@ -5,14 +5,15 @@
 	text-align: center;
 }
 .Home__alreadyMember {
-	margin: 6.4rem;
+	margin: 6.4rem 0;
 	h3 {
+		font-size: $h3-desktop;
 		color: $darkest-gray;
 	}
 }
 .Home__alreadyMember--buttons {
 	@include flex-center;
-	margin-top: 3.2rem;
+	margin-top: 2.4rem;
 	.btn:first-child {
 		margin-right: 2.4rem;
 	}
@@ -33,9 +34,12 @@
 		padding: 0 3.2rem;
 		text-align: left;
 		h3 {
-			font-size: $h1-desktop;
+			font-size: $h2-desktop;
 			margin-top: 7.2rem;
 			margin-bottom: 4.8rem;
+		}
+		p {
+			line-height: 2.4rem;
 		}
 		.btn {
 			position: absolute;
