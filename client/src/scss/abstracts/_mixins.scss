@@ -4,3 +4,6 @@
 @mixin text-trans {
 	transition: 0.175s ease-in-out color;
 }
+@mixin trans {
+	transition: 0.175s ease-in-out all;
+}

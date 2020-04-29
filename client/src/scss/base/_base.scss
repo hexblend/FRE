@@ -8,6 +8,10 @@
 html {
 	box-sizing: border-box;
 }
+body {
+	background: $lightest-gray;
+	padding: 0 20px;
+}
 
 /**
  * Make all elements from the DOM inherit from the parent box-sizing
