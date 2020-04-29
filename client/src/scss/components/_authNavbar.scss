@@ -6,14 +6,14 @@
 	width: 100%;
 	background: $white;
 	font-weight: 300;
-	border-bottom: 1px solid $dark-gray;
+	border-bottom: 0.1rem solid $dark-gray;
 }
 .authNavbar__rightLinks--link {
 	border-bottom: 0;
 	color: $dark-gray;
-	padding: 0 32px;
+	padding: 0 3.2rem;
 	position: relative;
-	@include text-trans;
+	@include trans;
 	&:hover {
 		color: $darkest-gray;
 	}
@@ -22,8 +22,8 @@
 		content: '';
 		display: block;
 		position: absolute;
-		width: 1px;
-		height: 50px;
+		width: 0.1rem;
+		height: 5rem;
 		background: $gray;
 		top: 50%;
 		right: 0;
@@ -38,13 +38,30 @@
 	color: $gray;
 	border: 0;
 	.authNavbar__rightLinks--link {
+		font-size: 1.4rem;
 		color: $gray;
-		&:hover {
-			color: $white;
-		}
-		&:before,
-		&:after {
+		&:before {
 			display: none;
 		}
+		&::after {
+			content: '';
+			position: absolute;
+			right: 50%;
+			top: 2.3rem;
+			transform: translateX(50%);
+			width: 0;
+			height: 0.1rem;
+			background: $white;
+			@include trans;
+		}
+		&:hover {
+			color: $white;
+			&::after {
+				width: calc(100% - 6.4rem); // - padding
+			}
+		}
+	}
+	.authNavbar__description {
+		font-size: 1.4rem;
 	}
 }
