@@ -31,4 +31,10 @@ a {
 	text-decoration: none;
 	font-size: $p-small-desktop;
 	color: $black;
+	outline: none;
+	&:hover,
+	&:active,
+	&:focus {
+		outline: none;
+	}
 }

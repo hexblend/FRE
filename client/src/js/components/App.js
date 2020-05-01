@@ -13,7 +13,9 @@ export default function App() {
 		<Router>
 			<Switch>
 				<Route path="/style" component={StyleGuide} />
+
 				<Route exact path="/" component={Home} />
+
 				{/* Auth */}
 				<Route path="/candidate/register">
 					<Register type="candidate" />

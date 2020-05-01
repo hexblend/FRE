@@ -18,7 +18,7 @@ function StyleGuide() {
 			<h2 className="mt-5 mb-4">Links</h2>
 			<Link
 				to={`${PUBLIC_URL}`}
-				text="Delete"
+				text="Hello there"
 				type="red"
 				border={true}
 				icon="times"

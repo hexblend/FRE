@@ -1,12 +1,14 @@
 .authNavbar {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	color: $dark-gray;
 	padding: $nav-padding;
 	width: 100%;
 	background: $white;
 	font-weight: 300;
 	border-bottom: 0.1rem solid $dark-gray;
+	position: relative;
 }
 .authNavbar__rightLinks--link {
 	border-bottom: 0;
@@ -100,5 +102,18 @@
 	}
 	.icon {
 		margin-right: 5px;
+	}
+}
+.authNavbar__goBackLink {
+	font-size: $p-small-desktop;
+	position: absolute;
+	left: 4rem;
+	top: 50%;
+	transform: translateY(-50%);
+	font-weight: 400;
+	@include text-trans;
+	&:hover {
+		color: $black;
+		cursor: pointer;
 	}
 }
