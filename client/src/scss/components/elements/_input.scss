@@ -1,5 +1,6 @@
 .customInput__wrapper {
 	text-align: left;
+	position: relative;
 }
 .customInput {
 	display: block;
@@ -20,6 +21,14 @@
 	&.noShadow {
 		box-shadow: none;
 	}
+}
+.customInput__error {
+	position: absolute;
+	bottom: -1.8rem;
+	left: 0;
+	color: $red;
+	font-weight: 400;
+	font-size: 1.3rem;
 }
 .customLabel {
 	font-size: 1.4rem;

@@ -10,6 +10,7 @@ function Input({
 	noShadow,
 	whiteLabel,
 	minWidth,
+	error,
 	value,
 	handleChange,
 }) {
@@ -24,19 +25,22 @@ function Input({
 				</label>
 			)}
 			{type !== 'textarea' && (
-				<input
-					type={type}
-					name={id}
-					id={id}
-					value={value}
-					onChange={(e) => handleChange(e.target.value)}
-					placeholder={placeholder}
-					className={`customInput 
+				<>
+					<input
+						type={type}
+						name={id}
+						id={id}
+						value={value}
+						onChange={(e) => handleChange(e.target.value)}
+						placeholder={placeholder}
+						className={`customInput 
                                 ${noBG && 'noBG'} 
                                 ${noShadow && 'noShadow'}
                               `}
-					style={{ minWidth: `${minWidth}` }}
-				/>
+						style={{ minWidth: `${minWidth}` }}
+					/>
+					{error && <p className="customInput__error">{error}</p>}
+				</>
 			)}
 			{type === 'textarea' && (
 				<textarea
@@ -65,6 +69,7 @@ Input.propTypes = {
 	minWidth: PropTypes.string,
 	value: PropTypes.string,
 	handleChange: PropTypes.func,
+	error: PropTypes.string,
 };
 
 export default Input;

@@ -5,8 +5,18 @@ import Button from '../../elements/Button';
 
 function Search() {
 	const [jobTitle, setJobTitle] = useState('');
+	const [jobTitleError, setJobTitleError] = useState('');
+
 	const [location, setLocation] = useState('');
+	const [locationError, setLocationError] = useState('');
+
 	const PUBLIC_URL = process.env.PUBLIC_URL;
+
+	const handleSubmit = (e) => {
+		if (jobTitle === '' || location === '') e.preventDefault();
+		setJobTitleError(jobTitle === '' ? 'You must add a job title' : '');
+		setLocationError(location === '' ? 'You must add a job title' : '');
+	};
 
 	return (
 		<div className="homeHeader__search">
@@ -19,6 +29,7 @@ function Search() {
 				whiteLabel={true}
 				value={jobTitle}
 				handleChange={setJobTitle}
+				error={jobTitleError}
 			/>
 			<Input
 				type="text"
@@ -28,8 +39,9 @@ function Search() {
 				whiteLabel={true}
 				value={location}
 				handleChange={setLocation}
+				error={locationError}
 			/>
-			<Link to={`${PUBLIC_URL}/search`}>
+			<Link to={`${PUBLIC_URL}/search`} onClick={handleSubmit}>
 				<Button text="Search for candidates" />
 			</Link>
 		</div>
