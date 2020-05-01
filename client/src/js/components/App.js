@@ -1,10 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // import Nav from '../components/Nav';
-import Home from '../pages/Home';
-import About from '../pages/About';
 import StyleGuide from '../pages/StyleGuide';
+import Home from '../pages/Home';
+import Register from '../pages/Register';
+import Login from '../pages/Login';
 import Footer from '../layout/Footer';
 
 export default function App() {
@@ -13,7 +14,19 @@ export default function App() {
 			<Switch>
 				<Route path="/style" component={StyleGuide} />
 				<Route exact path="/" component={Home} />
-				<Route path="/about" component={About} />
+				{/* Auth */}
+				<Route path="/candidate/register">
+					<Register type="candidate" />
+				</Route>
+				<Route path="/candidate/login">
+					<Login type="candidate" />
+				</Route>
+				<Route path="/employer/register">
+					<Register type="employer" />
+				</Route>
+				<Route path="/employer/login">
+					<Login type="employer" />
+				</Route>
 			</Switch>
 			<Footer />
 		</Router>

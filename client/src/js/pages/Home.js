@@ -7,6 +7,7 @@ import HomeHeader from '../layout/HomeHeader';
 import Button from '../components/elements/Button';
 
 function Home() {
+	const PUBLIC_URL = process.env.PUBLIC_URL;
 	return (
 		<div className="Home">
 			<HomeHeader />
@@ -15,10 +16,10 @@ function Home() {
 				<div className="Home__alreadyMember">
 					<h3>Already a member ?</h3>
 					<div className="Home__alreadyMember--buttons">
-						<Link to="/candidate/login">
+						<Link to={`${PUBLIC_URL}/candidate/login`}>
 							<Button text="Login as Candidate" />
 						</Link>
-						<Link to="/employer/login">
+						<Link to={`${PUBLIC_URL}/employer/login`}>
 							<Button text="Login as Employer" type="secondary" />
 						</Link>
 					</div>
@@ -34,7 +35,7 @@ function Home() {
 							idea about you and sit tight! At any moment, somebody may pick
 							your details and get in touch with you.
 						</p>
-						<Link to="/candidate/register">
+						<Link to={`${PUBLIC_URL}/candidate/register`}>
 							<Button text="Register as Candidate" type="secondary" />
 						</Link>
 					</div>
@@ -50,7 +51,7 @@ function Home() {
 							all right here, just search by job title and location. Oh, and you
 							can even look for multiple job titles at the same time.
 						</p>
-						<Link to="/employer/register">
+						<Link to={`${PUBLIC_URL}/employer/register`}>
 							<Button text="Register as Employer" type="secondary" />
 						</Link>
 					</div>

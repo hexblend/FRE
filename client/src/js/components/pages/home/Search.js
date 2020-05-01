@@ -6,6 +6,7 @@ import Button from '../../elements/Button';
 function Search() {
 	const [jobTitle, setJobTitle] = useState('');
 	const [location, setLocation] = useState('');
+	const PUBLIC_URL = process.env.PUBLIC_URL;
 
 	return (
 		<div className="homeHeader__search">
@@ -28,7 +29,7 @@ function Search() {
 				value={location}
 				handleChange={setLocation}
 			/>
-			<Link to="/search">
+			<Link to={`${PUBLIC_URL}/search`}>
 				<Button text="Search for candidates" />
 			</Link>
 		</div>

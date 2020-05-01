@@ -2,16 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Nav = () => {
-    return (
-        <nav>
-            <ul>
-                <li>
-                    <Link to="/">Home</Link>
-                    <Link to="/about">About</Link>
-                </li>
-            </ul>
-        </nav>
-    );
-}
+	const PUBLIC_URL = process.env.PUBLIC_URL;
+	return (
+		<nav>
+			<ul>
+				<li>
+					<Link to={`${PUBLIC_URL}`}>Home</Link>
+					<Link to={`${PUBLIC_URL}/search`}>Search</Link>
+				</li>
+			</ul>
+		</nav>
+	);
+};
 
 export default Nav;
