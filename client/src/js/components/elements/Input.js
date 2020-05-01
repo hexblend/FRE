@@ -23,9 +23,9 @@ function Input({
 					{label}
 				</label>
 			)}
-			{type === 'text' && (
+			{type !== 'textarea' && (
 				<input
-					type="text"
+					type={type}
 					name={id}
 					id={id}
 					value={value}
@@ -35,7 +35,7 @@ function Input({
                                 ${noBG && 'noBG'} 
                                 ${noShadow && 'noShadow'}
                               `}
-					style={{ minWidth: `${minWidth}px` }}
+					style={{ minWidth: `${minWidth}` }}
 				/>
 			)}
 			{type === 'textarea' && (
@@ -62,7 +62,7 @@ Input.propTypes = {
 	noBG: PropTypes.bool,
 	noShadow: PropTypes.bool,
 	whiteLabel: PropTypes.bool,
-	minWidth: PropTypes.number,
+	minWidth: PropTypes.string,
 	value: PropTypes.string,
 	handleChange: PropTypes.func,
 };

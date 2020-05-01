@@ -56,7 +56,7 @@ function AuthNavbar({ bg, authPage }) {
 							className={`authNavbar__middleLinks--link 
 								   ${userType === 'candidate' && 'active'}`}
 						>
-							<FontAwesomeIcon icon={faChartPie} className="icon" />
+							<FontAwesomeIcon icon={faBriefcase} className="icon" />
 							Candidate
 						</NavLink>
 
@@ -65,7 +65,7 @@ function AuthNavbar({ bg, authPage }) {
 							className={`authNavbar__middleLinks--link 
 								    ${userType === 'employer' && 'active'}`}
 						>
-							<FontAwesomeIcon icon={faBriefcase} className="icon" />
+							<FontAwesomeIcon icon={faChartPie} className="icon" />
 							Employer
 						</NavLink>
 					</div>

@@ -15,7 +15,7 @@ function Search() {
 				id="jobTitle"
 				placeholder="Web developer, Graphic Designer"
 				label="I'm looking for:"
-				minWidth={350}
+				minWidth="350px"
 				whiteLabel={true}
 				value={jobTitle}
 				handleChange={setJobTitle}
