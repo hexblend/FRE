@@ -36,22 +36,32 @@ const getUsersByType = async (req, res, next) => {
 	}
 };
 
-const getUsersByJob = async (req, res, next) => {
+const getUsersByJobAndCity = async (req, res, next) => {
 	const job1 = req.params.job1;
 	const job2 = req.params.job2;
 	const job3 = req.params.job3;
+	const city = req.params.location;
 	try {
 		const users = await User.find({ type: ['jobseeker'] });
 
 		const matchUsers = [];
 		users.forEach((user) => {
-			const search = (job) =>
-				user.job_title.toLowerCase().includes(job.toLowerCase());
+			const search = (job, city) => {
+				if (
+					user.job_title.toLowerCase().includes(job.toLowerCase()) &&
+					user.city.toLowerCase().includes(city.toLowerCase())
+				) {
+					return true;
+				} else {
+					return false;
+				}
+			};
 
 			let found;
-			if (job2 && job3) found = search(job1) || search(job2) || search(job3);
-			else if (job2 && !job3) found = search(job1) || search(job2);
-			else found = search(job1);
+			if (job2 && job3)
+				found = search(job1, city) || search(job2, city) || search(job3, city);
+			else if (job2 && !job3) found = search(job1, city) || search(job2, city);
+			else found = search(job1, city);
 
 			if (found) matchUsers.push(user);
 		});
@@ -198,7 +208,6 @@ const updateUser = async (req, res, next) => {
 
 		const updateStringField = (field, specialValue = null) => {
 			const reqValue = req['body'][field];
-
 			if (reqValue.length !== 0) {
 				if (specialValue) {
 					user[field] = specialValue;
@@ -219,6 +228,7 @@ const updateUser = async (req, res, next) => {
 		updateStringField('inactiveAccount');
 		updateStringField('status');
 		updateStringField('job_title');
+		updateStringField('city');
 		updateStringField('remote_worker');
 		updateStringField('years_of_activity');
 		updateStringField('higher_education');
@@ -247,12 +257,12 @@ const updateUser = async (req, res, next) => {
 			throw 'Abilities array must not be empty';
 		}
 
-		// Company
-		const company = req.body.company;
-		const { name, type, website } = company;
-		name && (user.company.name = name);
-		type && (user.company.type = type);
-		website && (user.company.website = website);
+		// Company - BAD CODE
+		// const company = req.body.company;
+		// const { name, type, website } = company;
+		// name && (user.company.name = name);
+		// type && (user.company.type = type);
+		// website && (user.company.website = website);
 
 		// Social Media
 		const socialMediaObj = req.body.social_media;
@@ -314,33 +324,33 @@ const updateUser = async (req, res, next) => {
 			throw 'Projects array must not be empty';
 		}
 
-		// Available Positions
-		const availPos = req.body.available_positions;
-		if (availPos.length !== 0) {
-			availPos.forEach((pos) => {
-				if (!pos.id) {
-					user.available_positions.unshift(pos);
-				} else {
-					const singlePos = user.available_positions.id(pos.id);
-					const {
-						job_title,
-						type_of_worker,
-						years_of_experience,
-						skills,
-						benefits,
-					} = pos;
+		// Available Positions - BAD CODE
+		// const availPos = req.body.available_positions;
+		// if (availPos.length !== 0) {
+		// 	availPos.forEach((pos) => {
+		// 		if (!pos.id) {
+		// 			user.available_positions.unshift(pos);
+		// 		} else {
+		// 			const singlePos = user.available_positions.id(pos.id);
+		// 			const {
+		// 				job_title,
+		// 				type_of_worker,
+		// 				years_of_experience,
+		// 				skills,
+		// 				benefits,
+		// 			} = pos;
 
-					job_title && (singlePos.job_title = job_title);
-					type_of_worker && (singlePos.type_of_worker = type_of_worker);
-					years_of_experience &&
-						(singlePos.years_of_experience = years_of_experience);
-					skills && (singlePos.skills = skills);
-					benefits && (singlePos.benefits = benefits);
-				}
-			});
-		} else {
-			throw 'Available Positions array must not be empty';
-		}
+		// 			job_title && (singlePos.job_title = job_title);
+		// 			type_of_worker && (singlePos.type_of_worker = type_of_worker);
+		// 			years_of_experience &&
+		// 				(singlePos.years_of_experience = years_of_experience);
+		// 			skills && (singlePos.skills = skills);
+		// 			benefits && (singlePos.benefits = benefits);
+		// 		}
+		// 	});
+		// } else {
+		// 	throw 'Available Positions array must not be empty';
+		// }
 
 		// Save
 		await user.save();
@@ -431,7 +441,7 @@ const viewMessages = async (req, res, next) => {
 module.exports = {
 	getAllUsers,
 	getUsersByType,
-	getUsersByJob,
+	getUsersByJobAndCity,
 	getSingleUser,
 	createUser,
 	updateUser,

@@ -29,7 +29,10 @@ router
 	.delete(controller.deleteUser);
 
 router.get('/type/:type', controller.getUsersByType);
-router.get('/job/:job1/:job2?/:job3?', controller.getUsersByJob);
+router.get(
+	'/job/:job1/:job2?/:job3?/location/:location',
+	controller.getUsersByJobAndCity
+);
 
 router.post('/register', controller.createUser);
 
