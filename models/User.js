@@ -152,7 +152,7 @@ const userSchema = mongoose.Schema(
 		},
 		inactiveAccount: {
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 		status: {
 			type: String,
@@ -181,6 +181,9 @@ const userSchema = mongoose.Schema(
 				type: [Number],
 				default: [],
 			},
+		},
+		city: {
+			type: String,
 		},
 		remote_worker: {
 			type: Boolean,

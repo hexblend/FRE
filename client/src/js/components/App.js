@@ -6,6 +6,7 @@ import StyleGuide from '../pages/StyleGuide';
 import Home from '../pages/Home';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
+import Search from '../pages/Search';
 import Footer from '../layout/Footer';
 
 export default function App() {
@@ -29,6 +30,8 @@ export default function App() {
 				<Route path="/employer/login">
 					<Login type="employer" />
 				</Route>
+
+				<Route path="/search" component={Search} />
 			</Switch>
 			<Footer />
 		</Router>
