@@ -7,15 +7,22 @@ import Tag from '../components/elements/Tag';
 
 function StyleGuide() {
 	const [inputValue, setInputValue] = useState('');
-
+	const PUBLIC_URL = process.env.PUBLIC_URL;
 	return (
 		<div>
 			<h1>Style Guide</h1>
 			<h2 className="mt-5 mb-4">Buttons</h2>
+
 			<Button icon="check" type="secondary" text="Finish editing" wide={true} />
 
 			<h2 className="mt-5 mb-4">Links</h2>
-			<Link to="/about" text="Delete" type="red" border={true} icon="times" />
+			<Link
+				to={`${PUBLIC_URL}`}
+				text="Hello there"
+				type="red"
+				border={true}
+				icon="times"
+			/>
 
 			<h2 className="mt-5 mb-4">{inputValue || 'Forms'}</h2>
 			<Input

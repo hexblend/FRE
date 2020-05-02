@@ -1,5 +1,6 @@
 .customInput__wrapper {
 	text-align: left;
+	position: relative;
 }
 .customInput {
 	display: block;
@@ -19,6 +20,29 @@
 	}
 	&.noShadow {
 		box-shadow: none;
+	}
+}
+.customInput__error {
+	position: absolute;
+	bottom: -1.8rem;
+	left: 0;
+	color: $red;
+	font-weight: 400;
+	font-size: 1.3rem;
+	animation: 0.15s ease-in-out errorAnimation forwards;
+}
+@keyframes errorAnimation {
+	0% {
+		left: -1.6rem;
+		opacity: 0;
+	}
+	70% {
+		left: 1rem;
+		opacity: 1;
+	}
+	100% {
+		left: 0;
+		opacity: 1;
 	}
 }
 .customLabel {

@@ -1,12 +1,14 @@
 .authNavbar {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	color: $dark-gray;
 	padding: $nav-padding;
 	width: 100%;
 	background: $white;
 	font-weight: 300;
-	border-bottom: 0.1rem solid $dark-gray;
+	border-bottom: 0.1rem solid $gray;
+	position: relative;
 }
 .authNavbar__rightLinks--link {
 	border-bottom: 0;
@@ -63,5 +65,55 @@
 	}
 	.authNavbar__description {
 		font-size: 1.4rem;
+	}
+}
+
+.authNavbar__middleLinks {
+	text-align: center;
+	width: 100%;
+}
+.authNavbar__middleLinks--link {
+	border-bottom: 0;
+	color: $dark-gray;
+	padding: 0 3.2rem;
+	position: relative;
+	font-weight: 400;
+	@include trans;
+	&:hover {
+		color: $dark-blue;
+	}
+	&:after,
+	&:first-child::before {
+		content: '';
+		display: block;
+		position: absolute;
+		width: 0.1rem;
+		height: 5rem;
+		background: $gray;
+		top: 50%;
+		right: 0;
+		transform: translateY(-50%);
+	}
+	&:first-child:before {
+		left: 0;
+	}
+	&.active {
+		color: $dark-blue;
+	}
+	.icon {
+		margin-right: 5px;
+	}
+}
+.authNavbar__goBackLink {
+	font-size: $p-small-desktop;
+	position: absolute;
+	left: 4rem;
+	top: 50%;
+	transform: translateY(-50%);
+	font-weight: 400;
+	@include text-trans;
+	&:hover {
+		color: $black;
+		cursor: pointer;
 	}
 }

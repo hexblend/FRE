@@ -1,0 +1,22 @@
+.Register__content {
+	text-align: center;
+	padding: 6.4rem 0;
+	max-width: 80rem;
+	margin: 0 auto;
+}
+.Register__form {
+	margin-top: 6.4rem;
+	input {
+		margin-bottom: 4rem;
+	}
+	button {
+		margin-top: 1.6rem;
+	}
+}
+.Register__form--title {
+	margin-bottom: 4rem;
+}
+.Register__loginLink {
+	font-size: $p-small-desktop;
+	margin-top: 4rem;
+}
