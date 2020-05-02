@@ -15,7 +15,7 @@ function Search() {
 	const handleSubmit = (e) => {
 		if (jobTitle === '' || location === '') e.preventDefault();
 		setJobTitleError(jobTitle === '' ? 'You must add a job title' : '');
-		setLocationError(location === '' ? 'You must add a job title' : '');
+		setLocationError(location === '' ? 'You must add a location' : '');
 	};
 
 	return (

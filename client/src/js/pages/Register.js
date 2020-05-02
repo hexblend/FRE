@@ -28,6 +28,7 @@ function Register({ type }) {
 					</h2>
 					<Input
 						type="text"
+						id="full_name"
 						label="Full name"
 						placeholder="Your full name"
 						value={fullName}
@@ -37,6 +38,7 @@ function Register({ type }) {
 					{type === 'employer' && (
 						<Input
 							type="text"
+							id="company_name"
 							label="Company name"
 							placeholder="Your company name"
 							value={compnayName}
@@ -46,6 +48,7 @@ function Register({ type }) {
 					)}
 					<Input
 						type="email"
+						id="email"
 						label="Your email"
 						placeholder="Your email"
 						value={email}
@@ -54,6 +57,7 @@ function Register({ type }) {
 					/>
 					<Input
 						type="password"
+						id="password"
 						label="Your password"
 						placeholder="Your password"
 						value={password}
@@ -62,6 +66,7 @@ function Register({ type }) {
 					/>
 					<Input
 						type="password"
+						id="second_password"
 						label="Re-type password"
 						placeholder="Your password"
 						value={rePassword}
