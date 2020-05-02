@@ -1,3 +1,44 @@
 // -----------------------------------------------------------------------------
 // This file contains all styles related to the header of the site/application.
 // -----------------------------------------------------------------------------
+.Header {
+	background: $white;
+	border-bottom: 1px solid $gray;
+}
+.Header__search {
+	display: flex;
+	padding: 0.8rem 4rem;
+}
+.Header__search--content {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-left: 5rem;
+}
+.Header__search--form {
+	display: flex;
+	align-items: center;
+	.formGroup {
+		display: flex;
+		align-items: center;
+		&:first-child {
+			margin-right: 4rem;
+		}
+		input {
+			background: $lightest-gray;
+		}
+		p {
+			margin-right: 1.6rem;
+			padding-top: 0.5rem;
+		}
+	}
+}
+.Header__search--buttons {
+	display: flex;
+	align-items: center;
+	a:first-child {
+		margin-right: 2.4rem;
+		padding-top: 0.5rem;
+	}
+}
