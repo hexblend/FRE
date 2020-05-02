@@ -7,7 +7,7 @@ import Input from '../components/elements/Input';
 import CustomLink from '../components/elements/Link';
 
 function Header({ type, content }) {
-	const [searchContent, setSearchContent] = useState('search');
+	const [searchContent, setSearchContent] = useState('results');
 
 	const [jobTitle, setJobTitle] = useState('');
 	const [jobTitleError, setJobTitleError] = useState('');
