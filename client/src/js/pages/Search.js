@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Header from '../layout/Header';
 import SearchResult from '../components/SearchResult';
 
@@ -12,6 +11,8 @@ function Search(props) {
 
 	const loggedIn = false;
 	const profile = {
+		id: 1,
+		type: 'candidate',
 		name: 'Konstantin Ruhzev',
 		jobTitle: 'Full-Stack Web Developer',
 		city: 'Southampton',
@@ -25,9 +26,7 @@ function Search(props) {
 	return (
 		<div className="Search">
 			<Header type="search" content={headerContent} />
-			<Link to="#">
-				<SearchResult profile={profile} loggedIn={loggedIn} />
-			</Link>
+			<SearchResult profile={profile} loggedIn={loggedIn} />
 		</div>
 	);
 }
