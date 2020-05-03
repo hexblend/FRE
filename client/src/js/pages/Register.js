@@ -119,12 +119,13 @@ function Register({ type }) {
 						});
 						setTimeout(() => {
 							history.push(`${PUBLIC_URL}/${type}/login`);
+							setAlert({ type: '', text: '' });
 						}, 2900);
 					})
 					.catch(() => {
 						setAlert({ type: 'error', text: 'Something went wrong!' });
 						setTimeout(() => {
-							history.push(`${PUBLIC_URL}/${type}/register`);
+							setAlert({ type: '', text: '' });
 						}, 2900);
 					});
 			}
