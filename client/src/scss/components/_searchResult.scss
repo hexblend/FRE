@@ -5,6 +5,9 @@
 	margin: 4rem;
 	border-radius: 0.8rem;
 	padding: 2.4rem;
+	&.marginLeft {
+		margin-left: 20rem;
+	}
 }
 .SearchResult__name {
 	font-size: $h4-desktop;
