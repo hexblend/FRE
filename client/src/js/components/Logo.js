@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 function Logo({ color, text, size }) {
-	const PUBLIC_URL = process.env.PUBLIC_URL;
+	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 	return (
 		<Link to={`${PUBLIC_URL}`}>
 			<div className={`logo ${size === 'small' && 'small'}`}>

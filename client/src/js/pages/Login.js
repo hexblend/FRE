@@ -15,7 +15,7 @@ function Login({ type }) {
 	const [password, setPassword] = useState('');
 	const [passwordError, setPasswordError] = useState('');
 
-	const PUBLIC_URL = process.env.PUBLIC_URL;
+	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
 	const handleSubmit = (e) => {
 		if (email === '' || password === '') e.preventDefault();

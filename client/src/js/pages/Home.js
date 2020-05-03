@@ -7,7 +7,7 @@ import HomeHeader from '../layout/HomeHeader';
 import Button from '../components/elements/Button';
 
 function Home() {
-	const PUBLIC_URL = process.env.PUBLIC_URL;
+	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 	return (
 		<div className="Home">
 			<HomeHeader />

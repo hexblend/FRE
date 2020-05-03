@@ -15,7 +15,7 @@ function Header({ type, content }) {
 	const [location, setLocation] = useState('');
 	const [locationError, setLocationError] = useState('');
 
-	const PUBLIC_URL = process.env.PUBLIC_URL;
+	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
 	const handleSubmit = (e) => {
 		if (jobTitle === '' || location === '') e.preventDefault();
