@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const getAllUsers = async (req, res, next) => {
 	try {
 		const users = await User.find({
-			type: ['jobseeker', 'employer'],
+			type: ['candidate', 'employer'],
 		});
 		if (users.length === 0) throw err;
 		return res.json({
@@ -42,7 +42,7 @@ const getUsersByJobAndCity = async (req, res, next) => {
 	const job3 = req.params.job3;
 	const city = req.params.location;
 	try {
-		const users = await User.find({ type: ['jobseeker'] });
+		const users = await User.find({ type: ['candidate'] });
 
 		const matchUsers = [];
 		users.forEach((user) => {

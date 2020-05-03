@@ -131,7 +131,7 @@ const userSchema = mongoose.Schema(
 		type: {
 			type: String,
 			required: true,
-			enum: ['admin', 'jobseeker', 'employer'],
+			enum: ['admin', 'candidate', 'employer'],
 		},
 		company: {
 			name: {
