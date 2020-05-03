@@ -10,52 +10,60 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 function SearchResult({ loggedIn, profile }) {
+	const fullNameArray = profile.name.split(' ');
+	const hiddenFullName = `${fullNameArray[0]} ${fullNameArray[1].slice(0, 1)}.`;
 	return (
 		<div className="SearchResult">
-			<h3 className="SearchResult__name">{profile.name}</h3>
+			<h3 className="SearchResult__name">
+				{loggedIn ? profile.name : hiddenFullName}
+			</h3>
 			<div className="SearchResult__icons">
-				{profile.jobTitle && (
-					<div className="searchResult__icons--iconRow">
-						<FontAwesomeIcon icon={faSuitcase} />
-						<span>{profile.jobTitle}</span>
-					</div>
-				)}
-				{profile.city && (
-					<div className="searchResult__icons--iconRow">
-						<FontAwesomeIcon icon={faMapMarkerAlt} />
-						<span>{profile.city}</span>
-					</div>
-				)}
+				<div>
+					{profile.jobTitle && (
+						<div className="SearchResult__icons--iconRow">
+							<FontAwesomeIcon icon={faSuitcase} />
+							<span>{profile.jobTitle}</span>
+						</div>
+					)}
+					{profile.city && loggedIn && (
+						<div className="SearchResult__icons--iconRow">
+							<FontAwesomeIcon icon={faMapMarkerAlt} />
+							<span>{profile.city}</span>
+						</div>
+					)}
 
-				{profile.remoteWorker && (
-					<div className="searchResult__icons--iconRow">
-						<FontAwesomeIcon icon={faGlobe} />
-						<span>Remote Worker</span>
-					</div>
-				)}
-				{profile.yearsOfExperience && (
-					<div className="searchResult__icons--iconRow">
-						<FontAwesomeIcon icon={faCalendarAlt} />
-						<span>
-							Years of activity:{' '}
-							{`${profile.yearsOfExperience} - ${
-								profile.yearsOfExperience + 1
-							}`}
-						</span>
-					</div>
-				)}
-				{profile.higherEducation && (
-					<div className="searchResult__icons--iconRow">
-						<FontAwesomeIcon icon={faGraduationCap} />
-						<span>Higher Education: Yes</span>
-					</div>
-				)}
+					{profile.remoteWorker && loggedIn && (
+						<div className="SearchResult__icons--iconRow">
+							<FontAwesomeIcon icon={faGlobe} />
+							<span>Remote Worker</span>
+						</div>
+					)}
+				</div>
+				<div>
+					{profile.yearsOfExperience && loggedIn && (
+						<div className="SearchResult__icons--iconRow">
+							<FontAwesomeIcon icon={faCalendarAlt} />
+							<span>
+								Years of activity:{' '}
+								{`${profile.yearsOfExperience} - ${
+									profile.yearsOfExperience + 1
+								}`}
+							</span>
+						</div>
+					)}
+					{profile.higherEducation && loggedIn && (
+						<div className="SearchResult__icons--iconRow">
+							<FontAwesomeIcon icon={faGraduationCap} />
+							<span>Higher Education: Yes</span>
+						</div>
+					)}
+				</div>
 			</div>
-			<div className="SearchResult__description">
+			<div className={`SearchResult__description ${!loggedIn && 'h'}`}>
 				<h4>Description:</h4>
 				<p>
-					{profile.description.length > 400
-						? `${profile.description.slice(0, 400)}...`
+					{profile.description.length > 500
+						? `${profile.description.slice(0, 500)}...`
 						: profile.description}
 				</p>
 			</div>

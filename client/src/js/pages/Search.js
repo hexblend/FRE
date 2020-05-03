@@ -9,7 +9,7 @@ function Search(props) {
 		city: 'London',
 	};
 
-	const loggedIn = true;
+	const loggedIn = false;
 	const profile = {
 		name: 'Konstantin Ruhzev',
 		jobTitle: 'Full-Stack Web Developer',
