@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
 
 import AuthNavbar from '../components/AuthNavbar';
 import Logo from '../components/Logo';
@@ -11,7 +11,15 @@ import Button from '../components/elements/Button';
 import CustomLink from '../components/elements/Link';
 import Alert from '../layout/Alert';
 
-function Login({ type }) {
+import { addLoggedUser } from '../redux/actions/index';
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addLoggedUser: (user) => dispatch(addLoggedUser(user)),
+	};
+};
+
+function ConnectedLogin({ type, addLoggedUser }) {
 	const [email, setEmail] = useState('');
 	const [emailError, setEmailError] = useState('');
 
@@ -64,12 +72,13 @@ function Login({ type }) {
 				.post(`${API_URL}/api/login`, user)
 				.then((res) => {
 					const user = res.data.user;
-					// Todo: Add the user to redux
-					console.log(user);
+					addLoggedUser(user);
+
 					setAlert({
 						type: 'success',
 						text: "You've been logged in",
 					});
+
 					setTimeout(() => {
 						history.push(`${PUBLIC_URL}`);
 						setAlert({ type: '', text: '' });
@@ -77,7 +86,7 @@ function Login({ type }) {
 				})
 				.catch(() => {
 					setAlert({ type: 'error', text: 'Invalid email or password.' });
-					setTimeout(() => setAlert({ type: '', text: '' }), 3000);
+					setTimeout(() => setAlert({ type: '', text: '' }), 2000);
 				});
 		}
 	};
@@ -136,8 +145,9 @@ function Login({ type }) {
 	);
 }
 
-Login.propTypes = {
+ConnectedLogin.propTypes = {
 	type: PropTypes.string.isRequired,
 };
 
+const Login = connect(null, mapDispatchToProps)(ConnectedLogin);
 export default Login;

@@ -1,15 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Logo from '../components/Logo';
 import AuthNavbar from '../components/AuthNavbar';
 import HomeSearch from '../components/pages/home/Search';
 
-function HomeHeader() {
-	const isLogged = false;
+const mapStateToProps = (state) => ({ loggedUser: state.loggedUser });
+
+function ConnectedHomeHeader({ loggedUser }) {
 	return (
 		<div className="homeHeader">
-			{!isLogged && <AuthNavbar />}
-			<div className="homeHeader__midElems">
+			{!loggedUser._id && <AuthNavbar />}
+			<div className={`homeHeader__midElems ${loggedUser._id && 'h-100'}`}>
 				<Logo color="white" text={true} />
 				<HomeSearch />
 			</div>
@@ -17,4 +19,5 @@ function HomeHeader() {
 	);
 }
 
+const HomeHeader = connect(mapStateToProps, null)(ConnectedHomeHeader);
 export default HomeHeader;

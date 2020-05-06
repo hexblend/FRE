@@ -1,7 +1,13 @@
-import { ADD_ARTICLE, DATA_LOADED } from '../constants/action-types';
+import {
+	ADD_ARTICLE,
+	DATA_LOADED,
+	ADD_LOGGED_USER,
+} from '../constants/action-types';
+
 const initialState = {
 	articles: [],
 	remoteArticles: [],
+	loggedUser: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -15,6 +21,10 @@ function rootReducer(state = initialState, action) {
 		return Object.assign({}, state, {
 			remoteArticles: state.remoteArticles.concat(action.payload),
 		});
+	}
+
+	if (action.type === ADD_LOGGED_USER) {
+		return { ...state.loggedUser, loggedUser: action.payload };
 	}
 
 	return state;
