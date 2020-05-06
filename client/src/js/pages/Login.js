@@ -62,8 +62,7 @@ function Login({ type }) {
 			};
 			axios
 				.post(`${API_URL}/api/login`, user)
-				.then((response) => {
-					console.log(response);
+				.then(() => {
 					setAlert({
 						type: 'success',
 						text: 'You have been logged in.',
@@ -71,13 +70,11 @@ function Login({ type }) {
 					setTimeout(() => {
 						history.push(`${PUBLIC_URL}`);
 						setAlert({ type: '', text: '' });
-					}, 2900);
+					}, 1200);
 				})
 				.catch(() => {
-					setAlert({ type: 'error', text: 'Invalid credentials.' });
-					setTimeout(() => {
-						setAlert({ type: '', text: '' });
-					}, 2900);
+					setAlert({ type: 'error', text: 'Invalid email or password.' });
+					setTimeout(() => setAlert({ type: '', text: '' }), 1200);
 				});
 		}
 	};

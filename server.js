@@ -44,11 +44,12 @@ app.use(morgan('combined'));
 app.use(
 	session({
 		name: 'session-id',
-		secret: process.env.APP_SECRET,
+		secret: process.env.SESSION_SECRET,
 		saveUninitialized: false,
 		resave: false,
 		cookie: {
-			expires: 600000,
+			expires: 10800000,
+			httpOnly: false,
 		},
 	})
 );
@@ -57,11 +58,21 @@ app.use(passport.initialize());
 app.use(passport.session());
 authConfig(passport);
 
+// Check authenticated
+function checkAuthenticated(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	} else {
+		const error = new Error('Unauthorised.');
+		return next(error);
+	}
+}
+
 // Routes
 const auth = require('./routes/auth');
 const users = require('./routes/users');
 app.use('/api/', auth);
-app.use('/api/users/', users);
+app.use('/api/users/', checkAuthenticated, users);
 
 // 404 Catcher
 app.use((req, res, next) => {

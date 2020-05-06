@@ -100,8 +100,8 @@ const getSingleUser = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
 	const { full_name, email, password, type } = req.body;
-	const hashedPassword = await bcrypt.hash(password, 10);
 	try {
+		const hashedPassword = await bcrypt.hash(password, 10);
 		const user = new User({
 			full_name,
 			email,
@@ -109,6 +109,7 @@ const createUser = async (req, res, next) => {
 			type,
 		});
 		const savedUser = await user.save();
+
 		return res.json({
 			message: 'Success! User added successfully',
 			savedUser,
