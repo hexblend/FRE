@@ -62,10 +62,13 @@ function Login({ type }) {
 			};
 			axios
 				.post(`${API_URL}/api/login`, user)
-				.then(() => {
+				.then((res) => {
+					const user = res.data.user;
+					// Todo: Add the user to redux
+					console.log(user);
 					setAlert({
 						type: 'success',
-						text: 'You have been logged in.',
+						text: "You've been logged in",
 					});
 					setTimeout(() => {
 						history.push(`${PUBLIC_URL}`);
@@ -74,7 +77,7 @@ function Login({ type }) {
 				})
 				.catch(() => {
 					setAlert({ type: 'error', text: 'Invalid email or password.' });
-					setTimeout(() => setAlert({ type: '', text: '' }), 1200);
+					setTimeout(() => setAlert({ type: '', text: '' }), 3000);
 				});
 		}
 	};

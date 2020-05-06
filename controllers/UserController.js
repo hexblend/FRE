@@ -36,7 +36,7 @@ const getUsersByType = async (req, res, next) => {
 	}
 };
 
-const getUsersByJobAndCity = async (req, res, next) => {
+const search = async (req, res, next) => {
 	const job1 = req.params.job1;
 	const job2 = req.params.job2;
 	const job3 = req.params.job3;
@@ -442,7 +442,7 @@ const viewMessages = async (req, res, next) => {
 module.exports = {
 	getAllUsers,
 	getUsersByType,
-	getUsersByJobAndCity,
+	search,
 	getSingleUser,
 	createUser,
 	updateUser,

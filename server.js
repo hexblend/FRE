@@ -58,21 +58,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 authConfig(passport);
 
-// Check authenticated
-function checkAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) {
-		return next();
-	} else {
-		const error = new Error('Unauthorised.');
-		return next(error);
-	}
-}
-
 // Routes
 const auth = require('./routes/auth');
 const users = require('./routes/users');
 app.use('/api/', auth);
-app.use('/api/users/', checkAuthenticated, users);
+app.use('/api/users/', users);
 
 // 404 Catcher
 app.use((req, res, next) => {
