@@ -82,11 +82,11 @@ function ConnectedLogin({ type, addLoggedUser }) {
 					setTimeout(() => {
 						history.push(`${PUBLIC_URL}`);
 						setAlert({ type: '', text: '' });
-					}, 1200);
+					}, 1750);
 				})
 				.catch(() => {
 					setAlert({ type: 'error', text: 'Invalid email or password.' });
-					setTimeout(() => setAlert({ type: '', text: '' }), 2000);
+					setTimeout(() => setAlert({ type: '', text: '' }), 1500);
 				});
 		}
 	};

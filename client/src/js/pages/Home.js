@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import List from '../components/List';
-// import Form from '../components/Form';
-// import Posts from '../components/Posts';
+
 import HomeHeader from '../layout/HomeHeader';
 import Button from '../components/elements/Button';
 
