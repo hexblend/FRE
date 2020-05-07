@@ -15,7 +15,7 @@ function SearchResult({ loggedIn, profile }) {
 	const fullNameArray = profile.name.split(' ');
 	const hiddenFullName = `${fullNameArray[0]} ${fullNameArray[1].slice(0, 1)}.`;
 	return (
-		<Link to={`/${profile.type}/${profile.id}`}>
+		<Link to={`/profile/${profile.id}`}>
 			<div className={`SearchResult ${!loggedIn && 'marginLeft'}`}>
 				<h3 className="SearchResult__name">
 					{loggedIn ? profile.name : hiddenFullName}

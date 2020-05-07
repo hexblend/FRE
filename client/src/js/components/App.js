@@ -20,9 +20,11 @@ const mapDispatchToProps = (dispatch) => {
 
 function ConnectedApp({ addLoggedUser }) {
 	useEffect(() => {
-		const user = JSON.parse(localStorage.getItem('user'));
-		addLoggedUser(user);
-	}, []);
+		const user = localStorage.getItem('user');
+		if (user) {
+			addLoggedUser(JSON.parse(user));
+		}
+	});
 
 	return (
 		<Router>

@@ -4,16 +4,18 @@ import { connect } from 'react-redux';
 
 import HomeHeader from '../layout/HomeHeader';
 import Button from '../components/elements/Button';
+import isEmpty from '../components/isEmpty';
 
 const mapStateToProps = (state) => ({ loggedUser: state.loggedUser });
 
 function ConnectedHome({ loggedUser }) {
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
+
 	return (
 		<div className="Home">
 			<HomeHeader />
 			<div className="container">
-				{loggedUser === null && (
+				{isEmpty(loggedUser) && (
 					<div className="Home__alreadyMember">
 						<h3>Already a member ?</h3>
 						<div className="Home__alreadyMember--buttons">
@@ -37,7 +39,7 @@ function ConnectedHome({ loggedUser }) {
 							idea about you and sit tight! At any moment, somebody may pick
 							your details and get in touch with you.
 						</p>
-						{loggedUser === null && (
+						{isEmpty(loggedUser) && (
 							<Link to={`${PUBLIC_URL}/candidate/register`}>
 								<Button text="Register as Candidate" type="secondary" />
 							</Link>
@@ -55,7 +57,7 @@ function ConnectedHome({ loggedUser }) {
 							all right here, just search by job title and location. Oh, and you
 							can even look for multiple job titles at the same time.
 						</p>
-						{loggedUser === null && (
+						{isEmpty(loggedUser) && (
 							<Link to={`${PUBLIC_URL}/employer/register`}>
 								<Button text="Register as Employer" type="secondary" />
 							</Link>
