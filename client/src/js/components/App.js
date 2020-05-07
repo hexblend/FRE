@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // import Nav from '../components/Nav';
 import StyleGuide from '../pages/StyleGuide';
@@ -9,7 +10,20 @@ import Login from '../pages/Login';
 import Search from '../pages/Search';
 import Footer from '../layout/Footer';
 
-export default function App() {
+import { addLoggedUser } from '../redux/actions/index';
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addLoggedUser: (user) => dispatch(addLoggedUser(user)),
+	};
+};
+
+function ConnectedApp({ addLoggedUser }) {
+	useEffect(() => {
+		const user = JSON.parse(localStorage.getItem('user'));
+		addLoggedUser(user);
+	}, []);
+
 	return (
 		<Router>
 			<Switch>
@@ -37,3 +51,6 @@ export default function App() {
 		</Router>
 	);
 }
+
+const App = connect(null, mapDispatchToProps)(ConnectedApp);
+export default App;

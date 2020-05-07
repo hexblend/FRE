@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import AuthNavbar from '../components/AuthNavbar';
 import Logo from '../components/Logo';
@@ -68,11 +68,14 @@ function ConnectedLogin({ type, addLoggedUser }) {
 				email,
 				password,
 			};
-			axios
+			const logIn = axios.create({
+				withCredentials: true,
+			});
+			logIn
 				.post(`${API_URL}/api/login`, user)
 				.then((res) => {
-					const user = res.data.user;
-					addLoggedUser(user);
+					localStorage.setItem('user', JSON.stringify(res.data.user));
+					addLoggedUser(res.data.user);
 
 					setAlert({
 						type: 'success',

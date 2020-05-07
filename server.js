@@ -28,9 +28,10 @@ mongoose
 	.catch((err) => console.log(err));
 
 // Middlewares
+app.use(cookieParser());
+3;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 app.use(helmet());
 app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
@@ -45,14 +46,17 @@ app.use(
 	session({
 		name: 'session-id',
 		secret: process.env.SESSION_SECRET,
-		saveUninitialized: false,
 		resave: false,
+		sameSite: false,
+		saveUninitialized: false,
+		rolling: true,
 		cookie: {
-			expires: 10800000,
-			httpOnly: false,
+			sameSite: false,
+			maxAge: 24 * 60 * 60 * 1000,
 		},
 	})
 );
+
 // Passport init
 app.use(passport.initialize());
 app.use(passport.session());

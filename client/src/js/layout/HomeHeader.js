@@ -10,8 +10,8 @@ const mapStateToProps = (state) => ({ loggedUser: state.loggedUser });
 function ConnectedHomeHeader({ loggedUser }) {
 	return (
 		<div className="homeHeader">
-			{!loggedUser._id && <AuthNavbar />}
-			<div className={`homeHeader__midElems ${loggedUser._id && 'h-100'}`}>
+			{!loggedUser && <AuthNavbar />}
+			<div className={`homeHeader__midElems ${loggedUser && 'h-100'}`}>
 				<Logo color="white" text={true} />
 				<HomeSearch />
 			</div>

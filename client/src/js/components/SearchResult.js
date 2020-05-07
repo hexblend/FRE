@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faMapMarkerAlt,
@@ -75,7 +76,7 @@ function SearchResult({ loggedIn, profile }) {
 }
 
 SearchResult.propTypes = {
-	login: PropTypes.bool.isRequired,
+	loggedIn: PropTypes.bool.isRequired,
 	profile: PropTypes.object.isRequired,
 };
 
