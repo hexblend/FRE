@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Header from '../layout/Header';
 import SearchResult from '../components/SearchResult';
+import Sidebar from '../components/Sidebar';
 
 const mapStateToProps = (state) => ({ loggedUser: state.loggedUser });
 
@@ -32,6 +33,7 @@ function ConnectedSearch({ loggedUser }) {
 		<div className="Search">
 			<Header type="search" content={headerContent} />
 			<SearchResult profile={profile} loggedIn={loggedIn} />
+			{loggedIn && <Sidebar loggedUser={loggedUser} />}
 		</div>
 	);
 }
