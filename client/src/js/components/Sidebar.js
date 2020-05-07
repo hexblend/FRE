@@ -39,34 +39,42 @@ function Sidebar({ loggedUser }) {
 	return (
 		<div className="Sidebar">
 			<Alert type={alert.type} text={alert.text} />
-			<img
-				src={loggedUser.avatar}
-				alt="Your avatar"
+			<div
+				style={{ background: loggedUser.avatar }}
 				className="Sidebar__avatar"
 			/>
+
+			<h3 className="Sidebar__userName">
+				{loggedUser.full_name.first_name + ' ' + loggedUser.full_name.last_name}
+			</h3>
+
 			<p className="Sidebar__userType">
 				<FontAwesomeIcon
 					icon={loggedUser.type === 'candidate' ? faBriefcase : faChartPie}
 				/>{' '}
 				Candidate
 			</p>
-			<Badges />
+			<div className="Sidebar__badges">
+				<Badges />
+			</div>
 			<div className="Sidebar__links">
-				<Link
-					to={`/profile/${loggedUser._id}`}
-					className="Sidebar__links--link"
-				>
-					View your profile
-				</Link>
-				<Link
-					to={`/profile/${loggedUser._id}/messages`}
-					className="Sidebar__links--link"
-				>
-					Check your messages
-				</Link>
-				<Link to={`/`} className="Sidebar__links--link">
-					Search
-				</Link>
+				<div>
+					<Link
+						to={`/profile/${loggedUser._id}`}
+						className="Sidebar__links--link"
+					>
+						View your profile
+					</Link>
+					<Link
+						to={`/profile/${loggedUser._id}/messages`}
+						className="Sidebar__links--link"
+					>
+						Check your messages
+					</Link>
+					<Link to={`/`} className="Sidebar__links--link">
+						Search
+					</Link>
+				</div>
 				<Link to="#" className="Sidebar__links--link" onClick={handleLogout}>
 					Logout
 				</Link>

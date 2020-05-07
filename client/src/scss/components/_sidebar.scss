@@ -1,0 +1,52 @@
+.Sidebar {
+	width: 25rem;
+	background: $white;
+	border-right: 1px solid $gray;
+	position: fixed;
+	height: calc(100% - 9.8rem - 5rem); // - topnav - footer
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+}
+.Sidebar__avatar {
+	width: 18rem;
+	height: 18rem;
+	margin: 2.4rem auto;
+	background-image: url('http://res.cloudinary.com/dxvhupqpy/image/upload/v1588845892/avatars/mss21dizidovyqcotj3s.jpg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	border-radius: 0.8rem;
+}
+.Sidebar__userName {
+	font-size: $h4-desktop;
+	margin-bottom: 0.5rem;
+}
+.Sidebar__userType {
+	font-size: $p-small-desktop;
+	color: $dark-blue;
+}
+.Sidebar__badges {
+	margin: 2.4rem auto;
+}
+.Sidebar__links {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.Sidebar__links--link {
+	display: block;
+	background: $lightest-gray;
+	color: darken($darkest-gray, 10%);
+	padding: 1.6rem 0;
+	margin-bottom: 0.8rem;
+	@include text-trans;
+	&:hover {
+		background: darken($lightest-gray, 3%);
+	}
+	&:last-child {
+		margin-top: auto;
+		margin-bottom: 0;
+	}
+}

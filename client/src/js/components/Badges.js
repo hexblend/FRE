@@ -15,31 +15,30 @@ import {
 const mapStateToProps = (state) => ({ profile: state.loggedUser });
 
 function ConnectedBadges({ profile }) {
-	console.log(profile);
 	return (
 		<div className="Badges">
 			{profile.type === 'candidate' && (
 				<>
 					{profile.job_title && (
-						<div className="Badgess__badgeRow">
+						<div className="Badges__badgeRow">
 							<FontAwesomeIcon icon={faSuitcase} />
 							<span>{profile.job_title}</span>
 						</div>
 					)}
 					{profile.city && (
-						<div className="Badgess__badgeRow">
+						<div className="Badges__badgeRow">
 							<FontAwesomeIcon icon={faMapMarkerAlt} />
 							<span>{profile.city}</span>
 						</div>
 					)}
 					{profile.remote_worker && (
-						<div className="Badgess__badgeRow">
+						<div className="Badges__badgeRow">
 							<FontAwesomeIcon icon={faGlobe} />
 							<span>Remote Worker</span>
 						</div>
 					)}
 					{profile.years_of_activity && (
-						<div className="Badgess__badgeRow">
+						<div className="Badges__badgeRow">
 							<FontAwesomeIcon icon={faCalendarAlt} />
 							<span>
 								Years of activity:{' '}
@@ -50,7 +49,7 @@ function ConnectedBadges({ profile }) {
 						</div>
 					)}
 					{profile.higher_education && (
-						<div className="Badgess__badgeRow">
+						<div className="Badges__badgeRow">
 							<FontAwesomeIcon icon={faGraduationCap} />
 							<span>Higher Education: Yes</span>
 						</div>
@@ -60,19 +59,19 @@ function ConnectedBadges({ profile }) {
 			{profile.type === 'employer' && (
 				<>
 					{profile.company.type && (
-						<div className="Badgess__badgeRow">
+						<div className="Badges__badgeRow">
 							<FontAwesomeIcon icon={faChartPie} />
 							<span>{profile.company.type}</span>
 						</div>
 					)}
 					{profile.city && (
-						<div className="Badgess__badgeRow">
+						<div className="Badges__badgeRow">
 							<FontAwesomeIcon icon={faMapMarkerAlt} />
 							<span>{profile.city}</span>
 						</div>
 					)}
 					{profile.years_of_activity && (
-						<div className="Badgess__badgeRow">
+						<div className="Badges__badgeRow">
 							<FontAwesomeIcon icon={faCalendarAlt} />
 							<span>
 								Years of activity:{' '}

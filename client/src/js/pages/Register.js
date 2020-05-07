@@ -111,8 +111,7 @@ function Register({ type }) {
 				};
 				axios
 					.post(`${API_URL}/api/users/register`, newCandidate)
-					.then((response) => {
-						console.log(response);
+					.then(() => {
 						setAlert({
 							type: 'success',
 							text: 'Your account has been created! Please log in.',
@@ -137,6 +136,9 @@ function Register({ type }) {
 					company_name,
 					type: 'employer',
 				};
+
+				// Register employer request
+				console.log(newEmployer);
 			}
 		}
 	};
