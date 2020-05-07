@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -10,32 +11,35 @@ import {
 	faCalendarAlt,
 	faGraduationCap,
 } from '@fortawesome/free-solid-svg-icons';
+import isEmpty from '../components/isEmpty';
 
-function SearchResult({ loggedIn, profile }) {
+const mapStateToProps = (state) => ({ loggedUser: state.loggedUser });
+
+function ConnectedSearchResult({ profile, loggedUser }) {
 	const fullNameArray = profile.name.split(' ');
 	const hiddenFullName = `${fullNameArray[0]} ${fullNameArray[1].slice(0, 1)}.`;
 	return (
 		<Link to={`/profile/${profile.id}`}>
-			<div className={`SearchResult ${!loggedIn && 'marginLeft'}`}>
+			<div className={`SearchResult ${isEmpty(loggedUser) && 'marginLeft'}`}>
 				<h3 className="SearchResult__name">
-					{loggedIn ? profile.name : hiddenFullName}
+					{!isEmpty(loggedUser) ? profile.name : hiddenFullName}
 				</h3>
 				<div className="SearchResult__icons">
 					<div>
-						{profile.jobTitle && (
+						{profile.job_title && (
 							<div className="SearchResult__icons--iconRow">
 								<FontAwesomeIcon icon={faSuitcase} />
-								<span>{profile.jobTitle}</span>
+								<span>{profile.job_title}</span>
 							</div>
 						)}
-						{profile.city && loggedIn && (
+						{profile.city && !isEmpty(loggedUser) && (
 							<div className="SearchResult__icons--iconRow">
 								<FontAwesomeIcon icon={faMapMarkerAlt} />
 								<span>{profile.city}</span>
 							</div>
 						)}
 
-						{profile.remoteWorker && loggedIn && (
+						{profile.remote_worker && !isEmpty(loggedUser) && (
 							<div className="SearchResult__icons--iconRow">
 								<FontAwesomeIcon icon={faGlobe} />
 								<span>Remote Worker</span>
@@ -43,18 +47,18 @@ function SearchResult({ loggedIn, profile }) {
 						)}
 					</div>
 					<div>
-						{profile.yearsOfExperience && loggedIn && (
+						{profile.years_of_activity && !isEmpty(loggedUser) && (
 							<div className="SearchResult__icons--iconRow">
 								<FontAwesomeIcon icon={faCalendarAlt} />
 								<span>
 									Years of activity:{' '}
-									{`${profile.yearsOfExperience} - ${
-										profile.yearsOfExperience + 1
+									{`${profile.years_of_activity} - ${
+										profile.years_of_activity + 1
 									}`}
 								</span>
 							</div>
 						)}
-						{profile.higherEducation && loggedIn && (
+						{profile.higher_education && !isEmpty(loggedUser) && (
 							<div className="SearchResult__icons--iconRow">
 								<FontAwesomeIcon icon={faGraduationCap} />
 								<span>Higher Education: Yes</span>
@@ -62,7 +66,9 @@ function SearchResult({ loggedIn, profile }) {
 						)}
 					</div>
 				</div>
-				<div className={`SearchResult__description ${!loggedIn && 'h'}`}>
+				<div
+					className={`SearchResult__description ${isEmpty(loggedUser) && 'h'}`}
+				>
 					<h4>Description:</h4>
 					<p>
 						{profile.description.length > 500
@@ -75,9 +81,9 @@ function SearchResult({ loggedIn, profile }) {
 	);
 }
 
-SearchResult.propTypes = {
-	loggedIn: PropTypes.bool.isRequired,
+ConnectedSearchResult.propTypes = {
 	profile: PropTypes.object.isRequired,
 };
 
+const SearchResult = connect(mapStateToProps)(ConnectedSearchResult);
 export default SearchResult;
