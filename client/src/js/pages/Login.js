@@ -36,9 +36,10 @@ function ConnectedLogin({ type, addLoggedUser }) {
 
 	let history = useHistory();
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		let activeErrors = false;
+
 		// Email validation
 		if (email === '') {
 			setEmailError('You must add an email');
@@ -50,7 +51,8 @@ function ConnectedLogin({ type, addLoggedUser }) {
 			setEmailError('');
 			activeErrors = false;
 		}
-		// Password
+
+		// Password validation
 		if (password === '') {
 			setPasswordError('You must add a password');
 			activeErrors = true;
@@ -68,13 +70,11 @@ function ConnectedLogin({ type, addLoggedUser }) {
 				email,
 				password,
 			};
-			const logIn = axios.create({
-				withCredentials: true,
-			});
-			logIn
-				.post(`${API_URL}/api/login`, user)
+			await axios
+				.post(`${API_URL}/api/login`, user, {
+					withCredentials: true,
+				})
 				.then((res) => {
-					localStorage.setItem('user', JSON.stringify(res.data.user));
 					addLoggedUser(res.data.user);
 
 					setAlert({
@@ -88,8 +88,18 @@ function ConnectedLogin({ type, addLoggedUser }) {
 					}, 1750);
 				})
 				.catch(() => {
-					setAlert({ type: 'error', text: 'Invalid email or password.' });
-					setTimeout(() => setAlert({ type: '', text: '' }), 1500);
+					setAlert({
+						type: 'error',
+						text: 'Invalid email or password.',
+					});
+					setTimeout(
+						() =>
+							setAlert({
+								type: '',
+								text: '',
+							}),
+						1500
+					);
 				});
 		}
 	};

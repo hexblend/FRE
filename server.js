@@ -14,6 +14,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const authConfig = require('./auth-config');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const app = express();
 
@@ -29,7 +30,6 @@ mongoose
 
 // Middlewares
 app.use(cookieParser());
-3;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -44,12 +44,12 @@ app.use(morgan('combined'));
 
 app.use(
 	session({
-		name: 'session-id',
+		name: 'session',
 		secret: process.env.SESSION_SECRET,
-		resave: false,
-		sameSite: false,
+		sameSite: true,
 		saveUninitialized: false,
 		rolling: true,
+		store: new MongoStore({ mongooseConnection: mongoose.connection }),
 		cookie: {
 			sameSite: false,
 			maxAge: 24 * 60 * 60 * 1000,

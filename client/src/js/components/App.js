@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 // import Nav from '../components/Nav';
 import StyleGuide from '../pages/StyleGuide';
@@ -18,13 +19,21 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-function ConnectedApp({ addLoggedUser }) {
+function ConnectedApp() {
 	useEffect(() => {
-		const user = localStorage.getItem('user');
-		if (user) {
-			addLoggedUser(JSON.parse(user));
-		}
-	});
+		const getSession = async () => {
+			await axios
+				.get(`${process.env.REACT_APP_API_URL}/api/check-session`, {
+					withCredentials: true,
+				})
+				.then((res) => {
+					if (res.status === 200) {
+						addLoggedUser(res.data.user);
+					}
+				});
+		};
+		getSession();
+	}, []);
 
 	return (
 		<Router>

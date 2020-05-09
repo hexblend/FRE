@@ -1,14 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import Header from '../layout/Header';
 import SearchResult from '../components/SearchResult';
 import Sidebar from '../components/Sidebar';
-import isEmpty from '../components/isEmpty';
 
-const mapStateToProps = (state) => ({ loggedUser: state.loggedUser });
-
-function ConnectedSearch({ loggedUser }) {
+function Search() {
 	const headerContent = {
 		resultsNo: 37,
 		jobTitles: 'Web Developer, UX Designer',
@@ -31,7 +27,7 @@ function ConnectedSearch({ loggedUser }) {
 	return (
 		<div className="Search">
 			<Header type="search" content={headerContent} />
-			{!isEmpty(loggedUser) && <Sidebar loggedUser={loggedUser} />}
+			<Sidebar />
 			<div className="Search__content">
 				<SearchResult profile={profile} />
 			</div>
@@ -39,5 +35,4 @@ function ConnectedSearch({ loggedUser }) {
 	);
 }
 
-const Search = connect(mapStateToProps)(ConnectedSearch);
 export default Search;

@@ -109,7 +109,6 @@ const createUser = async (req, res, next) => {
 			type,
 		});
 		const savedUser = await user.save();
-
 		return res.json({
 			message: 'Success! User added successfully',
 			savedUser,
