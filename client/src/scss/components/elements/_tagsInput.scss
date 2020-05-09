@@ -1,0 +1,30 @@
+.TagsInput {
+	text-align: left;
+	position: relative;
+	// max-width: 360px;
+	border-radius: 0.5rem;
+	// margin-right: 1.6rem;
+	.Tags {
+		position: absolute;
+		display: flex;
+		left: 1.6rem;
+		top: 4.3rem;
+		.tag {
+			margin-right: 0.8rem;
+			display: flex;
+		}
+	}
+	.customInput__info {
+		position: absolute;
+		bottom: -2.2rem;
+		left: 0;
+		color: $white;
+		font-weight: 300;
+		font-size: 1.3rem;
+		animation: 0.15s ease-in-out errorAnimation forwards;
+	}
+	.customInput__error {
+		color: black;
+		bottom: -2.2rem;
+	}
+}

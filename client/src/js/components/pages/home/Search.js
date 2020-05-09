@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../elements/Input';
 import Button from '../../elements/Button';
+import TagsInput from '../../elements/TagsInput';
 
 function Search() {
 	const [jobTitle, setJobTitle] = useState('');
@@ -14,13 +15,24 @@ function Search() {
 
 	const handleSubmit = (e) => {
 		if (jobTitle === '' || location === '') e.preventDefault();
+		// Check empty
 		setJobTitleError(jobTitle === '' ? 'You must add a job title' : '');
 		setLocationError(location === '' ? 'You must add a location' : '');
+
+		// Get job titles
+		const job_titles = jobTitle.split(',');
 	};
 
 	return (
 		<div className="homeHeader__search">
-			<Input
+			<TagsInput
+				id="jobTitle"
+				placeholder="Web developer, Designer"
+				label="I'm looking for:"
+				whiteLabel={true}
+				minWidth="350px"
+			/>
+			{/* <Input
 				type="text"
 				id="jobTitle"
 				placeholder="Web developer, Graphic Designer"
@@ -30,7 +42,7 @@ function Search() {
 				value={jobTitle}
 				handleChange={setJobTitle}
 				error={jobTitleError}
-			/>
+			/> */}
 			<Input
 				type="text"
 				id="location"

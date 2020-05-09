@@ -3,8 +3,14 @@ import React from 'react';
 import Header from '../layout/Header';
 import SearchResult from '../components/SearchResult';
 import Sidebar from '../components/Sidebar';
+import AuthNavbar from '../components/AuthNavbar';
+import isEmpty from '../components/isEmpty';
 
-function Search() {
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => ({ loggedUser: state.loggedUser });
+
+function ConnectedSearch({ loggedUser }) {
 	const headerContent = {
 		resultsNo: 37,
 		jobTitles: 'Web Developer, UX Designer',
@@ -26,6 +32,7 @@ function Search() {
 
 	return (
 		<div className="Search">
+			{isEmpty(loggedUser) && <AuthNavbar bg={true} />}
 			<Header type="search" content={headerContent} />
 			<Sidebar />
 			<div className="Search__content">
@@ -34,5 +41,5 @@ function Search() {
 		</div>
 	);
 }
-
+const Search = connect(mapStateToProps)(ConnectedSearch);
 export default Search;

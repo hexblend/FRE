@@ -31,7 +31,7 @@ function ConnectedSidebar({ loggedUser }) {
 				addLoggedUser({});
 				setAlert({
 					type: 'success',
-					text: "You've been logged in",
+					text: "You've been logged out.",
 				});
 				setTimeout(() => (window.location.href = '/'), 1700);
 			})
