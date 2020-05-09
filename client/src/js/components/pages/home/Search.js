@@ -27,7 +27,7 @@ function Search() {
 		<div className="homeHeader__search">
 			<TagsInput
 				id="jobTitle"
-				placeholder="Web developer, Designer"
+				placeholder="Developer, Designer"
 				label="I'm looking for:"
 				whiteLabel={true}
 				minWidth="350px"

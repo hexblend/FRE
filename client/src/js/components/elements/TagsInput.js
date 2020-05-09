@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import Input from './Input';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import PropTypes from 'prop-types';
-
-function InputWithTags({
+function ConnectedTagsInput({
 	id,
 	minWidth,
 	placeholder,
@@ -24,9 +25,9 @@ function InputWithTags({
 		const tag = e.target.value;
 		if (e.key === 'Enter' && tag !== '') {
 			if (tags.includes(tag)) {
-				setError("You can't search for the same job twice.");
+				setError('Job title already added.');
 			} else if (tags.length === 3) {
-				setError("You can't search for more than 3 job titles.");
+				setError('The search can accept max. 3 job titles.');
 			} else {
 				setTags([...tags, tag]);
 				setInfo((info) => info - 1);
@@ -70,11 +71,12 @@ function InputWithTags({
 				id={id}
 				name={id}
 				className="customInput"
-				placeholder={placeholder}
+				placeholder={tags.length > 0 ? '' : placeholder}
 				className={`customInput ${noBG && 'noBG'} ${noShadow && 'noShadow'}`}
 				style={{
 					minWidth: `${tagsWidth + minWidth}`,
 					paddingLeft: `${tagsWidth}`,
+					width: `${tags.length > 0 && 0}`,
 				}}
 				onKeyUp={(e) => addTag(e)}
 				readOnly={info === 0 ? true : false}
@@ -84,7 +86,7 @@ function InputWithTags({
 				<p
 					className="customInput__info"
 					style={{
-						color: `${info === 0 ? 'black' : 'white'}`,
+						color: `${info === 0 ? '#b91515' : 'white'}`,
 						fontWeight: `${info === 0 ? 400 : 300}`,
 					}}
 				>
@@ -95,7 +97,7 @@ function InputWithTags({
 	);
 }
 
-InputWithTags.propTypes = {
+ConnectedTagsInput.propTypes = {
 	minWidth: PropTypes.string,
 	placeholder: PropTypes.string,
 	id: PropTypes.string,
@@ -105,4 +107,5 @@ InputWithTags.propTypes = {
 	noShadow: PropTypes.bool,
 };
 
-export default InputWithTags;
+const TagsInput = connect()(ConnectedTagsInput);
+export default TagsInput;

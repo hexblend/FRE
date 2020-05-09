@@ -2,6 +2,7 @@ import {
 	ADD_ARTICLE,
 	DATA_LOADED,
 	ADD_LOGGED_USER,
+	ADD_SEARCH_TAG,
 } from '../constants/action-types';
 
 export function addArticle(payload) {
@@ -20,4 +21,8 @@ export function getData() {
 
 export function addLoggedUser(payload) {
 	return { type: ADD_LOGGED_USER, payload };
+}
+
+export function addSearchTag(payload) {
+	return { type: ADD_SEARCH_TAG, payload };
 }

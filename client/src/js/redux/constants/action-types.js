@@ -2,3 +2,6 @@ export const ADD_ARTICLE = 'ADD_ARTICLE';
 export const DATA_LOADED = 'DATA_LOADED';
 
 export const ADD_LOGGED_USER = 'ADD_LOGGED_USER';
+
+export const ADD_SEARCH_TAG = 'ADD_SEARCH_TAG';
+export const REMOVE_SEARCH_TAG = 'REMOVE_SEARCH_TAG';
