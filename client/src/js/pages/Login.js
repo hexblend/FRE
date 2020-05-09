@@ -76,7 +76,6 @@ function ConnectedLogin({ type, addLoggedUser }) {
 				})
 				.then((res) => {
 					addLoggedUser(res.data.user);
-
 					setAlert({
 						type: 'success',
 						text: "You've been logged in",

@@ -37,7 +37,7 @@ app.use(helmet());
 app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 mins
-	max: 100, // 100 reqs / 15 mins / IP
+	max: 300, // 100 reqs / 15 mins / IP
 });
 app.use(limiter);
 app.use(morgan('combined'));

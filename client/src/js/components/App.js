@@ -19,7 +19,13 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-function ConnectedApp() {
+const mapStateToProps = (state) => {
+	return {
+		loggedUser: state.loggedUser,
+	};
+};
+
+function ConnectedApp({ addLoggedUser, loggedUser }) {
 	useEffect(() => {
 		const getSession = async () => {
 			await axios
@@ -63,5 +69,5 @@ function ConnectedApp() {
 	);
 }
 
-const App = connect(null, mapDispatchToProps)(ConnectedApp);
+const App = connect(mapStateToProps, mapDispatchToProps)(ConnectedApp);
 export default App;
