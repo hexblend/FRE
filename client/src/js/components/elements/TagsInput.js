@@ -6,6 +6,17 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
+import { addSearchTag, removeSearchTag } from '../../redux/actions/index';
+
+const mapStateToProps = (state) => ({ searchTags: state.searchTags });
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addSearchTag: (tag) => dispatch(addSearchTag(tag)),
+		removeSearchTag: (tag) => dispatch(removeSearchTag(tag)),
+	};
+};
+
 function ConnectedTagsInput({
 	id,
 	minWidth,
@@ -14,6 +25,8 @@ function ConnectedTagsInput({
 	whiteLabel,
 	noBG,
 	noShadow,
+	searchTags,
+	addSearchTag,
 }) {
 	const [tags, setTags] = useState([]);
 	const [tagsLeft, setTagsLeft] = useState(3);
@@ -32,6 +45,7 @@ function ConnectedTagsInput({
 		setTagsLeft(tagsLeft - 1);
 		setTyping('');
 		setSuggestions([]);
+		addSearchTag(tagName);
 	};
 
 	const removeTag = (index) => {
@@ -49,7 +63,7 @@ function ConnectedTagsInput({
 					.get(
 						`http://api.dataatwork.org/v1/jobs/autocomplete?contains=${typing}`
 					)
-					.then((res) => setSuggestions(res.data.slice(0, 5).reverse()));
+					.then((res) => setSuggestions(res.data.slice(0, 4).reverse()));
 			}, 150)
 		);
 	};
@@ -135,5 +149,8 @@ ConnectedTagsInput.propTypes = {
 	noShadow: PropTypes.bool,
 };
 
-const TagsInput = connect()(ConnectedTagsInput);
+const TagsInput = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ConnectedTagsInput);
 export default TagsInput;

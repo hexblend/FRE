@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
-function LocationInput({
+import { updateSearchLocation } from '../../redux/actions/index';
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setSearchLocation: (location) => dispatch(updateSearchLocation(location)),
+	};
+};
+
+const mapStateToProps = (state) => ({ searchLocation: state.searchLocation });
+
+function ConnectedLocationInput({
 	id,
 	placeholder,
 	label,
@@ -10,26 +21,28 @@ function LocationInput({
 	noBG,
 	noShadow,
 	width,
+	error,
+	searchLocation,
+	setSearchLocation,
 }) {
-	const [typing, setTyping] = useState('');
 	const [typingTimeout, setTypingTimeout] = useState(0);
 	const [suggestions, setSuggestions] = useState([]);
-	const [error, setError] = useState('');
 
-	const searchLocation = (e) => {
-		setTyping(e.target.value);
+	const handleChange = (e) => {
+		setSearchLocation(e.target.value);
+		// setSearchLocation(e.target.value);
 		if (typingTimeout) clearTimeout(typingTimeout);
 		setTypingTimeout(
 			setTimeout(() => {
 				axios
-					.get(`https://api.postcodes.io/places?q=${typing}`)
-					.then((res) => setSuggestions(res.data.result.slice(0, 3)));
+					.get(`https://api.postcodes.io/places?q=${searchLocation}`)
+					.then((res) => setSuggestions(res.data.result.slice(0, 4)));
 			}, 200)
 		);
 	};
 
-	const handleLocationClick = (location) => {
-		setTyping(location);
+	const handleClick = (location) => {
+		setSearchLocation(location);
 		setSuggestions([]);
 	};
 
@@ -50,9 +63,9 @@ function LocationInput({
 				autoComplete="off"
 				placeholder={placeholder}
 				className={`customInput ${noBG && 'noBG'} ${noShadow && 'noShadow'}`}
-				value={typing}
+				value={searchLocation}
 				style={{ minWidth: `${width}` }}
-				onChange={(e) => searchLocation(e)}
+				onChange={(e) => handleChange(e)}
 			/>
 			{/* Errors */}
 			<p className="customInput__error">{error}</p>
@@ -61,7 +74,7 @@ function LocationInput({
 				{suggestions.map((suggestion) => (
 					<li
 						key={suggestion.code}
-						onClick={() => handleLocationClick(suggestion.name_1)}
+						onClick={() => handleClick(suggestion.name_1)}
 						className="Suggestions__suggestion"
 					>
 						{suggestion.name_1}
@@ -72,7 +85,7 @@ function LocationInput({
 	);
 }
 
-LocationInput.propTypes = {
+ConnectedLocationInput.propTypes = {
 	placeholder: PropTypes.string,
 	id: PropTypes.string,
 	label: PropTypes.string,
@@ -82,4 +95,8 @@ LocationInput.propTypes = {
 	width: PropTypes.string,
 };
 
+const LocationInput = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ConnectedLocationInput);
 export default LocationInput;
