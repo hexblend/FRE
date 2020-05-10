@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import Input from './Input';
+import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -17,30 +16,42 @@ function ConnectedTagsInput({
 	noShadow,
 }) {
 	const [tags, setTags] = useState([]);
+	const [tagsLeft, setTagsLeft] = useState(3);
+	const [typing, setTyping] = useState('');
+	const [typingTimeout, setTypingTimeout] = useState(0);
+	const [suggestions, setSuggestions] = useState([]);
 	const [tagsWidth, setTagsWidth] = useState('');
 	const [error, setError] = useState('');
-	const [info, setInfo] = useState(3);
 
-	const addTag = (e) => {
-		const tag = e.target.value;
-		if (e.key === 'Enter' && tag !== '') {
-			if (tags.includes(tag)) {
-				setError('Job title already added.');
-			} else if (tags.length === 3) {
-				setError('The search can accept max. 3 job titles.');
-			} else {
-				setTags([...tags, tag]);
-				setInfo((info) => info - 1);
-				setError('');
-			}
-			e.target.value = '';
+	const addSuggestedTag = (tagName) => {
+		if (tags.indexOf(tagName) !== -1) {
+			setSuggestions([]);
+			return setError('You already added this tag');
 		}
+		setTags([...tags, tagName]);
+		setTagsLeft(tagsLeft - 1);
+		setTyping('');
+		setSuggestions([]);
 	};
 
 	const removeTag = (index) => {
 		setTags([...tags.filter((tag) => tags.indexOf(tag) !== index)]);
-		setInfo((info) => info + 1);
+		setTagsLeft((tagsLeft) => tagsLeft + 1);
 		setError('');
+	};
+
+	const searchJobs = (e) => {
+		setTyping(e.target.value);
+		if (typingTimeout) clearTimeout(typingTimeout);
+		setTypingTimeout(
+			setTimeout(() => {
+				axios
+					.get(
+						`http://api.dataatwork.org/v1/jobs/autocomplete?contains=${typing}`
+					)
+					.then((res) => setSuggestions(res.data.slice(0, 5).reverse()));
+			}, 50)
+		);
 	};
 
 	const refCallback = (element) => {
@@ -50,12 +61,14 @@ function ConnectedTagsInput({
 	};
 	return (
 		<div className="TagsInput">
+			{/* Label */}
 			<label
 				htmlFor={id}
 				className={`customLabel ${whiteLabel && 'whiteLabel'}`}
 			>
 				{label}
 			</label>
+			{/* Tags */}
 			<ul className="Tags" ref={refCallback}>
 				{tags.map((tag, index) => (
 					<li className="tag" key={index}>
@@ -66,11 +79,12 @@ function ConnectedTagsInput({
 					</li>
 				))}
 			</ul>
+			{/* Input */}
 			<input
 				type="text"
 				id={id}
 				name={id}
-				className="customInput"
+				autoComplete="off"
 				placeholder={tags.length > 0 ? '' : placeholder}
 				className={`customInput ${noBG && 'noBG'} ${noShadow && 'noShadow'}`}
 				style={{
@@ -78,21 +92,35 @@ function ConnectedTagsInput({
 					paddingLeft: `${tagsWidth}`,
 					width: `${tags.length > 0 && 0}`,
 				}}
-				onKeyUp={(e) => addTag(e)}
-				readOnly={info === 0 ? true : false}
+				value={typing}
+				onChange={(e) => searchJobs(e)}
+				readOnly={tagsLeft === 0 ? true : false}
 			/>
+			{/* Errors / Info Messages */}
 			<p className="customInput__error">{error}</p>
 			{!error && (
 				<p
 					className="customInput__info"
 					style={{
-						color: `${info === 0 ? '#b91515' : 'white'}`,
-						fontWeight: `${info === 0 ? 400 : 300}`,
+						color: `${tagsLeft === 0 ? '#b91515' : 'white'}`,
+						fontWeight: `${tagsLeft === 0 ? 400 : 300}`,
 					}}
 				>
-					{info} job titles left
+					{tagsLeft} job titles left
 				</p>
 			)}
+			{/* Suggestions */}
+			<ul className="TagsSuggestions">
+				{suggestions.map((suggestion) => (
+					<li
+						key={suggestion.uuid}
+						onClick={() => addSuggestedTag(suggestion.suggestion)}
+						className="TagsSuggestions__suggestion"
+					>
+						{suggestion.suggestion}
+					</li>
+				))}
+			</ul>
 		</div>
 	);
 }

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Input from '../../elements/Input';
 import Button from '../../elements/Button';
 import TagsInput from '../../elements/TagsInput';
+import LocationInput from '../../elements/LocationInput';
 
 function Search() {
 	const [jobTitle, setJobTitle] = useState('');
@@ -18,9 +19,6 @@ function Search() {
 		// Check empty
 		setJobTitleError(jobTitle === '' ? 'You must add a job title' : '');
 		setLocationError(location === '' ? 'You must add a location' : '');
-
-		// Get job titles
-		const job_titles = jobTitle.split(',');
 	};
 
 	return (
@@ -32,26 +30,12 @@ function Search() {
 				whiteLabel={true}
 				minWidth="350px"
 			/>
-			{/* <Input
-				type="text"
-				id="jobTitle"
-				placeholder="Web developer, Graphic Designer"
-				label="I'm looking for:"
-				minWidth="350px"
-				whiteLabel={true}
-				value={jobTitle}
-				handleChange={setJobTitle}
-				error={jobTitleError}
-			/> */}
-			<Input
-				type="text"
+			<LocationInput
 				id="location"
 				placeholder="London"
 				label="In:"
 				whiteLabel={true}
-				value={location}
-				handleChange={setLocation}
-				error={locationError}
+				width="210px"
 			/>
 			<Link to={`${PUBLIC_URL}/search`} onClick={handleSubmit}>
 				<Button text="Search for candidates" />
