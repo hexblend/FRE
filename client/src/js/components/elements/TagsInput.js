@@ -50,7 +50,7 @@ function ConnectedTagsInput({
 						`http://api.dataatwork.org/v1/jobs/autocomplete?contains=${typing}`
 					)
 					.then((res) => setSuggestions(res.data.slice(0, 5).reverse()));
-			}, 50)
+			}, 150)
 		);
 	};
 
@@ -110,12 +110,12 @@ function ConnectedTagsInput({
 				</p>
 			)}
 			{/* Suggestions */}
-			<ul className="TagsSuggestions">
+			<ul className="Suggestions">
 				{suggestions.map((suggestion) => (
 					<li
 						key={suggestion.uuid}
 						onClick={() => addSuggestedTag(suggestion.suggestion)}
-						className="TagsSuggestions__suggestion"
+						className="Suggestions__suggestion"
 					>
 						{suggestion.suggestion}
 					</li>
