@@ -10,12 +10,13 @@ import {
 } from '../constants/action-types';
 
 const initialState = {
+	// Tags input
 	tagsInput: '',
 	searchTags: [],
 	tagsLeft: 3,
 	tagsInputError: '',
 	tagsInputSuggestions: [],
-
+	// Location
 	searchLocation: '',
 	locationInputError: '',
 	locationInputSuggestions: [],

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -42,9 +42,25 @@ function ConnectedSearchBar({
 			console.log('submitted search');
 		}
 	};
-	const job1 = tags[0];
-	const job2 = tags[1];
-	const job3 = tags[2];
+
+	const generateLink = () => {
+		let link = `${PUBLIC_URL}/search?`;
+		switch (tagsLeft) {
+			case 2:
+				link += `job1=${tags[0]}&location=${location}`;
+				break;
+			case 1:
+				link += `job1=${tags[0]}&job2=${tags[1]}&location=${location}`;
+				break;
+			case 0:
+				link += `job1=${tags[0]}&job2=${tags[1]}&job3=${tags[2]}&location=${location}`;
+				break;
+			default:
+				link = link;
+		}
+		return link;
+	};
+
 	return (
 		<div className="homeHeader__search">
 			<TagsInput
@@ -61,14 +77,7 @@ function ConnectedSearchBar({
 				whiteLabel={true}
 				width="210px"
 			/>
-			<Link
-				to={`${PUBLIC_URL}/search?job1=${job1}
-										 ${job2 !== undefined && `&job2=${job2}`}
-										 ${job3 !== undefined && `&job3=${job3}`}
-										 &location=${location}
-				   `}
-				onClick={handleSubmit}
-			>
+			<Link to={generateLink} onClick={handleSubmit}>
 				<Button text="Search for candidates" />
 			</Link>
 		</div>
