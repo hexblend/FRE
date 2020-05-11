@@ -6,9 +6,12 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { addSearchTag, removeSearchTag } from '../../redux/actions/index';
+import {
+	addSearchTag,
+	removeSearchTag,
+} from '../../redux/actions/SearchActions';
 
-const mapStateToProps = (state) => ({ searchTags: state.searchTags });
+const mapStateToProps = (state) => ({ tags: state.SearchReducer.searchTags });
 
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -16,6 +19,8 @@ const mapDispatchToProps = (dispatch) => {
 		removeSearchTag: (tag) => dispatch(removeSearchTag(tag)),
 	};
 };
+
+// Have a search reducer for all the search state (including suggestions)
 
 function ConnectedTagsInput({
 	id,
@@ -25,33 +30,35 @@ function ConnectedTagsInput({
 	whiteLabel,
 	noBG,
 	noShadow,
-	searchTags,
+	error,
+	// Globals
+	tags,
 	addSearchTag,
+	removeSearchTag,
 }) {
-	const [tags, setTags] = useState([]);
-	const [tagsLeft, setTagsLeft] = useState(3);
+	const [tagsLeft, setTagsLeft] = useState(3); // global
 	const [typing, setTyping] = useState('');
-	const [typingTimeout, setTypingTimeout] = useState(0);
+	const [typingTimeout, setTypingTimeout] = useState(0); // global
 	const [suggestions, setSuggestions] = useState([]);
 	const [tagsWidth, setTagsWidth] = useState('');
-	const [error, setError] = useState('');
+	const [internalError, setInternalError] = useState(''); // global errors for each field
 
 	const addSuggestedTag = (tagName) => {
 		if (tags.indexOf(tagName) !== -1) {
 			setSuggestions([]);
-			return setError('You already added this tag');
+			return setInternalError('You already added this tag');
 		}
-		setTags([...tags, tagName]);
+		addSearchTag(tagName);
 		setTagsLeft(tagsLeft - 1);
 		setTyping('');
 		setSuggestions([]);
-		addSearchTag(tagName);
 	};
 
 	const removeTag = (index) => {
-		setTags([...tags.filter((tag) => tags.indexOf(tag) !== index)]);
+		removeSearchTag(index);
 		setTagsLeft((tagsLeft) => tagsLeft + 1);
-		setError('');
+		setInternalError('');
+		error = '';
 	};
 
 	const searchJobs = (e) => {
@@ -111,7 +118,7 @@ function ConnectedTagsInput({
 				readOnly={tagsLeft === 0 ? true : false}
 			/>
 			{/* Errors / Info Messages */}
-			<p className="customInput__error">{error}</p>
+			<p className="customInput__error">{internalError || error}</p>
 			{!error && (
 				<p
 					className="customInput__info"

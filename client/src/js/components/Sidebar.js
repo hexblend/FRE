@@ -11,14 +11,14 @@ import Badges from '../components/Badges';
 import Alert from '../layout/Alert';
 import isEmpty from '../components/isEmpty';
 
-import { addLoggedUser } from '../redux/actions/index';
+import { addLoggedUser } from '../redux/actions/AuthActions';
 
 const mapDispatchToProps = (dispatch) => {
 	return { addLoggedUser: (user) => dispatch(addLoggedUser({})) };
 };
 
 const mapStateToProps = (state) => {
-	return { loggedUser: state.loggedUser };
+	return { loggedUser: state.AuthReducer.loggedUser };
 };
 
 function ConnectedSidebar({ loggedUser }) {

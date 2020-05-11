@@ -13,7 +13,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import isEmpty from '../components/isEmpty';
 
-const mapStateToProps = (state) => ({ loggedUser: state.loggedUser });
+const mapStateToProps = (state) => ({
+	loggedUser: state.AuthReducer.loggedUser,
+});
 
 function ConnectedSearchResult({ profile, loggedUser }) {
 	const fullNameArray = profile.name.split(' ');

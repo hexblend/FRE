@@ -12,7 +12,7 @@ import {
 	faGraduationCap,
 } from '@fortawesome/free-solid-svg-icons';
 
-const mapStateToProps = (state) => ({ profile: state.loggedUser });
+const mapStateToProps = (state) => ({ profile: state.AuthReducer.loggedUser });
 
 function ConnectedBadges({ profile }) {
 	return (

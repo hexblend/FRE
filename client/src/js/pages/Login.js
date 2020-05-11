@@ -11,7 +11,7 @@ import Button from '../components/elements/Button';
 import CustomLink from '../components/elements/Link';
 import Alert from '../layout/Alert';
 
-import { addLoggedUser } from '../redux/actions/index';
+import { addLoggedUser } from '../redux/actions/AuthActions';
 
 const mapDispatchToProps = (dispatch) => {
 	return {

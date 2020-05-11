@@ -2,16 +2,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { updateSearchLocation } from '../../redux/actions/SearchActions.js';
 
-import { updateSearchLocation } from '../../redux/actions/index';
+const mapDispatchToProps = (dispatch) => ({
+	setSearchLocation: (location) => dispatch(updateSearchLocation(location)),
+});
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		setSearchLocation: (location) => dispatch(updateSearchLocation(location)),
-	};
-};
-
-const mapStateToProps = (state) => ({ searchLocation: state.searchLocation });
+const mapStateToProps = (state) => ({
+	searchLocation: state.SearchReducer.searchLocation,
+});
 
 function ConnectedLocationInput({
 	id,
@@ -21,16 +20,16 @@ function ConnectedLocationInput({
 	noBG,
 	noShadow,
 	width,
-	error,
+	error, // Global for each input
+	// Globals
 	searchLocation,
 	setSearchLocation,
 }) {
-	const [typingTimeout, setTypingTimeout] = useState(0);
+	const [typingTimeout, setTypingTimeout] = useState(0); // global
 	const [suggestions, setSuggestions] = useState([]);
 
 	const handleChange = (e) => {
 		setSearchLocation(e.target.value);
-		// setSearchLocation(e.target.value);
 		if (typingTimeout) clearTimeout(typingTimeout);
 		setTypingTimeout(
 			setTimeout(() => {

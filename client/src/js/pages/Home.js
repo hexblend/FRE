@@ -6,7 +6,9 @@ import HomeHeader from '../layout/HomeHeader';
 import Button from '../components/elements/Button';
 import isEmpty from '../components/isEmpty';
 
-const mapStateToProps = (state) => ({ loggedUser: state.loggedUser });
+const mapStateToProps = (state) => ({
+	loggedUser: state.AuthReducer.loggedUser,
+});
 
 function ConnectedHome({ loggedUser }) {
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;

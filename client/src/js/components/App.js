@@ -11,7 +11,7 @@ import Login from '../pages/Login';
 import Search from '../pages/Search';
 import Footer from '../layout/Footer';
 
-import { addLoggedUser } from '../redux/actions/index';
+import { addLoggedUser } from '../redux/actions/AuthActions';
 
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
 	return {
-		loggedUser: state.loggedUser,
+		loggedUser: state.AuthReducer.loggedUser,
 	};
 };
 

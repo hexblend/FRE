@@ -6,7 +6,9 @@ import AuthNavbar from '../components/AuthNavbar';
 import HomeSearch from '../components/pages/home/Search';
 import isEmpty from '../components/isEmpty';
 
-const mapStateToProps = (state) => ({ loggedUser: state.loggedUser });
+const mapStateToProps = (state) => ({
+	loggedUser: state.AuthReducer.loggedUser,
+});
 
 function ConnectedHomeHeader({ loggedUser }) {
 	return (

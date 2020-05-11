@@ -8,7 +8,9 @@ import isEmpty from '../components/isEmpty';
 
 import { connect } from 'react-redux';
 
-const mapStateToProps = (state) => ({ loggedUser: state.loggedUser });
+const mapStateToProps = (state) => ({
+	loggedUser: state.AuthReducer.loggedUser,
+});
 
 function ConnectedSearch({ loggedUser }) {
 	const headerContent = {
