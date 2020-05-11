@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import querySearch from 'stringquery';
+
 import Logo from '../components/Logo';
 import Button from '../components/elements/Button';
 import Input from '../components/elements/Input';
 import CustomLink from '../components/elements/Link';
 
-function Header({ type, content }) {
-	const [searchContent, setSearchContent] = useState('results');
+const mapStateToProps = (state) => ({
+	searchResults: state.SearchReducer.searchResults,
+	searchTags: state.SearchReducer.searchTags,
+	searchLocation: state.SearchReducer.searchLocation,
+});
 
+function ConnectedHeader({
+	type,
+	content,
+	searchResults,
+	searchTags,
+	searchLocation,
+}) {
+	const [searchContent, setSearchContent] = useState('results');
 	const [jobTitle, setJobTitle] = useState('');
 	const [jobTitleError, setJobTitleError] = useState('');
 
@@ -31,7 +45,7 @@ function Header({ type, content }) {
 					{searchContent === 'results' && (
 						<div className="Header__search--content resultsView">
 							<p>
-								{content.resultsNo} Results for "{content.jobTitles}" in{' '}
+								{searchResults.length} Results for "{content.jobTitles}" in{' '}
 								{content.city}
 							</p>
 							<div className="Header__serach--buttons">
@@ -88,9 +102,10 @@ function Header({ type, content }) {
 	);
 }
 
-Header.propTypes = {
+ConnectedHeader.propTypes = {
 	type: PropTypes.string.isRequired,
 	content: PropTypes.object,
 };
 
+const Header = connect(mapStateToProps)(ConnectedHeader);
 export default Header;
