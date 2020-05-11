@@ -16,7 +16,7 @@ const mapStateToProps = (state) => ({
 });
 
 function ConnectedHeader({ searchResults, searchTags, searchLocation }) {
-	const [view, setView] = useState('results');
+	const [view, setView] = useState('search');
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
 	const handleSubmit = (e) => {
@@ -52,6 +52,11 @@ function ConnectedHeader({ searchResults, searchTags, searchLocation }) {
 							</div>
 							<div className="formGroup">
 								<p>In: </p>
+								<LocationInput
+									id="location"
+									placeholder="London"
+									width="210px"
+								/>
 							</div>
 						</div>
 						<div className="Header__search--buttons">

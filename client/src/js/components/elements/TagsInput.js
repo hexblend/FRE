@@ -153,7 +153,7 @@ function ConnectedTagsInput({
 				</p>
 			)}
 			{/* Suggestions */}
-			<ul className="Suggestions" style={{ top: `${!label && '6rem'}` }}>
+			<ul className="Suggestions" style={{ top: `${!label && '5.85rem'}` }}>
 				{tagsInputSuggestions.map((suggestion) => (
 					<li
 						key={suggestion.uuid}

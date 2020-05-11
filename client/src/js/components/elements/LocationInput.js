@@ -84,7 +84,10 @@ function ConnectedLocationInput({
 			{/* Errors */}
 			<p className="customInput__error">{locationInputError}</p>
 			{/* Suggestions */}
-			<ul className="Suggestions" style={{ width: `${width}` }}>
+			<ul
+				className="Suggestions"
+				style={{ width: `${width}`, top: `${!label && '5.85rem'}` }}
+			>
 				{locationInputSuggestions.map((suggestion) => (
 					<li
 						key={suggestion.code}
