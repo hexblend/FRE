@@ -9,6 +9,8 @@ import LocationInput from './elements/LocationInput';
 import {
 	updateTagsInputError,
 	updateLocationInputError,
+	updateTagsInputSuggestions,
+	updateLocationInputSuggestions,
 } from '../redux/actions/SearchActions';
 
 const mapStateToProps = (state) => ({
@@ -21,6 +23,10 @@ const mapDispatchToProps = (dispatch) => ({
 	updateTagsInputError: (error) => dispatch(updateTagsInputError(error)),
 	updateLocationInputError: (error) =>
 		dispatch(updateLocationInputError(error)),
+	updateTagsInputSuggestions: (suggestions) =>
+		dispatch(updateTagsInputSuggestions(suggestions)),
+	updateLocationInputSuggestions: (suggestions) =>
+		dispatch(updateLocationInputSuggestions(suggestions)),
 });
 
 function ConnectedSearchBar({
@@ -34,10 +40,12 @@ function ConnectedSearchBar({
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
 	const handleSubmit = (e) => {
-		if (tagsLeft === 3 || LocationInput === '') {
+		if (tagsLeft === 3 || location === '') {
 			e.preventDefault();
 			if (tagsLeft === 3) updateTagsInputError('Please enter a job title');
 			if (location === '') updateLocationInputError('Please enter a location');
+			updateTagsInputSuggestions([]);
+			updateLocationInputSuggestions([]);
 		} else {
 			console.log('submitted search');
 		}
