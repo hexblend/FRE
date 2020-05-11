@@ -85,7 +85,7 @@ function ConnectedSearch(props) {
 		axios
 			.get(generateLink(), { withCredentials: true })
 			.then((res) => props.updateSearchResults(res.data.users));
-	}, []);
+	}, [props.location.search]);
 
 	const history = useHistory();
 

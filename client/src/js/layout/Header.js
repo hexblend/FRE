@@ -9,18 +9,66 @@ import CustomLink from '../components/elements/Link';
 import TagsInput from '../components/elements/TagsInput';
 import LocationInput from '../components/elements/LocationInput';
 
+import {
+	updateTagsInputError,
+	updateLocationInputError,
+	updateSearchResults,
+} from '../redux/actions/SearchActions';
+
 const mapStateToProps = (state) => ({
 	searchResults: state.SearchReducer.searchResults,
-	searchTags: state.SearchReducer.searchTags,
-	searchLocation: state.SearchReducer.searchLocation,
+	tags: state.SearchReducer.searchTags,
+	location: state.SearchReducer.searchLocation,
+	tagsLeft: state.SearchReducer.tagsLeft,
 });
 
-function ConnectedHeader({ searchResults, searchTags, searchLocation }) {
-	const [view, setView] = useState('search');
+const mapDispatchToProps = (dispatch) => ({
+	updateSearchResults: (results) => dispatch(updateSearchResults(results)),
+	updateTagsInputError: (error) => dispatch(updateTagsInputError(error)),
+	updateLocationInputError: (error) =>
+		dispatch(updateLocationInputError(error)),
+});
+
+function ConnectedHeader({
+	// Globals
+	tags,
+	tagsLeft,
+	updateTagsInputError,
+	location,
+	updateLocationInputError,
+	searchResults,
+	updateSearchResults,
+}) {
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
+	const [view, setView] = useState('results');
+
 	const handleSubmit = (e) => {
-		console.log('submitted');
+		if (tagsLeft === 3 || location === '') {
+			e.preventDefault();
+			if (tagsLeft === 3) updateTagsInputError('Please enter a job title');
+			if (location === '') updateLocationInputError('Please enter a location');
+		} else {
+			updateSearchResults([]);
+		}
+	};
+
+	const generateLink = () => {
+		let link = `${PUBLIC_URL}/search?`;
+		switch (tagsLeft) {
+			case 2:
+				link += `job1=${tags[0]}&location=${location}`;
+				break;
+			case 1:
+				link += `job1=${tags[0]}&job2=${tags[1]}&location=${location}`;
+				break;
+			case 0:
+				link += `job1=${tags[0]}&job2=${tags[1]}&job3=${tags[2]}&location=${location}`;
+				break;
+			default:
+				link += '';
+		}
+		return link;
 	};
 
 	return (
@@ -32,7 +80,7 @@ function ConnectedHeader({ searchResults, searchTags, searchLocation }) {
 						<p>
 							{searchResults.length}{' '}
 							{searchResults.length === 1 ? 'Result' : 'Results'} for "
-							{searchTags.join(', ')}" in {searchLocation}
+							{tags.join(', ')}" in {location}
 						</p>
 						<div className="Header__serach--buttons">
 							<Button text="Change Search" onClick={() => setView('search')} />
@@ -66,7 +114,7 @@ function ConnectedHeader({ searchResults, searchTags, searchLocation }) {
 								text="Go Back"
 								onClick={() => setView('results')}
 							/>
-							<Link to={`${PUBLIC_URL}/search`} onClick={handleSubmit}>
+							<Link to={generateLink} onClick={handleSubmit}>
 								<Button text="Search for candidates" />
 							</Link>
 						</div>
@@ -77,5 +125,5 @@ function ConnectedHeader({ searchResults, searchTags, searchLocation }) {
 	);
 }
 
-const Header = connect(mapStateToProps)(ConnectedHeader);
+const Header = connect(mapStateToProps, mapDispatchToProps)(ConnectedHeader);
 export default Header;

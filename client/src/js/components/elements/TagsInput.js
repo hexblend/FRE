@@ -143,9 +143,7 @@ function ConnectedTagsInput({
 					className="customInput__info"
 					style={{
 						fontWeight: `${tagsLeft === 0 ? 400 : 300}`,
-						color: `${!label ? 'black' : 'white'}`,
-						color: `${tagsLeft === 0 && label ? '#b91515' : 'white'}`,
-						color: `${tagsLeft === 0 && !label ? '#b91515' : 'black'}`,
+						color: `${whiteLabel ? 'white' : 'black'}`,
 						bottom: `${!label && '-2rem'}`,
 					}}
 				>
