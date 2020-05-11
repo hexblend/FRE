@@ -7,6 +7,7 @@ import {
 	UPDATE_SEARCH_LOCATION,
 	UPDATE_LOCATION_INPUT_ERROR,
 	UPDATE_LOCATION_INPUT_SUGGESTIONS,
+	UPDATE_SEARCH_RESULTS,
 } from '../constants/action-types';
 
 const initialState = {
@@ -20,6 +21,8 @@ const initialState = {
 	searchLocation: '',
 	locationInputError: '',
 	locationInputSuggestions: [],
+	// Results
+	searchResults: [],
 };
 
 function SearchReducer(state = initialState, action) {
@@ -59,6 +62,9 @@ function SearchReducer(state = initialState, action) {
 				...state,
 				locationInputSuggestions: action.payload,
 			};
+		// Results
+		case UPDATE_SEARCH_RESULTS:
+			return { ...state, searchResults: action.payload };
 		default:
 			return state;
 	}

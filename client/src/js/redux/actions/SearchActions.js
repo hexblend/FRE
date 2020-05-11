@@ -7,6 +7,7 @@ import {
 	UPDATE_SEARCH_LOCATION,
 	UPDATE_LOCATION_INPUT_ERROR,
 	UPDATE_LOCATION_INPUT_SUGGESTIONS,
+	UPDATE_SEARCH_RESULTS,
 } from '../constants/action-types';
 
 // Tags input
@@ -34,4 +35,8 @@ export function updateLocationInputError(payload) {
 }
 export function updateLocationInputSuggestions(payload) {
 	return { type: UPDATE_LOCATION_INPUT_SUGGESTIONS, payload };
+}
+// Search results
+export function updateSearchResults(payload) {
+	return { type: UPDATE_SEARCH_RESULTS, payload };
 }

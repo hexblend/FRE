@@ -18,13 +18,15 @@ const mapStateToProps = (state) => ({
 });
 
 function ConnectedSearchResult({ profile, loggedUser }) {
-	const fullNameArray = profile.name.split(' ');
+	const fullName =
+		profile.full_name.first_name + ' ' + profile.full_name.last_name;
+	const fullNameArray = fullName.split(' ');
 	const hiddenFullName = `${fullNameArray[0]} ${fullNameArray[1].slice(0, 1)}.`;
 	return (
 		<Link to={`/profile/${profile.id}`}>
 			<div className={`SearchResult ${isEmpty(loggedUser) && 'marginLeft'}`}>
 				<h3 className="SearchResult__name">
-					{!isEmpty(loggedUser) ? profile.name : hiddenFullName}
+					{!isEmpty(loggedUser) ? fullName : hiddenFullName}
 				</h3>
 				<div className="SearchResult__icons">
 					<div>
