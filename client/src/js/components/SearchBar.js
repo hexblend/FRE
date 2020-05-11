@@ -41,7 +41,6 @@ function ConnectedSearchBar({
 		} else {
 			console.log('submitted search');
 		}
-		// Name this search bar	and moove out of this folder
 	};
 	const job1 = tags[0];
 	const job2 = tags[1];

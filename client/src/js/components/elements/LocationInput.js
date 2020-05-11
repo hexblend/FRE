@@ -5,17 +5,21 @@ import { connect } from 'react-redux';
 import {
 	updateSearchLocation,
 	updateLocationInputError,
+	updateLocationInputSuggestions,
 } from '../../redux/actions/SearchActions.js';
 
 const mapDispatchToProps = (dispatch) => ({
 	setSearchLocation: (location) => dispatch(updateSearchLocation(location)),
 	updateLocationInputError: (error) =>
 		dispatch(updateLocationInputError(error)),
+	updateLocationInputSuggestions: (suggestions) =>
+		dispatch(updateLocationInputSuggestions(suggestions)),
 });
 
 const mapStateToProps = (state) => ({
 	searchLocation: state.SearchReducer.searchLocation,
 	locationInputError: state.SearchReducer.locationInputError,
+	locationInputSuggestions: state.SearchReducer.locationInputSuggestions,
 });
 
 function ConnectedLocationInput({
@@ -31,9 +35,10 @@ function ConnectedLocationInput({
 	setSearchLocation,
 	locationInputError,
 	updateLocationInputError,
+	locationInputSuggestions,
+	updateLocationInputSuggestions,
 }) {
-	const [typingTimeout, setTypingTimeout] = useState(0); // global
-	const [suggestions, setSuggestions] = useState([]);
+	const [typingTimeout, setTypingTimeout] = useState(0);
 
 	const handleChange = (e) => {
 		setSearchLocation(e.target.value);
@@ -42,14 +47,16 @@ function ConnectedLocationInput({
 			setTimeout(() => {
 				axios
 					.get(`https://api.postcodes.io/places?q=${searchLocation}`)
-					.then((res) => setSuggestions(res.data.result.slice(0, 4)));
+					.then((res) =>
+						updateLocationInputSuggestions(res.data.result.slice(0, 4))
+					);
 			}, 200)
 		);
 	};
 
 	const handleClick = (location) => {
 		setSearchLocation(location);
-		setSuggestions([]);
+		updateLocationInputSuggestions([]);
 		updateLocationInputError('');
 	};
 
@@ -78,7 +85,7 @@ function ConnectedLocationInput({
 			<p className="customInput__error">{locationInputError}</p>
 			{/* Suggestions */}
 			<ul className="Suggestions" style={{ width: `${width}` }}>
-				{suggestions.map((suggestion) => (
+				{locationInputSuggestions.map((suggestion) => (
 					<li
 						key={suggestion.code}
 						onClick={() => handleClick(suggestion.name_1)}

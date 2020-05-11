@@ -7,26 +7,31 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import {
+	updateTagsInput,
 	addSearchTag,
 	removeSearchTag,
 	updateTagsInputError,
+	updateTagsInputSuggestions,
 } from '../../redux/actions/SearchActions';
 
 const mapStateToProps = (state) => ({
+	tagsInput: state.SearchReducer.tagsInput,
 	tags: state.SearchReducer.searchTags,
 	tagsLeft: state.SearchReducer.tagsLeft,
 	tagsInputError: state.SearchReducer.tagsInputError,
+	tagsInputSuggestions: state.SearchReducer.tagsInputSuggestions,
 });
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+		updateTagsInput: (value) => dispatch(updateTagsInput(value)),
 		addSearchTag: (tag) => dispatch(addSearchTag(tag)),
 		removeSearchTag: (tag) => dispatch(removeSearchTag(tag)),
 		updateTagsInputError: (error) => dispatch(updateTagsInputError(error)),
+		updateTagsInputSuggestions: (suggestions) =>
+			dispatch(updateTagsInputSuggestions(suggestions)),
 	};
 };
-
-// Have a search reducer for all the search state (including suggestions)
 
 function ConnectedTagsInput({
 	id,
@@ -36,29 +41,30 @@ function ConnectedTagsInput({
 	whiteLabel,
 	noBG,
 	noShadow,
-	error,
 	// Globals
+	tagsInput,
+	updateTagsInput,
 	tags,
 	tagsLeft,
 	addSearchTag,
 	removeSearchTag,
 	tagsInputError,
 	updateTagsInputError,
+	tagsInputSuggestions,
+	updateTagsInputSuggestions,
 }) {
-	const [typing, setTyping] = useState('');
-	const [typingTimeout, setTypingTimeout] = useState(0); // global
-	const [suggestions, setSuggestions] = useState([]);
+	const [typingTimeout, setTypingTimeout] = useState(0);
 	const [tagsWidth, setTagsWidth] = useState('');
 
 	const addSuggestedTag = (tagName) => {
 		if (tags.indexOf(tagName) !== -1) {
-			setSuggestions([]);
+			updateTagsInputSuggestions([]);
 			return updateTagsInputError('Tag already added');
 		}
 		addSearchTag(tagName);
+		updateTagsInput('');
 		updateTagsInputError('');
-		setSuggestions([]);
-		setTyping('');
+		updateTagsInputSuggestions([]);
 	};
 
 	const removeTag = (index) => {
@@ -67,16 +73,18 @@ function ConnectedTagsInput({
 	};
 
 	const searchJobs = (e) => {
-		setTyping(e.target.value);
+		updateTagsInput(e.target.value);
 		if (typingTimeout) clearTimeout(typingTimeout);
 		setTypingTimeout(
 			setTimeout(() => {
 				axios
 					.get(
-						`http://api.dataatwork.org/v1/jobs/autocomplete?contains=${typing}`
+						`http://api.dataatwork.org/v1/jobs/autocomplete?contains=${tagsInput}`
 					)
-					.then((res) => setSuggestions(res.data.slice(0, 4).reverse()));
-			}, 150)
+					.then((res) =>
+						updateTagsInputSuggestions(res.data.slice(0, 4).reverse())
+					);
+			}, 200)
 		);
 	};
 
@@ -118,7 +126,7 @@ function ConnectedTagsInput({
 					paddingLeft: `${tagsWidth}`,
 					width: `${tags.length > 0 && 0}`,
 				}}
-				value={typing}
+				value={tagsInput}
 				onChange={(e) => searchJobs(e)}
 				readOnly={tagsLeft === 0 ? true : false}
 			/>
@@ -138,7 +146,7 @@ function ConnectedTagsInput({
 			)}
 			{/* Suggestions */}
 			<ul className="Suggestions">
-				{suggestions.map((suggestion) => (
+				{tagsInputSuggestions.map((suggestion) => (
 					<li
 						key={suggestion.uuid}
 						onClick={() => addSuggestedTag(suggestion.suggestion)}
