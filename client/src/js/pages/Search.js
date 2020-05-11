@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import querySearch from 'stringquery';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Header from '../layout/Header';
 import SearchResult from '../components/SearchResult';
@@ -8,7 +10,6 @@ import Sidebar from '../components/Sidebar';
 import AuthNavbar from '../components/AuthNavbar';
 import isEmpty from '../components/isEmpty';
 
-import { connect } from 'react-redux';
 import {
 	updateSearchResults,
 	addSearchTag,
@@ -27,14 +28,7 @@ const mapDispatchToProps = (dispatch) => ({
 	addSearchTag: (tag) => dispatch(addSearchTag(tag)),
 	updateSearchLocation: (location) => dispatch(updateSearchLocation(location)),
 });
-
 function ConnectedSearch(props) {
-	const headerContent = {
-		resultsNo: 37,
-		jobTitles: 'Web Developer, UX Designer',
-		city: 'London',
-	};
-
 	useEffect(() => {
 		const API_URL = process.env.REACT_APP_API_URL;
 		const query = querySearch(props.location.search);
@@ -93,10 +87,12 @@ function ConnectedSearch(props) {
 			.then((res) => props.updateSearchResults(res.data.users));
 	}, []);
 
+	const history = useHistory();
+
 	return (
 		<div className="Search">
 			{isEmpty(props.loggedUser) && <AuthNavbar bg={true} />}
-			<Header type="search" content={headerContent} />
+			<Header />
 			<Sidebar />
 			<div className="Search__content">
 				{props.searchResults.map((profile) => (

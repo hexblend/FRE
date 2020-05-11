@@ -18,13 +18,7 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-const mapStateToProps = (state) => {
-	return {
-		loggedUser: state.AuthReducer.loggedUser,
-	};
-};
-
-function ConnectedApp({ addLoggedUser, loggedUser }) {
+function ConnectedApp({ addLoggedUser }) {
 	useEffect(() => {
 		const getSession = async () => {
 			await axios
@@ -38,7 +32,7 @@ function ConnectedApp({ addLoggedUser, loggedUser }) {
 				});
 		};
 		getSession();
-	}, []);
+	}, [addLoggedUser]);
 
 	return (
 		<Router>
@@ -68,5 +62,5 @@ function ConnectedApp({ addLoggedUser, loggedUser }) {
 	);
 }
 
-const App = connect(mapStateToProps, mapDispatchToProps)(ConnectedApp);
+const App = connect(null, mapDispatchToProps)(ConnectedApp);
 export default App;

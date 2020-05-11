@@ -103,7 +103,11 @@ function ConnectedTagsInput({
 				{label}
 			</label>
 			{/* Tags */}
-			<ul className="Tags" ref={refCallback}>
+			<ul
+				className="Tags"
+				ref={refCallback}
+				style={{ top: `${!label && '1.7rem'}` }}
+			>
 				{tags.map((tag, index) => (
 					<li className="tag" key={index}>
 						<span className="tag__text">{tag}</span>
@@ -125,6 +129,7 @@ function ConnectedTagsInput({
 					minWidth: `${tagsWidth + minWidth}`,
 					paddingLeft: `${tagsWidth}`,
 					width: `${tags.length > 0 && 0}`,
+					background: `${!whiteLabel && '#f9f9f9'}`,
 				}}
 				value={tagsInput}
 				onChange={(e) => searchJobs(e)}
@@ -137,15 +142,18 @@ function ConnectedTagsInput({
 				<p
 					className="customInput__info"
 					style={{
-						color: `${tagsLeft === 0 ? '#b91515' : 'white'}`,
 						fontWeight: `${tagsLeft === 0 ? 400 : 300}`,
+						color: `${!label ? 'black' : 'white'}`,
+						color: `${tagsLeft === 0 && label ? '#b91515' : 'white'}`,
+						color: `${tagsLeft === 0 && !label ? '#b91515' : 'black'}`,
+						bottom: `${!label && '-2rem'}`,
 					}}
 				>
 					{tagsLeft} job titles left
 				</p>
 			)}
 			{/* Suggestions */}
-			<ul className="Suggestions">
+			<ul className="Suggestions" style={{ top: `${!label && '6rem'}` }}>
 				{tagsInputSuggestions.map((suggestion) => (
 					<li
 						key={suggestion.uuid}
