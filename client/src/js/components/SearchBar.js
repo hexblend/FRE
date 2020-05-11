@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Button from '../../elements/Button';
-import TagsInput from '../../elements/TagsInput';
-import LocationInput from '../../elements/LocationInput';
+import Button from './elements/Button';
+import TagsInput from './elements/TagsInput';
+import LocationInput from './elements/LocationInput';
 
 import {
 	updateTagsInputError,
 	updateLocationInputError,
-} from '../../../redux/actions/SearchActions';
+} from '../redux/actions/SearchActions';
 
 const mapStateToProps = (state) => ({
 	tags: state.SearchReducer.searchTags,
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
 		dispatch(updateLocationInputError(error)),
 });
 
-function ConnectedSearch({
+function ConnectedSearchBar({
 	// Globals
 	tags,
 	tagsLeft,
@@ -41,8 +41,6 @@ function ConnectedSearch({
 		} else {
 			console.log('submitted search');
 		}
-		// Set errors to be globals for each of the fields
-		// If they are empty show error
 		// Name this search bar	and moove out of this folder
 	};
 	const job1 = tags[0];
@@ -78,5 +76,8 @@ function ConnectedSearch({
 	);
 }
 
-const Search = connect(mapStateToProps, mapDispatchToProps)(ConnectedSearch);
-export default Search;
+const SearchBar = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ConnectedSearchBar);
+export default SearchBar;
