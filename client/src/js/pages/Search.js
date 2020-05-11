@@ -40,7 +40,7 @@ function ConnectedSearch(props) {
 			} else if (query.job1 && !query.job2 && !query.job3) {
 				link += `/${query.job1}/location/${query.location}`;
 			} else {
-				link = link;
+				link += '';
 			}
 			return link;
 		};

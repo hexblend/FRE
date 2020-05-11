@@ -44,10 +44,6 @@ function ConnectedSearchBar({
 			e.preventDefault();
 			if (tagsLeft === 3) updateTagsInputError('Please enter a job title');
 			if (location === '') updateLocationInputError('Please enter a location');
-			updateTagsInputSuggestions([]);
-			updateLocationInputSuggestions([]);
-		} else {
-			console.log('submitted search');
 		}
 	};
 
@@ -64,7 +60,7 @@ function ConnectedSearchBar({
 				link += `job1=${tags[0]}&job2=${tags[1]}&job3=${tags[2]}&location=${location}`;
 				break;
 			default:
-				link = link;
+				link += '';
 		}
 		return link;
 	};

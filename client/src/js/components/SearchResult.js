@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import randomWords from 'random-words';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -74,11 +75,15 @@ function ConnectedSearchResult({ profile, loggedUser }) {
 					className={`SearchResult__description ${isEmpty(loggedUser) && 'h'}`}
 				>
 					<h4>Description:</h4>
-					<p>
-						{profile.description.length > 500
-							? `${profile.description.slice(0, 500)}...`
-							: profile.description}
-					</p>
+					{isEmpty(loggedUser) ? (
+						<p>{randomWords(50).map((word) => `${word} `)}</p>
+					) : (
+						<p>
+							{profile.description.length > 500
+								? `${profile.description.slice(0, 500)}...`
+								: profile.description}
+						</p>
+					)}
 				</div>
 			</div>
 		</Link>
