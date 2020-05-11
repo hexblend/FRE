@@ -9,14 +9,20 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import {
 	addSearchTag,
 	removeSearchTag,
+	updateTagsInputError,
 } from '../../redux/actions/SearchActions';
 
-const mapStateToProps = (state) => ({ tags: state.SearchReducer.searchTags });
+const mapStateToProps = (state) => ({
+	tags: state.SearchReducer.searchTags,
+	tagsLeft: state.SearchReducer.tagsLeft,
+	tagsInputError: state.SearchReducer.tagsInputError,
+});
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		addSearchTag: (tag) => dispatch(addSearchTag(tag)),
 		removeSearchTag: (tag) => dispatch(removeSearchTag(tag)),
+		updateTagsInputError: (error) => dispatch(updateTagsInputError(error)),
 	};
 };
 
@@ -33,32 +39,31 @@ function ConnectedTagsInput({
 	error,
 	// Globals
 	tags,
+	tagsLeft,
 	addSearchTag,
 	removeSearchTag,
+	tagsInputError,
+	updateTagsInputError,
 }) {
-	const [tagsLeft, setTagsLeft] = useState(3); // global
 	const [typing, setTyping] = useState('');
 	const [typingTimeout, setTypingTimeout] = useState(0); // global
 	const [suggestions, setSuggestions] = useState([]);
 	const [tagsWidth, setTagsWidth] = useState('');
-	const [internalError, setInternalError] = useState(''); // global errors for each field
 
 	const addSuggestedTag = (tagName) => {
 		if (tags.indexOf(tagName) !== -1) {
 			setSuggestions([]);
-			return setInternalError('You already added this tag');
+			return updateTagsInputError('Tag already added');
 		}
 		addSearchTag(tagName);
-		setTagsLeft(tagsLeft - 1);
-		setTyping('');
+		updateTagsInputError('');
 		setSuggestions([]);
+		setTyping('');
 	};
 
 	const removeTag = (index) => {
 		removeSearchTag(index);
-		setTagsLeft((tagsLeft) => tagsLeft + 1);
-		setInternalError('');
-		error = '';
+		updateTagsInputError('');
 	};
 
 	const searchJobs = (e) => {
@@ -118,8 +123,9 @@ function ConnectedTagsInput({
 				readOnly={tagsLeft === 0 ? true : false}
 			/>
 			{/* Errors / Info Messages */}
-			<p className="customInput__error">{internalError || error}</p>
-			{!error && (
+			{tagsInputError ? (
+				<p className="customInput__error">{tagsInputError}</p>
+			) : (
 				<p
 					className="customInput__info"
 					style={{

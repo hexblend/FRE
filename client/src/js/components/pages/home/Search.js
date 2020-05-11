@@ -6,21 +6,38 @@ import Button from '../../elements/Button';
 import TagsInput from '../../elements/TagsInput';
 import LocationInput from '../../elements/LocationInput';
 
+import {
+	updateTagsInputError,
+	updateLocationInputError,
+} from '../../../redux/actions/SearchActions';
+
 const mapStateToProps = (state) => ({
 	tags: state.SearchReducer.searchTags,
+	tagsLeft: state.SearchReducer.tagsLeft,
 	location: state.SearchReducer.searchLocation,
 });
 
-function ConnectedSearch({ tags, location }) {
+const mapDispatchToProps = (dispatch) => ({
+	updateTagsInputError: (error) => dispatch(updateTagsInputError(error)),
+	updateLocationInputError: (error) =>
+		dispatch(updateLocationInputError(error)),
+});
+
+function ConnectedSearch({
+	// Globals
+	tags,
+	tagsLeft,
+	updateTagsInputError,
+	location,
+	updateLocationInputError,
+}) {
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
-	const [jobTitlesError, setJobTitlesError] = useState('');
-	const [locationError, setLocationError] = useState('');
 
 	const handleSubmit = (e) => {
-		if (tags.length === 0 || location === '') {
+		if (tagsLeft === 3 || LocationInput === '') {
 			e.preventDefault();
-			if (tags.length === 0) setJobTitlesError('You must enter a job title');
-			if (location === '') setLocationError('You must enter a job title');
+			if (tagsLeft === 3) updateTagsInputError('Please enter a job title');
+			if (location === '') updateLocationInputError('Please enter a location');
 		} else {
 			console.log('submitted search');
 		}
@@ -39,7 +56,6 @@ function ConnectedSearch({ tags, location }) {
 				label="I'm looking for:"
 				whiteLabel={true}
 				minWidth="350px"
-				error={jobTitlesError}
 			/>
 			<LocationInput
 				id="location"
@@ -47,7 +63,6 @@ function ConnectedSearch({ tags, location }) {
 				label="In:"
 				whiteLabel={true}
 				width="210px"
-				error={locationError}
 			/>
 			<Link
 				to={`${PUBLIC_URL}/search?job1=${job1}
@@ -63,5 +78,5 @@ function ConnectedSearch({ tags, location }) {
 	);
 }
 
-const Search = connect(mapStateToProps)(ConnectedSearch);
+const Search = connect(mapStateToProps, mapDispatchToProps)(ConnectedSearch);
 export default Search;

@@ -2,14 +2,20 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { updateSearchLocation } from '../../redux/actions/SearchActions.js';
+import {
+	updateSearchLocation,
+	updateLocationInputError,
+} from '../../redux/actions/SearchActions.js';
 
 const mapDispatchToProps = (dispatch) => ({
 	setSearchLocation: (location) => dispatch(updateSearchLocation(location)),
+	updateLocationInputError: (error) =>
+		dispatch(updateLocationInputError(error)),
 });
 
 const mapStateToProps = (state) => ({
 	searchLocation: state.SearchReducer.searchLocation,
+	locationInputError: state.SearchReducer.locationInputError,
 });
 
 function ConnectedLocationInput({
@@ -20,10 +26,11 @@ function ConnectedLocationInput({
 	noBG,
 	noShadow,
 	width,
-	error, // Global for each input
 	// Globals
 	searchLocation,
 	setSearchLocation,
+	locationInputError,
+	updateLocationInputError,
 }) {
 	const [typingTimeout, setTypingTimeout] = useState(0); // global
 	const [suggestions, setSuggestions] = useState([]);
@@ -43,6 +50,7 @@ function ConnectedLocationInput({
 	const handleClick = (location) => {
 		setSearchLocation(location);
 		setSuggestions([]);
+		updateLocationInputError('');
 	};
 
 	return (
@@ -67,7 +75,7 @@ function ConnectedLocationInput({
 				onChange={(e) => handleChange(e)}
 			/>
 			{/* Errors */}
-			<p className="customInput__error">{error}</p>
+			<p className="customInput__error">{locationInputError}</p>
 			{/* Suggestions */}
 			<ul className="Suggestions" style={{ width: `${width}` }}>
 				{suggestions.map((suggestion) => (

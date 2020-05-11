@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-// import Nav from '../components/Nav';
 import StyleGuide from '../pages/StyleGuide';
 import Home from '../pages/Home';
 import Register from '../pages/Register';

@@ -68,18 +68,6 @@ function ConnectedHome({ loggedUser }) {
 					<img src="assets/images/empty_office.jpg" alt="Empty office" />
 				</div>
 			</div>
-			{/* <div>
-				<h2>Articles</h2>
-				<List />
-				</div>b
-				<div>
-					<h2>Add new article</h2> 
-					<Form />
-				</div>
-				<div>
-					<h2>API Posts</h2>
-					<Posts />
-				</div> */}
 		</div>
 	);
 }
