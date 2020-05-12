@@ -10,7 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 function AuthNavbar({ bg, authPage }) {
-	const PUBLIC_URL = process.env.PUBLIC_URL;
+	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
 	let userType;
 	let userAction;

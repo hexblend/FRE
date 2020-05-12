@@ -53,3 +53,17 @@
 		font-size: $p-small-desktop;
 	}
 }
+.btn-gray {
+	background: $transparent;
+	box-shadow: none;
+	color: $dark-gray;
+	@include text-trans;
+	&:hover {
+		color: $darkest-gray;
+	}
+	&:active {
+		box-shadow: none;
+		background: darken($gray, 3%);
+		font-size: $p-small-desktop;
+	}
+}

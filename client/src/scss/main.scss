@@ -18,17 +18,25 @@
 
 // 4. Layout-related sections
 @import 'layout/homeHeader';
+@import 'layout/header';
 @import 'layout/footer';
+@import 'layout/alert';
 
 // 5. Components
 @import 'components/logo';
 @import 'components/authNavbar';
+@import 'components/searchResult';
+@import 'components/sidebar';
+@import 'components/badges';
+@import 'components/infoBar';
 // Elements
 @import 'components/elements/button';
 @import 'components/elements/link';
 @import 'components/elements/input';
 @import 'components/elements/tag';
+@import 'components/elements/tagsInput';
 
 // 6. Page-specific styles
 @import 'pages/home';
 @import 'pages/register';
+@import 'pages/search';

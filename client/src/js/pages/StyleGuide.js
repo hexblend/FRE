@@ -7,7 +7,7 @@ import Tag from '../components/elements/Tag';
 
 function StyleGuide() {
 	const [inputValue, setInputValue] = useState('');
-	const PUBLIC_URL = process.env.PUBLIC_URL;
+	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 	return (
 		<div>
 			<h1>Style Guide</h1>

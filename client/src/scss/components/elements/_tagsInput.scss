@@ -1,0 +1,64 @@
+.TagsInput {
+	text-align: left;
+	position: relative;
+	border-radius: 0.5rem;
+	input {
+		&::placeholder {
+			overflow: visible;
+		}
+	}
+	.customInput__info {
+		position: absolute;
+		bottom: -2.2rem;
+		left: 0;
+		font-weight: 300;
+		font-size: 1.3rem;
+		animation: 0.15s ease-in-out errorAnimation forwards;
+	}
+	.customInput__error {
+		bottom: -2.2rem;
+	}
+}
+
+.Tags {
+	position: absolute;
+	display: flex;
+	left: 1.6rem;
+	top: 4.3rem;
+	.tag {
+		margin-right: 0.8rem;
+		display: flex;
+	}
+}
+.Suggestions {
+	background: $white;
+	position: absolute;
+	width: 350px;
+	top: 8.7rem;
+	border-radius: 0.5rem;
+	z-index: 10;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+}
+.Suggestions__suggestion {
+	color: $darkest-gray;
+	border-bottom: 1px solid $gray;
+	padding: 1.6rem 0 1.6rem 0.8rem;
+	font-size: $p-small-desktop;
+	&:hover {
+		cursor: pointer;
+		background: $lightest-gray;
+	}
+	&:first-child {
+		border-top-left-radius: 0.5rem;
+		border-top-right-radius: 0.5rem;
+	}
+	&:last-child {
+		border-bottom: 0;
+		border-bottom-left-radius: 0.5rem;
+		border-bottom-right-radius: 0.5rem;
+	}
+}
+.LocationInput {
+	text-align: left;
+	position: relative;
+}

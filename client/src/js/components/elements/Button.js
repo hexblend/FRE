@@ -10,7 +10,7 @@ const iconList = Object.keys(Icons)
 	.map((icon) => Icons[icon]);
 library.add(...iconList);
 
-function Button({ type, wide, icon, text }) {
+function Button({ type, wide, icon, text, onClick, btnType }) {
 	return (
 		<div>
 			<button
@@ -20,6 +20,8 @@ function Button({ type, wide, icon, text }) {
 				${!type && 'btn-primary'}
 				${wide ? 'btn-wide' : ''}
 				`}
+				onClick={onClick}
+				type={btnType}
 			>
 				{icon && <FontAwesomeIcon icon={icon} className="btn-icon" />}
 				{text}
@@ -33,6 +35,7 @@ Button.propTypes = {
 	wide: PropTypes.bool,
 	icon: PropTypes.string,
 	text: PropTypes.string.isRequired,
+	btnType: PropTypes.string,
 };
 
 export default Button;

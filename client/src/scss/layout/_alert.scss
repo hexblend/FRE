@@ -1,0 +1,38 @@
+.Alert {
+	position: fixed;
+	min-width: 30vw;
+	left: 4rem;
+	padding: 0.8rem 1.3rem;
+	border-radius: 0.5rem;
+	// border: 1px solid $transparent;
+	font-weight: 300;
+	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.9);
+	animation: slideInAndLeave 1.5s ease-in-out forwards;
+	z-index: 10;
+	&.success {
+		background: $dark-blue;
+		color: $white;
+	}
+	&.error {
+		background: $red;
+		border-color: darken($red, 15%);
+		color: $white;
+	}
+}
+@keyframes slideInAndLeave {
+	0% {
+		top: -5rem;
+	}
+	15% {
+		top: 4rem;
+	}
+	80% {
+		top: 4rem;
+	}
+	90% {
+		top: 7.8rem;
+	}
+	100% {
+		top: -9rem;
+	}
+}

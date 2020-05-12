@@ -14,6 +14,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const authConfig = require('./auth-config');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const app = express();
 
@@ -28,30 +29,35 @@ mongoose
 	.catch((err) => console.log(err));
 
 // Middlewares
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 app.use(helmet());
 app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 mins
-	max: 100, // 100 reqs / 15 mins / IP
+	max: 300, // 100 reqs / 15 mins / IP
 });
 app.use(limiter);
 app.use(morgan('combined'));
 
 app.use(
 	session({
-		name: 'session-id',
-		secret: process.env.APP_SECRET,
+		name: 'session',
+		secret: process.env.SESSION_SECRET,
+		sameSite: true,
 		saveUninitialized: false,
+		rolling: true,
 		resave: false,
+		store: new MongoStore({ mongooseConnection: mongoose.connection }),
 		cookie: {
-			expires: 600000,
+			sameSite: false,
+			maxAge: 24 * 60 * 60 * 1000,
 		},
 	})
 );
+
 // Passport init
 app.use(passport.initialize());
 app.use(passport.session());

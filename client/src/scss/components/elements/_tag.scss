@@ -6,6 +6,7 @@
 	color: $white;
 	font-size: $p-small-desktop;
 	position: relative;
+	border-radius: 0.4rem;
 	&::after,
 	&::before {
 		content: '';

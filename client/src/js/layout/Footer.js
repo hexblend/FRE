@@ -2,7 +2,7 @@ import React from 'react';
 import Link from '../components/elements/Link';
 
 function Footer() {
-	const PUBLIC_URL = process.env.PUBLIC_URL;
+	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 	return (
 		<div className="footer">
 			<p>Copyright &copy;{new Date().getFullYear()} Find the Right Employee</p>

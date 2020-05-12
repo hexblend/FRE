@@ -8,14 +8,14 @@ function Tag({ content }) {
 	return (
 		<Fragment>
 			{showTag && (
-				<div className="tag">
+				<li className="tag">
 					<span className="tag__text">
 						{content ? content : 'Tag default text'}
 					</span>
 					<span className="tag__icon">
 						<FontAwesomeIcon icon={faTimes} onClick={() => setShowTag(false)} />
 					</span>
-				</div>
+				</li>
 			)}
 		</Fragment>
 	);
