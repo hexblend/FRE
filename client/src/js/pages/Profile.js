@@ -12,8 +12,9 @@ const ConnectedProfile = ({ loggedUser }) => {
 	const history = useHistory();
 
 	useEffect(() => {
+		const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 		if (isEmpty(loggedUser)) {
-			history.push(process.env.REACT_APP_PUBLIC_URL);
+			history.push(`${PUBLIC_URL}/candidate/login`);
 		}
 	}, [history, loggedUser]);
 
