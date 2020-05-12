@@ -10,6 +10,8 @@ import Login from '../pages/Login';
 import Search from '../pages/Search';
 import Footer from '../layout/Footer';
 
+import MainLayout from '../layout/MainLayout';
+
 import { addLoggedUser } from '../redux/actions/AuthActions';
 
 const mapDispatchToProps = (dispatch) => {
@@ -55,7 +57,9 @@ function ConnectedApp({ addLoggedUser }) {
 					<Login type="employer" />
 				</Route>
 
-				<Route path="/search" component={Search} />
+				<MainLayout>
+					<Route path="/search" component={Search} />
+				</MainLayout>
 			</Switch>
 			<Footer />
 		</Router>

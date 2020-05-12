@@ -3,11 +3,7 @@ import querySearch from 'stringquery';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import Header from '../layout/Header';
 import SearchResult from '../components/SearchResult';
-import Sidebar from '../components/Sidebar';
-import AuthNavbar from '../components/AuthNavbar';
-import isEmpty from '../components/isEmpty';
 import InfoBar from '../components/InfoBar';
 
 import {
@@ -88,16 +84,11 @@ function ConnectedSearch(props) {
 	}, [props.location.search]);
 
 	return (
-		<div className="Search">
-			{isEmpty(props.loggedUser) && <AuthNavbar bg={true} />}
-			<Header />
-			<Sidebar />
-			<div className="Search__content">
-				<InfoBar />
-				{props.searchResults.map((profile) => (
-					<SearchResult profile={profile} key={profile._id} />
-				))}
-			</div>
+		<div className="Search__content">
+			<InfoBar />
+			{props.searchResults.map((profile) => (
+				<SearchResult profile={profile} key={profile._id} />
+			))}
 		</div>
 	);
 }

@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartPie, faBriefcase } from '@fortawesome/free-solid-svg-icons';
 
 import Badges from '../components/Badges';
-import Alert from '../layout/Alert';
+import Alert from './Alert';
 import isEmpty from '../components/isEmpty';
 
 import { addLoggedUser } from '../redux/actions/AuthActions';
