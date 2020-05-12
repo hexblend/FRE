@@ -14,7 +14,7 @@ import isEmpty from '../components/isEmpty';
 import { addLoggedUser } from '../redux/actions/AuthActions';
 
 const mapDispatchToProps = (dispatch) => {
-	return { addLoggedUser: (user) => dispatch(addLoggedUser({})) };
+	return { addLoggedUser: (user) => dispatch(addLoggedUser(user)) };
 };
 
 const mapStateToProps = (state) => {
