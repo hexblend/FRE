@@ -12,11 +12,13 @@ const mapStateToProps = (state) => ({
 
 function ConnectedMainLayout(props) {
 	return (
-		<div>
+		<div className="MainLayout">
 			{isEmpty(props.loggedUser) && <AuthNavbar bg={true} />}
 			<Header />
 			<Sidebar />
-			{props.children}
+			<div className="MainLayout__content" style={{ padding: '0 25rem' }}>
+				{props.children}
+			</div>
 		</div>
 	);
 }

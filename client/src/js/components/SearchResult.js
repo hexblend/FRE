@@ -26,7 +26,7 @@ function ConnectedSearchResult({ profile, loggedUser }) {
 	return (
 		<div className="SearchResult__wrapper">
 			<Link to={`/profile/${profile._id}`}>
-				<div className={`SearchResult ${isEmpty(loggedUser) && 'marginLeft'}`}>
+				<div className={`SearchResult`}>
 					<h3 className="SearchResult__name">
 						{!isEmpty(loggedUser) ? fullName : hiddenFullName}
 					</h3>

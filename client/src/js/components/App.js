@@ -8,6 +8,7 @@ import Home from '../pages/Home';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
 import Search from '../pages/Search';
+import Profile from '../pages/Profile';
 import Footer from '../layout/Footer';
 
 import MainLayout from '../layout/MainLayout';
@@ -59,6 +60,7 @@ function ConnectedApp({ addLoggedUser }) {
 
 				<MainLayout>
 					<Route path="/search" component={Search} />
+					<Route path="/profile" component={Profile} />
 				</MainLayout>
 			</Switch>
 			<Footer />

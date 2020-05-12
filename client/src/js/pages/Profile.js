@@ -1,21 +1,17 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
 
-export const Profile = () => {
+const mapStateToProps = (state) => ({
+	loggedUser: state.AuthReducer.loggedUser,
+});
+
+const ConnectedProfile = ({ loggedUser }) => {
 	return (
-		<div>
-			<h1></h1>
+		<div className="Profile">
+			<h1>Hello</h1>
 		</div>
 	);
 };
 
-Profile.propTypes = {
-	prop: PropTypes,
-};
-
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+const Profile = connect(mapStateToProps)(ConnectedProfile);
+export default Profile;
