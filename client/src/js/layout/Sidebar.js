@@ -54,7 +54,7 @@ function ConnectedSidebar({ loggedUser }) {
 				<div className="Sidebar">
 					<Alert type={alert.type} text={alert.text} />
 					<div
-						style={{ background: loggedUser.avatar }}
+						style={{ backgroundImage: `url(${loggedUser.avatar})` }}
 						className="Sidebar__avatar"
 					/>
 
@@ -71,7 +71,7 @@ function ConnectedSidebar({ loggedUser }) {
 						Candidate
 					</p>
 					<div className="Sidebar__badges">
-						<Badges />
+						<Badges profile={loggedUser} />
 					</div>
 					<div className="Sidebar__links">
 						<div>

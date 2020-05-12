@@ -1,0 +1,54 @@
+.Profile {
+	background: $white;
+	margin: 4rem 0 4rem 4rem;
+	padding: 1.6rem 2.4rem;
+}
+.Profile__header {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 3.2rem;
+}
+.Profile__fullName {
+	font-weight: 300;
+	color: $dark-blue;
+	margin-bottom: 1.6rem;
+}
+.Profile__status {
+	color: $green;
+	margin-bottom: 3.2rem;
+	position: relative;
+	padding-left: 1.6rem;
+	text-transform: capitalize;
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0.8rem;
+		left: 0;
+		width: 0.6rem;
+		height: 0.6rem;
+		background: $green;
+		border-radius: 50%;
+	}
+}
+.Profile__badges {
+	.Badges {
+		.Badges__badgeRow {
+			font-size: $p-small-desktop;
+		}
+	}
+}
+.Profile__header--right {
+	text-align: center;
+	button {
+		font-size: 1.4rem;
+	}
+}
+.Profile__avatar {
+	background-position: center center;
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 200px;
+	height: 200px;
+	border-radius: 0.8rem;
+	margin-bottom: 1.6rem;
+}

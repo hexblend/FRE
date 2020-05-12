@@ -60,7 +60,7 @@ function ConnectedApp({ addLoggedUser }) {
 
 				<MainLayout>
 					<Route path="/search" component={Search} />
-					<Route path="/profile" component={Profile} />
+					<Route path="/profile/:id" component={Profile} />
 				</MainLayout>
 			</Switch>
 			<Footer />
