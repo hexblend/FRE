@@ -92,8 +92,8 @@ function ConnectedSearch(props) {
 			{isEmpty(props.loggedUser) && <AuthNavbar bg={true} />}
 			<Header />
 			<Sidebar />
-			<InfoBar />
 			<div className="Search__content">
+				<InfoBar />
 				{props.searchResults.map((profile) => (
 					<SearchResult profile={profile} key={profile._id} />
 				))}

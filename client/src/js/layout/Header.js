@@ -67,6 +67,7 @@ function ConnectedHeader({
 			updateLocationInputError('Select a location from the list');
 		} else {
 			updateSearchResults([]);
+			setView('results');
 		}
 	};
 
