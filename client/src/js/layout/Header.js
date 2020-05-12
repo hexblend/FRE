@@ -13,6 +13,8 @@ import {
 	updateTagsInputError,
 	updateLocationInputError,
 	updateSearchResults,
+	updateTagsInputSuggestions,
+	updateLocationInputSuggestions,
 } from '../redux/actions/SearchActions';
 
 const mapStateToProps = (state) => ({
@@ -28,6 +30,10 @@ const mapDispatchToProps = (dispatch) => ({
 	updateTagsInputError: (error) => dispatch(updateTagsInputError(error)),
 	updateLocationInputError: (error) =>
 		dispatch(updateLocationInputError(error)),
+	updateTagsInputSuggestions: (suggestions) =>
+		dispatch(updateTagsInputSuggestions(suggestions)),
+	updateLocationInputSuggestions: (suggestions) =>
+		dispatch(updateLocationInputSuggestions(suggestions)),
 });
 
 function ConnectedHeader({
@@ -40,6 +46,8 @@ function ConnectedHeader({
 	searchResults,
 	updateSearchResults,
 	loggedUser,
+	updateTagsInputSuggestions,
+	updateLocationInputSuggestions,
 }) {
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
@@ -48,11 +56,17 @@ function ConnectedHeader({
 	const handleSubmit = (e) => {
 		if (tagsLeft === 3 || location === '') {
 			e.preventDefault();
+			updateTagsInputSuggestions([]);
+			updateLocationInputSuggestions([]);
 			if (tagsLeft === 3) updateTagsInputError('Please enter a job title');
 			if (location === '') updateLocationInputError('Please enter a location');
+		} else if (location !== '' && location[0] !== location[0].toUpperCase()) {
+			e.preventDefault();
+			updateTagsInputSuggestions([]);
+			updateLocationInputSuggestions([]);
+			updateLocationInputError('Select a location from the list');
 		} else {
 			updateSearchResults([]);
-			setView('results');
 		}
 	};
 

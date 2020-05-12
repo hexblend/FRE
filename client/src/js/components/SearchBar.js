@@ -39,14 +39,23 @@ function ConnectedSearchBar({
 	location,
 	updateLocationInputError,
 	updateSearchResults,
+	updateLocationInputSuggestions,
+	updateTagsInputSuggestions,
 }) {
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
 	const handleSubmit = (e) => {
 		if (tagsLeft === 3 || location === '') {
 			e.preventDefault();
+			updateTagsInputSuggestions([]);
+			updateLocationInputSuggestions([]);
 			if (tagsLeft === 3) updateTagsInputError('Please enter a job title');
 			if (location === '') updateLocationInputError('Please enter a location');
+		} else if (location !== '' && location[0] !== location[0].toUpperCase()) {
+			e.preventDefault();
+			updateTagsInputSuggestions([]);
+			updateLocationInputSuggestions([]);
+			updateLocationInputError('Please select a location from the list');
 		} else {
 			updateSearchResults([]);
 		}
