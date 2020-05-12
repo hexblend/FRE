@@ -23,7 +23,7 @@ export const ConnectedInfoBar = ({ loggedUser, searchResults }) => {
 					<div className="InfoBar__left">
 						<FontAwesomeIcon icon={faInfoCircle} />
 						<span className="InfoBar__text">
-							You must be logged in to see full information about candidates.
+							Please log in to see full information about candidates.
 						</span>
 					</div>
 				</div>
