@@ -8,6 +8,7 @@ import SearchResult from '../components/SearchResult';
 import Sidebar from '../components/Sidebar';
 import AuthNavbar from '../components/AuthNavbar';
 import isEmpty from '../components/isEmpty';
+import InfoBar from '../components/InfoBar';
 
 import {
 	updateSearchResults,
@@ -28,72 +29,70 @@ const mapDispatchToProps = (dispatch) => ({
 	updateSearchLocation: (location) => dispatch(updateSearchLocation(location)),
 });
 function ConnectedSearch(props) {
-	useEffect(
-		(props) => {
-			const API_URL = process.env.REACT_APP_API_URL;
-			const query = querySearch(props.location.search);
-			// Generate results without client search
-			if (props.searchTags.length === 0) {
-				if (query.job1) {
-					if (query.job1.includes('%20')) {
-						const job1 = query.job1.split('%20').join(' ');
-						props.addSearchTag(job1);
-					} else {
-						props.addSearchTag(query.job1);
-					}
-				}
-				if (query.job2) {
-					if (query.job2.includes('%20')) {
-						const job2 = query.job2.split('%20').join(' ');
-						props.addSearchTag(job2);
-					} else {
-						props.addSearchTag(query.job2);
-					}
-				}
-				if (query.job3) {
-					if (query.job3.includes('%20')) {
-						const job3 = query.job3.split('%20').join(' ');
-						props.addSearchTag(job3);
-					} else {
-						props.addSearchTag(query.job3);
-					}
+	useEffect(() => {
+		const API_URL = process.env.REACT_APP_API_URL;
+		const query = querySearch(props.location.search);
+		// Generate results without client search
+		if (props.searchTags.length === 0) {
+			if (query.job1) {
+				if (query.job1.includes('%20')) {
+					const job1 = query.job1.split('%20').join(' ');
+					props.addSearchTag(job1);
+				} else {
+					props.addSearchTag(query.job1);
 				}
 			}
-			if (props.searchLocation === '') {
-				if (query.location.includes('%20')) {
-					const location = query.location.split('%20').join(' ');
-					props.updateSearchLocation(location);
+			if (query.job2) {
+				if (query.job2.includes('%20')) {
+					const job2 = query.job2.split('%20').join(' ');
+					props.addSearchTag(job2);
 				} else {
-					props.updateSearchLocation(query.location);
+					props.addSearchTag(query.job2);
 				}
 			}
-
-			const generateLink = () => {
-				let link = `${API_URL}/api/users/job`;
-				if (query.job1 && query.job2 && query.job3) {
-					link += `/${query.job1}/${query.job2}/${query.job3}/location/${query.location}`;
-				} else if (query.job1 && query.job2 && !query.job3) {
-					link += `/${query.job1}/${query.job2}/location/${query.location}`;
-				} else if (query.job1 && !query.job2 && !query.job3) {
-					link += `/${query.job1}/location/${query.location}`;
+			if (query.job3) {
+				if (query.job3.includes('%20')) {
+					const job3 = query.job3.split('%20').join(' ');
+					props.addSearchTag(job3);
 				} else {
-					link += '';
+					props.addSearchTag(query.job3);
 				}
-				return link;
-			};
+			}
+		}
+		if (props.searchLocation === '') {
+			if (query.location.includes('%20')) {
+				const location = query.location.split('%20').join(' ');
+				props.updateSearchLocation(location);
+			} else {
+				props.updateSearchLocation(query.location);
+			}
+		}
 
-			axios
-				.get(generateLink(), { withCredentials: true })
-				.then((res) => props.updateSearchResults(res.data.users));
-		},
-		[props.location.search]
-	);
+		const generateLink = () => {
+			let link = `${API_URL}/api/users/job`;
+			if (query.job1 && query.job2 && query.job3) {
+				link += `/${query.job1}/${query.job2}/${query.job3}/location/${query.location}`;
+			} else if (query.job1 && query.job2 && !query.job3) {
+				link += `/${query.job1}/${query.job2}/location/${query.location}`;
+			} else if (query.job1 && !query.job2 && !query.job3) {
+				link += `/${query.job1}/location/${query.location}`;
+			} else {
+				link += '';
+			}
+			return link;
+		};
+
+		axios
+			.get(generateLink(), { withCredentials: true })
+			.then((res) => props.updateSearchResults(res.data.users));
+	}, [props.location.search]);
 
 	return (
 		<div className="Search">
 			{isEmpty(props.loggedUser) && <AuthNavbar bg={true} />}
 			<Header />
 			<Sidebar />
+			<InfoBar />
 			<div className="Search__content">
 				{props.searchResults.map((profile) => (
 					<SearchResult profile={profile} key={profile._id} />

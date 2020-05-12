@@ -49,6 +49,7 @@ app.use(
 		sameSite: true,
 		saveUninitialized: false,
 		rolling: true,
+		resave: false,
 		store: new MongoStore({ mongooseConnection: mongoose.connection }),
 		cookie: {
 			sameSite: false,

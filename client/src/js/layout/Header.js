@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import Logo from '../components/Logo';
 import Button from '../components/elements/Button';
 import CustomLink from '../components/elements/Link';
-
 import TagsInput from '../components/elements/TagsInput';
 import LocationInput from '../components/elements/LocationInput';
+import isEmpty from '../components/isEmpty';
 
 import {
 	updateTagsInputError,
@@ -20,6 +20,7 @@ const mapStateToProps = (state) => ({
 	tags: state.SearchReducer.searchTags,
 	location: state.SearchReducer.searchLocation,
 	tagsLeft: state.SearchReducer.tagsLeft,
+	loggedUser: state.AuthReducer.loggedUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -38,6 +39,7 @@ function ConnectedHeader({
 	updateLocationInputError,
 	searchResults,
 	updateSearchResults,
+	loggedUser,
 }) {
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
@@ -50,6 +52,7 @@ function ConnectedHeader({
 			if (location === '') updateLocationInputError('Please enter a location');
 		} else {
 			updateSearchResults([]);
+			setView('results');
 		}
 	};
 
@@ -82,7 +85,14 @@ function ConnectedHeader({
 							{searchResults.length === 1 ? 'Result' : 'Results'} for "
 							{tags.join(', ')}" in {location}
 						</p>
-						<div className="Header__serach--buttons">
+						<div className="Header__search--buttons">
+							{isEmpty(loggedUser) && (
+								<CustomLink
+									to={`${PUBLIC_URL}/candidate/login`}
+									type="gray"
+									text="Login"
+								/>
+							)}
 							<Button text="Change Search" onClick={() => setView('search')} />
 						</div>
 					</div>
