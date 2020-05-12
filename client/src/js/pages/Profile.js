@@ -56,13 +56,6 @@ const ConnectedProfile = (props) => {
 						className="Profile__avatar"
 						style={{ backgroundImage: `url(${profile.avatar})` }}
 					></div>
-					<Link to="#">
-						<Button
-							text={`Message ${firstName}`}
-							type="secondary"
-							btnType="button"
-						/>
-					</Link>
 				</div>
 			</div>
 
@@ -81,7 +74,6 @@ const ConnectedProfile = (props) => {
 					{profile.key_abilities && (
 						<div className="Profile__keyAbilities">
 							<h3 className="Profile__sectionTitle">Key abilities: </h3>
-
 							<ul>
 								{profile.key_abilities.map((ability, index) => (
 									<li key={index}>{ability}</li>
@@ -106,7 +98,8 @@ const ConnectedProfile = (props) => {
 										<p className="Profile__experience--startingDate">
 											{moment(exp.starting_date).format('MMM') +
 												' ' +
-												moment(exp.starting_date).format('YYYY')}
+												moment(exp.starting_date).format('YYYY') +
+												' -'}
 										</p>
 										<p className="Profile__experience--endingDate">
 											{moment(exp.ending_date).format('MMM') +
@@ -156,9 +149,9 @@ const ConnectedProfile = (props) => {
 									)}
 									{prj.link && (
 										<div className="Profile__projects--link">
-											<p className="Profile__projects--subsectionTitle">
+											<span className="Profile__projects--subsectionTitle">
 												Link:
-											</p>
+											</span>
 											<CustomLink to={prj.link} text={prj.link} border={true} />
 										</div>
 									)}
@@ -172,7 +165,7 @@ const ConnectedProfile = (props) => {
 						<h3 className="Profile__sectionTitle">Useful Links:</h3>
 						{/* Email */}
 						<div className="Profile__links--link">
-							<p>Email -</p>
+							<span>Email -</span>
 							<CustomLink
 								to={profile.email}
 								text={profile.email}
@@ -184,7 +177,7 @@ const ConnectedProfile = (props) => {
 								{/* Facebook */}
 								{profile.social_media.facebook && (
 									<div className="Profile__links--link">
-										<p>Facebook -</p>
+										<span>Facebook -</span>
 										<CustomLink
 											to={profile.social_media.facebook}
 											text={profile.social_media.facebook}
@@ -195,7 +188,7 @@ const ConnectedProfile = (props) => {
 								{/* Twitter */}
 								{profile.social_media.twitter && (
 									<div className="Profile__links--link">
-										<p>Twitter -</p>
+										<span>Twitter -</span>
 										<CustomLink
 											to={profile.social_media.twitter}
 											text={profile.social_media.twitter}
@@ -206,7 +199,7 @@ const ConnectedProfile = (props) => {
 								{/* Instagram */}
 								{profile.social_media.instagram && (
 									<div className="Profile__links--link">
-										<p>Instagram -</p>
+										<span>Instagram -</span>
 										<CustomLink
 											to={profile.social_media.instagram}
 											text={profile.social_media.instagram}
@@ -217,7 +210,7 @@ const ConnectedProfile = (props) => {
 								{/* LinkedIn */}
 								{profile.social_media.linkedin && (
 									<div className="Profile__links--link">
-										<p>LinkedIn -</p>
+										<span>LinkedIn -</span>
 										<CustomLink
 											to={profile.social_media.linkedin}
 											text={profile.social_media.linkedin}
@@ -228,7 +221,7 @@ const ConnectedProfile = (props) => {
 								{/* GitHub */}
 								{profile.social_media.github && (
 									<div className="Profile__links--link">
-										<p>GitHub -</p>
+										<span>GitHub -</span>
 										<CustomLink
 											to={profile.social_media.github}
 											text={profile.social_media.github}
@@ -239,17 +232,17 @@ const ConnectedProfile = (props) => {
 							</>
 						)}
 					</div>
-				</div>
-				{/* Get in touch */}
-				<div className="Profile__getInTouch">
-					<h3 className="Profile__sectionTitle">Get in touch:</h3>
-					<Link to="#">
-						<Button
-							text={`Message ${firstName}`}
-							type="secondary"
-							btnType="button"
-						/>
-					</Link>
+					{/* Get in touch */}
+					<div className="Profile__getInTouch">
+						<h3 className="Profile__sectionTitle">Get in touch:</h3>
+						<Link to="#">
+							<Button
+								text={`Message ${firstName}`}
+								type="secondary"
+								btnType="button"
+							/>
+						</Link>
+					</div>
 				</div>
 			</div>
 		</div>

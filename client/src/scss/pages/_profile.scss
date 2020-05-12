@@ -3,10 +3,11 @@
 	margin: 4rem 0 4rem 4rem;
 	padding: 1.6rem 2.4rem;
 }
+// Header - left
 .Profile__header {
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 3.2rem;
+	margin-bottom: 4rem;
 }
 .Profile__fullName {
 	font-weight: 300;
@@ -37,6 +38,7 @@
 		}
 	}
 }
+// Header - right
 .Profile__header--right {
 	text-align: center;
 	button {
@@ -51,4 +53,122 @@
 	height: 200px;
 	border-radius: 0.8rem;
 	margin-bottom: 1.6rem;
+}
+// Content - left
+.Profile__splitView {
+	display: flex;
+	justify-content: space-between;
+}
+.Profile__splitView--left {
+	max-width: 50%;
+}
+.Profile__sectionTitle {
+	color: $dark-blue;
+	font-size: $p-small-desktop;
+	margin-bottom: 1.6rem;
+	display: block;
+}
+.Profile__description {
+	margin-bottom: 3.2rem;
+	p {
+		color: $darkest-gray;
+		font-size: $p-small-desktop;
+		line-height: 1.8rem;
+	}
+}
+.Profile__keyAbilities {
+	margin-bottom: 3.2rem;
+	ul {
+		columns: 2;
+		li {
+			font-size: 1.4rem;
+			margin-bottom: 1.6rem;
+			padding-left: 1.2rem;
+			position: relative;
+			&:before {
+				content: '';
+				position: absolute;
+				top: 0.6rem;
+				left: 0;
+				width: 0.4rem;
+				height: 0.4rem;
+				background: $dark-blue;
+				border-radius: 50%;
+			}
+		}
+	}
+}
+.Profile__experience--single,
+.Profile__projects--single {
+	margin-bottom: 1.6rem;
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+.Profile__experience--jobTitle,
+.Profile__projects--projectTitle {
+	font-size: $p-small-desktop;
+	color: $black;
+	margin-bottom: 0.8rem;
+}
+.Profile__experience--companyName {
+	font-size: 1.4rem;
+	color: $darkest-gray;
+	margin-bottom: 0.8rem;
+}
+.Profile__experience--date {
+	display: flex;
+	margin-bottom: 1.6rem;
+}
+.Profile__experience--startingDate,
+.Profile__experience--endingDate,
+.Profile__projects--subsectionTitle {
+	font-size: 1.4rem;
+	color: $dark-gray;
+	margin-right: 0.5rem;
+}
+.Profile__experinece--longDesc {
+	color: $darkest-gray;
+	font-size: $p-small-desktop;
+}
+// Content - right
+.Profile__projects {
+	margin-bottom: 3.2rem;
+}
+.Profile__projects--projectTitle {
+	font-size: $p-desktop;
+}
+.Profile__projects--subsectionTitle {
+	margin: 1.6rem 0;
+}
+.Profile__projects--projectDescription {
+	font-size: $p-small-desktop;
+	color: $darkest-gray;
+	margin-bottom: 1.6rem;
+}
+.Profile__projects--link {
+	span {
+		margin-right: 1.6rem;
+	}
+	a {
+		font-size: 1.4rem;
+	}
+}
+.Profile__links {
+	margin-bottom: 4rem;
+}
+.Profile__links--link {
+	margin-bottom: 2.4rem;
+	span {
+		font-size: 1.4rem;
+		margin-right: 0.5rem;
+	}
+	a {
+		font-size: 1.4rem;
+	}
+}
+.Profile__getInTouch {
+	button {
+		font-size: 1.4rem;
+	}
 }

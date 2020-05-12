@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -14,7 +14,7 @@ library.add(...iconList);
 
 function CustomLink({ to, text, type, border, icon, iconSide, onClick }) {
 	return (
-		<Link
+		<a
 			className={`link 
 				${type === 'gray' && 'gray-link'} 
 				${type === 'blue' && 'blue-link'} 
@@ -22,17 +22,18 @@ function CustomLink({ to, text, type, border, icon, iconSide, onClick }) {
 				${!type && 'link-primary'}
 				${!border && 'no-border'}
 			`}
-			to={to}
+			href={to}
 			onClick={onClick}
+			target="_blank"
 		>
 			{icon && iconSide === 'left' && (
 				<FontAwesomeIcon icon={icon} className="link-icon" />
-			)}{' '}
+			)}
 			{text}{' '}
 			{icon && iconSide === 'right' && (
 				<FontAwesomeIcon icon={icon} className="link-icon" />
 			)}
-		</Link>
+		</a>
 	);
 }
 
