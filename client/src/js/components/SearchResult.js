@@ -25,7 +25,7 @@ function ConnectedSearchResult({ profile, loggedUser }) {
 	const hiddenFullName = `${fullNameArray[0]} ${fullNameArray[1].slice(0, 1)}.`;
 	return (
 		<div className="SearchResult__wrapper">
-			<Link to={`/profile/${profile._id}`}>
+			<Link to={`${isEmpty(loggedUser) ? '#' : `/profile/${profile._id}`}`}>
 				<div className={`SearchResult`}>
 					<h3 className="SearchResult__name">
 						{!isEmpty(loggedUser) ? fullName : hiddenFullName}
