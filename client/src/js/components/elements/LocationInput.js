@@ -6,6 +6,7 @@ import {
 	updateSearchLocation,
 	updateLocationInputError,
 	updateLocationInputSuggestions,
+	updateTagsInputSuggestions,
 } from '../../redux/actions/SearchActions.js';
 
 const mapDispatchToProps = (dispatch) => ({
@@ -14,6 +15,8 @@ const mapDispatchToProps = (dispatch) => ({
 		dispatch(updateLocationInputError(error)),
 	updateLocationInputSuggestions: (suggestions) =>
 		dispatch(updateLocationInputSuggestions(suggestions)),
+	updateTagsInputSuggestions: (suggestions) =>
+		dispatch(updateTagsInputSuggestions(suggestions)),
 });
 
 const mapStateToProps = (state) => ({
@@ -37,6 +40,7 @@ function ConnectedLocationInput({
 	updateLocationInputError,
 	locationInputSuggestions,
 	updateLocationInputSuggestions,
+	updateTagsInputSuggestions,
 }) {
 	const [typingTimeout, setTypingTimeout] = useState(0);
 
@@ -50,7 +54,7 @@ function ConnectedLocationInput({
 					.then((res) =>
 						updateLocationInputSuggestions(res.data.result.slice(0, 4))
 					);
-			}, 200)
+			}, 500)
 		);
 	};
 
@@ -80,6 +84,7 @@ function ConnectedLocationInput({
 				value={searchLocation}
 				style={{ minWidth: `${width}` }}
 				onChange={(e) => handleChange(e)}
+				onFocus={() => updateTagsInputSuggestions([])}
 			/>
 			{/* Errors */}
 			<p className="customInput__error">{locationInputError}</p>

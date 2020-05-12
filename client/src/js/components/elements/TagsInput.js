@@ -12,6 +12,7 @@ import {
 	removeSearchTag,
 	updateTagsInputError,
 	updateTagsInputSuggestions,
+	updateLocationInputSuggestions,
 } from '../../redux/actions/SearchActions';
 
 const mapStateToProps = (state) => ({
@@ -30,6 +31,8 @@ const mapDispatchToProps = (dispatch) => {
 		updateTagsInputError: (error) => dispatch(updateTagsInputError(error)),
 		updateTagsInputSuggestions: (suggestions) =>
 			dispatch(updateTagsInputSuggestions(suggestions)),
+		updateLocationInputSuggestions: (suggestions) =>
+			dispatch(updateLocationInputSuggestions(suggestions)),
 	};
 };
 
@@ -52,6 +55,7 @@ function ConnectedTagsInput({
 	updateTagsInputError,
 	tagsInputSuggestions,
 	updateTagsInputSuggestions,
+	updateLocationInputSuggestions,
 }) {
 	const [typingTimeout, setTypingTimeout] = useState(0);
 	const [tagsWidth, setTagsWidth] = useState('');
@@ -84,7 +88,7 @@ function ConnectedTagsInput({
 					.then((res) =>
 						updateTagsInputSuggestions(res.data.slice(0, 4).reverse())
 					);
-			}, 200)
+			}, 500)
 		);
 	};
 
@@ -133,6 +137,7 @@ function ConnectedTagsInput({
 				}}
 				value={tagsInput}
 				onChange={(e) => searchJobs(e)}
+				onFocus={() => updateLocationInputSuggestions([])}
 				readOnly={tagsLeft === 0 ? true : false}
 			/>
 			{/* Errors / Info Messages */}
