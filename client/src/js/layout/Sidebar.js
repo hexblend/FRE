@@ -5,7 +5,10 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartPie, faBriefcase } from '@fortawesome/free-solid-svg-icons';
+import {
+	faChartPie,
+	faBriefcase,
+} from '@fortawesome/free-solid-svg-icons';
 
 import Badges from '../components/Badges';
 import Alert from './Alert';
@@ -66,7 +69,11 @@ function ConnectedSidebar({ loggedUser }) {
 
 					<p className="Sidebar__userType">
 						<FontAwesomeIcon
-							icon={loggedUser.type === 'candidate' ? faBriefcase : faChartPie}
+							icon={
+								loggedUser.type === 'candidate'
+									? faBriefcase
+									: faChartPie
+							}
 						/>{' '}
 						Candidate
 					</p>
@@ -109,5 +116,8 @@ ConnectedSidebar.propTypes = {
 	loggedUser: PropTypes.object.isRequired,
 };
 
-const Sidebar = connect(mapStateToProps, mapDispatchToProps)(ConnectedSidebar);
+const Sidebar = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ConnectedSidebar);
 export default Sidebar;
