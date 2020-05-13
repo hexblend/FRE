@@ -59,8 +59,10 @@
 	display: flex;
 	justify-content: space-between;
 }
-.Profile__splitView--left {
-	max-width: 50%;
+.Profile__splitView--left,
+.Profile__splitView--right {
+	min-width: 45%;
+	max-width: 45%;
 }
 .Profile__sectionTitle {
 	color: $dark-blue;
@@ -133,20 +135,22 @@
 }
 // Content - right
 .Profile__projects {
-	margin-bottom: 3.2rem;
+	margin-bottom: 4rem;
 }
 .Profile__projects--projectTitle {
-	font-size: $p-desktop;
+	font-size: $p-small-desktop;
+	margin-bottom: 1.6rem;
 }
 .Profile__projects--subsectionTitle {
-	margin: 1.6rem 0;
+	margin: 0.8rem 0;
 }
 .Profile__projects--projectDescription {
-	font-size: $p-small-desktop;
+	font-size: 1.4rem;
 	color: $darkest-gray;
 	margin-bottom: 1.6rem;
 }
 .Profile__projects--link {
+	margin-top: 2.4rem;
 	span {
 		margin-right: 1.6rem;
 	}
@@ -155,7 +159,7 @@
 	}
 }
 .Profile__links {
-	margin-bottom: 4rem;
+	margin-bottom: 4.8rem;
 }
 .Profile__links--link {
 	margin-bottom: 2.4rem;

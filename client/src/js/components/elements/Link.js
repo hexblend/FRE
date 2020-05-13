@@ -12,7 +12,16 @@ const iconList = Object.keys(Icons)
 	.map((icon) => Icons[icon]);
 library.add(...iconList);
 
-function CustomLink({ to, href, text, type, border, icon, iconSide, onClick }) {
+function CustomLink({
+	to,
+	href,
+	text,
+	type,
+	border,
+	icon,
+	iconSide,
+	onClick,
+}) {
 	return (
 		<Link
 			className={`link 
@@ -41,7 +50,6 @@ function CustomLink({ to, href, text, type, border, icon, iconSide, onClick }) {
 CustomLink.propTypes = {
 	text: PropTypes.string.isRequired,
 	to: PropTypes.string.isRequired,
-	to: PropTypes.string,
 	type: PropTypes.string,
 	border: PropTypes.bool,
 	icon: PropTypes.string,

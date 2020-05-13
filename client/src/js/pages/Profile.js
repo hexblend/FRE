@@ -26,17 +26,24 @@ const ConnectedProfile = (props) => {
 	const { profile, updateProfile, updateHeaderView } = props;
 
 	const history = useHistory();
+	const API_URL = process.env.REACT_APP_API_URL;
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
 	useEffect(() => {
 		const uid = props.match.params.id;
-		const API_URL = process.env.REACT_APP_API_URL;
 		axios
 			.get(`${API_URL}/api/users/${uid}`)
 			.then((res) => updateProfile(res.data.user))
 			.catch((err) => err && history.push(PUBLIC_URL));
 		updateHeaderView('profile');
-	}, []);
+	}, [
+		props.match.params.id,
+		API_URL,
+		PUBLIC_URL,
+		history,
+		updateHeaderView,
+		updateProfile,
+	]);
 
 	// Formating
 	const fullName =
