@@ -4,6 +4,9 @@
 .Header {
 	background: $white;
 	border-bottom: 1px solid $gray;
+	position: sticky;
+	top: 0;
+	z-index: 10;
 }
 .Header__search {
 	display: flex;

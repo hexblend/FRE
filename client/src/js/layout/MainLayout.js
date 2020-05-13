@@ -16,7 +16,10 @@ function ConnectedMainLayout(props) {
 			{isEmpty(props.loggedUser) && <AuthNavbar bg={true} />}
 			<Header />
 			<Sidebar />
-			<div className="MainLayout__content" style={{ padding: '0 25rem' }}>
+			<div
+				className="MainLayout__content"
+				style={{ padding: '0 4rem 0 25rem' }}
+			>
 				{props.children}
 			</div>
 		</div>

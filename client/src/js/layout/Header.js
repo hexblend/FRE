@@ -17,23 +17,29 @@ import {
 	updateLocationInputSuggestions,
 } from '../redux/actions/SearchActions';
 
+import { updateHeaderView } from '../redux/actions/HeaderActions';
+
 const mapStateToProps = (state) => ({
 	searchResults: state.SearchReducer.searchResults,
 	tags: state.SearchReducer.searchTags,
 	location: state.SearchReducer.searchLocation,
 	tagsLeft: state.SearchReducer.tagsLeft,
 	loggedUser: state.AuthReducer.loggedUser,
+	view: state.HeaderReducer.view,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	updateSearchResults: (results) => dispatch(updateSearchResults(results)),
-	updateTagsInputError: (error) => dispatch(updateTagsInputError(error)),
+	updateSearchResults: (results) =>
+		dispatch(updateSearchResults(results)),
+	updateTagsInputError: (error) =>
+		dispatch(updateTagsInputError(error)),
 	updateLocationInputError: (error) =>
 		dispatch(updateLocationInputError(error)),
 	updateTagsInputSuggestions: (suggestions) =>
 		dispatch(updateTagsInputSuggestions(suggestions)),
 	updateLocationInputSuggestions: (suggestions) =>
 		dispatch(updateLocationInputSuggestions(suggestions)),
+	setView: (view) => dispatch(updateHeaderView(view)),
 });
 
 function ConnectedHeader({
@@ -48,19 +54,24 @@ function ConnectedHeader({
 	loggedUser,
 	updateTagsInputSuggestions,
 	updateLocationInputSuggestions,
+	view,
+	setView,
 }) {
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
-
-	const [view, setView] = useState('results');
 
 	const handleSubmit = (e) => {
 		if (tagsLeft === 3 || location === '') {
 			e.preventDefault();
 			updateTagsInputSuggestions([]);
 			updateLocationInputSuggestions([]);
-			if (tagsLeft === 3) updateTagsInputError('Please enter a job title');
-			if (location === '') updateLocationInputError('Please enter a location');
-		} else if (location !== '' && location[0] !== location[0].toUpperCase()) {
+			if (tagsLeft === 3)
+				updateTagsInputError('Please enter a job title');
+			if (location === '')
+				updateLocationInputError('Please enter a location');
+		} else if (
+			location !== '' &&
+			location[0] !== location[0].toUpperCase()
+		) {
 			e.preventDefault();
 			updateTagsInputSuggestions([]);
 			updateLocationInputSuggestions([]);
@@ -97,8 +108,8 @@ function ConnectedHeader({
 					<div className="Header__search--content resultsView">
 						<p>
 							{searchResults.length}{' '}
-							{searchResults.length === 1 ? 'Result' : 'Results'} for "
-							{tags.join(', ')}" in {location}
+							{searchResults.length === 1 ? 'Result' : 'Results'} for
+							"{tags.join(', ')}" in {location}
 						</p>
 						<div className="Header__search--buttons">
 							{isEmpty(loggedUser) && (
@@ -108,7 +119,10 @@ function ConnectedHeader({
 									text="Login"
 								/>
 							)}
-							<Button text="Change Search" onClick={() => setView('search')} />
+							<Button
+								text="Change Search"
+								onClick={() => setView('search')}
+							/>
 						</div>
 					</div>
 				)}
@@ -145,10 +159,18 @@ function ConnectedHeader({
 						</div>
 					</div>
 				)}
+				{view === 'profile' && (
+					<div className="Header__search--content profileView">
+						<h3>Profile view</h3>
+					</div>
+				)}
 			</div>
 		</div>
 	);
 }
 
-const Header = connect(mapStateToProps, mapDispatchToProps)(ConnectedHeader);
+const Header = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ConnectedHeader);
 export default Header;

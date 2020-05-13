@@ -12,6 +12,8 @@ import {
 	updateSearchLocation,
 } from '../redux/actions/SearchActions';
 
+import { updateHeaderView } from '../redux/actions/HeaderActions';
+
 const mapStateToProps = (state) => ({
 	loggedUser: state.AuthReducer.loggedUser,
 	searchResults: state.SearchReducer.searchResults,
@@ -20,12 +22,16 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	updateSearchResults: (results) => dispatch(updateSearchResults(results)),
+	updateSearchResults: (results) =>
+		dispatch(updateSearchResults(results)),
 	addSearchTag: (tag) => dispatch(addSearchTag(tag)),
-	updateSearchLocation: (location) => dispatch(updateSearchLocation(location)),
+	updateSearchLocation: (location) =>
+		dispatch(updateSearchLocation(location)),
+	updateHeaderView: (view) => dispatch(updateHeaderView(view)),
 });
 function ConnectedSearch(props) {
 	useEffect(() => {
+		props.updateHeaderView('results');
 		const API_URL = process.env.REACT_APP_API_URL;
 		const query = querySearch(props.location.search);
 		// Generate results without client search
@@ -92,5 +98,8 @@ function ConnectedSearch(props) {
 		</div>
 	);
 }
-const Search = connect(mapStateToProps, mapDispatchToProps)(ConnectedSearch);
+const Search = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ConnectedSearch);
 export default Search;

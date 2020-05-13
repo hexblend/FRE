@@ -9,24 +9,33 @@ import Button from '../components/elements/Button';
 import CustomLink from '../components/elements/Link';
 
 // import isEmpty from '../components/isEmpty';
+import { updateProfile } from '../redux/actions/ProfileActions';
+import { updateHeaderView } from '../redux/actions/HeaderActions';
 
 const mapStateToProps = (state) => ({
 	loggedUser: state.AuthReducer.loggedUser,
+	profile: state.ProfileReducer.profile,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	updateProfile: (profile) => dispatch(updateProfile(profile)),
+	updateHeaderView: (view) => dispatch(updateHeaderView(view)),
 });
 
 const ConnectedProfile = (props) => {
+	const { profile, updateProfile, updateHeaderView } = props;
+
 	const history = useHistory();
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
-
-	const [profile, setProfile] = React.useState({});
 
 	useEffect(() => {
 		const uid = props.match.params.id;
 		const API_URL = process.env.REACT_APP_API_URL;
 		axios
 			.get(`${API_URL}/api/users/${uid}`)
-			.then((res) => setProfile(res.data.user))
+			.then((res) => updateProfile(res.data.user))
 			.catch((err) => err && history.push(PUBLIC_URL));
+		updateHeaderView('profile');
 	}, []);
 
 	// Formating
@@ -73,7 +82,9 @@ const ConnectedProfile = (props) => {
 					{/* Key abilities */}
 					{profile.key_abilities && (
 						<div className="Profile__keyAbilities">
-							<h3 className="Profile__sectionTitle">Key abilities: </h3>
+							<h3 className="Profile__sectionTitle">
+								Key abilities:{' '}
+							</h3>
 							<ul>
 								{profile.key_abilities.map((ability, index) => (
 									<li key={index}>{ability}</li>
@@ -87,7 +98,11 @@ const ConnectedProfile = (props) => {
 							<h3 className="Profile__sectionTitle">Experience: </h3>
 
 							{profile.experience.map((exp) => (
-								<div div className="Profile__experience--single" key={exp._id}>
+								<div
+									div
+									className="Profile__experience--single"
+									key={exp._id}
+								>
 									<p className="Profile__experience--jobTitle">
 										{exp.job_title}
 									</p>
@@ -125,8 +140,14 @@ const ConnectedProfile = (props) => {
 							</h3>
 
 							{profile.projects.map((prj) => (
-								<div div className="Profile__projects--single" key={prj._id}>
-									<p className="Profile__projects--projectTitle">{prj.title}</p>
+								<div
+									div
+									className="Profile__projects--single"
+									key={prj._id}
+								>
+									<p className="Profile__projects--projectTitle">
+										{prj.title}
+									</p>
 									{prj.description && (
 										<>
 											<p className="Profile__projects--subsectionTitle">
@@ -152,7 +173,11 @@ const ConnectedProfile = (props) => {
 											<span className="Profile__projects--subsectionTitle">
 												Link:
 											</span>
-											<CustomLink to={prj.link} text={prj.link} border={true} />
+											<CustomLink
+												to={prj.link}
+												text={prj.link}
+												border={true}
+											/>
 										</div>
 									)}
 								</div>
@@ -249,5 +274,8 @@ const ConnectedProfile = (props) => {
 	);
 };
 
-const Profile = connect(mapStateToProps)(ConnectedProfile);
+const Profile = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ConnectedProfile);
 export default Profile;

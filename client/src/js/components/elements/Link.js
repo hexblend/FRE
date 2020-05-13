@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -12,9 +12,9 @@ const iconList = Object.keys(Icons)
 	.map((icon) => Icons[icon]);
 library.add(...iconList);
 
-function CustomLink({ to, text, type, border, icon, iconSide, onClick }) {
+function CustomLink({ to, href, text, type, border, icon, iconSide, onClick }) {
 	return (
-		<a
+		<Link
 			className={`link 
 				${type === 'gray' && 'gray-link'} 
 				${type === 'blue' && 'blue-link'} 
@@ -22,9 +22,10 @@ function CustomLink({ to, text, type, border, icon, iconSide, onClick }) {
 				${!type && 'link-primary'}
 				${!border && 'no-border'}
 			`}
-			href={to}
+			to={to}
+			href={href}
 			onClick={onClick}
-			target="_blank"
+			target={href && '_blank'}
 		>
 			{icon && iconSide === 'left' && (
 				<FontAwesomeIcon icon={icon} className="link-icon" />
@@ -33,13 +34,14 @@ function CustomLink({ to, text, type, border, icon, iconSide, onClick }) {
 			{icon && iconSide === 'right' && (
 				<FontAwesomeIcon icon={icon} className="link-icon" />
 			)}
-		</a>
+		</Link>
 	);
 }
 
 CustomLink.propTypes = {
 	text: PropTypes.string.isRequired,
 	to: PropTypes.string.isRequired,
+	to: PropTypes.string,
 	type: PropTypes.string,
 	border: PropTypes.bool,
 	icon: PropTypes.string,
