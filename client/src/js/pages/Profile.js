@@ -23,7 +23,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ConnectedProfile = (props) => {
-	const { profile, updateProfile, updateHeaderView } = props;
+	const {
+		profile,
+		loggedUser,
+		updateProfile,
+		updateHeaderView,
+	} = props;
 
 	const history = useHistory();
 	const API_URL = process.env.REACT_APP_API_URL;
@@ -277,6 +282,12 @@ const ConnectedProfile = (props) => {
 					</div>
 				</div>
 			</div>
+			{profile._id === loggedUser._id && (
+				<div className="Profile__buttons">
+					<Button text="Edit profile" btnType="button" />
+					<Button text="Delete profile" btnType="button" />
+				</div>
+			)}
 		</div>
 	);
 };

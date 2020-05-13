@@ -176,3 +176,15 @@
 		font-size: 1.4rem;
 	}
 }
+.Profile__buttons {
+	margin-top: 6rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	button {
+		font-size: 1.4rem;
+		&:last-child {
+			background: $red;
+		}
+	}
+}
