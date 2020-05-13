@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Logo from '../components/Logo';
@@ -26,6 +26,7 @@ const mapStateToProps = (state) => ({
 	tagsLeft: state.SearchReducer.tagsLeft,
 	loggedUser: state.AuthReducer.loggedUser,
 	view: state.HeaderReducer.view,
+	profile: state.ProfileReducer.profile,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -56,7 +57,9 @@ function ConnectedHeader({
 	updateLocationInputSuggestions,
 	view,
 	setView,
+	profile,
 }) {
+	const history = useHistory();
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
 	const handleSubmit = (e) => {
@@ -161,7 +164,23 @@ function ConnectedHeader({
 				)}
 				{view === 'profile' && (
 					<div className="Header__search--content profileView">
-						<h3>Profile view</h3>
+						<div></div>
+						{profile.full_name && (
+							<>
+								{profile._id === loggedUser._id ? (
+									<h3 className="Header__title">Your profile</h3>
+								) : (
+									<h3 className="Header__title">
+										{profile.full_name.first_name}'s profile
+									</h3>
+								)}
+							</>
+						)}
+						<Button
+							text="Go back"
+							wide={true}
+							onClick={history.goBack}
+						/>
 					</div>
 				)}
 			</div>

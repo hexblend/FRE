@@ -12,21 +12,19 @@ library.add(...iconList);
 
 function Button({ type, wide, icon, text, onClick, btnType }) {
 	return (
-		<div>
-			<button
-				className={`btn 
+		<button
+			className={`btn 
 				${type === 'secondary' && 'btn-secondary'}
 				${type === 'full-width' && 'btn-full-width'}
 				${!type && 'btn-primary'}
 				${wide ? 'btn-wide' : ''}
 				`}
-				onClick={onClick}
-				type={btnType}
-			>
-				{icon && <FontAwesomeIcon icon={icon} className="btn-icon" />}
-				{text}
-			</button>
-		</div>
+			onClick={onClick}
+			type={btnType}
+		>
+			{icon && <FontAwesomeIcon icon={icon} className="btn-icon" />}
+			{text}
+		</button>
 	);
 }
 
