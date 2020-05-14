@@ -9,6 +9,7 @@ import Button from '../components/elements/Button';
 import CustomLink from '../components/elements/Link';
 import ConfirmationModal from '../components/ConfirmationModal';
 import Alert from '../layout/Alert';
+import isEmpty from '../components/isEmpty';
 
 import { updateProfile } from '../redux/actions/ProfileActions';
 import { updateHeaderView } from '../redux/actions/HeaderActions';
@@ -92,9 +93,9 @@ const ConnectedProfile = (props) => {
 				setAlert({
 					type: 'success',
 					text:
-						'Your account and all the data has been deleted from our system',
+						'Your account and all the data has been deleted from our system.',
 				});
-				setTimeout(() => (window.location.href = '/'), 1700);
+				setTimeout(() => (window.location.href = '/'), 3000);
 			})
 			.catch(() => {
 				setAlert({
@@ -155,7 +156,7 @@ const ConnectedProfile = (props) => {
 						</div>
 					)}
 					{/* Key abilities */}
-					{profile.key_abilities && (
+					{!isEmpty(profile.key_abilities) && (
 						<div className="Profile__keyAbilities">
 							<h3 className="Profile__sectionTitle">
 								Key abilities:{' '}
@@ -168,7 +169,7 @@ const ConnectedProfile = (props) => {
 						</div>
 					)}
 					{/* Experience */}
-					{profile.experience && (
+					{!isEmpty(profile.experience) && (
 						<div className="Profile__experience">
 							<h3 className="Profile__sectionTitle">Experience: </h3>
 
@@ -208,7 +209,7 @@ const ConnectedProfile = (props) => {
 				{/* Right side */}
 				<div className="Profile__splitView--right">
 					{/* Projects */}
-					{profile.projects && (
+					{!isEmpty(profile.projects) && (
 						<div className="Profile__projects">
 							<h3 className="Profile__sectionTitle">
 								Projects / Achivements / Activities:{' '}
@@ -347,7 +348,7 @@ const ConnectedProfile = (props) => {
 			</div>
 			{profile._id === loggedUser._id && (
 				<div className="Profile__buttons">
-					<Button text="Edit profile" btnType="button" />
+					<Button text="Update profile" btnType="button" />
 					<Button
 						text="Delete profile"
 						btnType="button"
