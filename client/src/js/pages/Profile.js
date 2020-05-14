@@ -175,7 +175,6 @@ const ConnectedProfile = (props) => {
 
 							{profile.experience.map((exp) => (
 								<div
-									div
 									className="Profile__experience--single"
 									key={exp._id}
 								>
@@ -217,7 +216,6 @@ const ConnectedProfile = (props) => {
 
 							{profile.projects.map((prj) => (
 								<div
-									div
 									className="Profile__projects--single"
 									key={prj._id}
 								>
@@ -265,14 +263,16 @@ const ConnectedProfile = (props) => {
 					<div className="Profile__links">
 						<h3 className="Profile__sectionTitle">Useful Links:</h3>
 						{/* Email */}
-						<div className="Profile__links--link">
-							<span>Email -</span>
-							<CustomLink
-								to={profile.email}
-								text={profile.email}
-								border={true}
-							/>
-						</div>
+						{!isEmpty(profile.email) && (
+							<div className="Profile__links--link">
+								<span>Email -</span>
+								<CustomLink
+									to={profile.email}
+									text={profile.email}
+									border={true}
+								/>
+							</div>
+						)}
 						{profile.social_media && (
 							<>
 								{/* Facebook */}
