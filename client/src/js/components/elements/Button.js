@@ -15,9 +15,11 @@ function Button({ type, wide, icon, text, onClick, btnType }) {
 		<button
 			className={`btn 
 				${type === 'secondary' && 'btn-secondary'}
+				${type === 'delete' && 'btn-delete'}
 				${type === 'full-width' && 'btn-full-width'}
 				${!type && 'btn-primary'}
 				${wide ? 'btn-wide' : ''}
+
 				`}
 			onClick={onClick}
 			type={btnType}

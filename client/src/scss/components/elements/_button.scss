@@ -34,6 +34,17 @@
 		background: darken($gray, 5%);
 	}
 }
+.btn-delete {
+	background: $red;
+	color: $white;
+	font-weight: 300;
+	&:hover {
+		background: darken($red, 2%);
+	}
+	&:active {
+		background: darken($red, 5%);
+	}
+}
 .btn-wide {
 	padding: 1.2rem 5.5rem;
 }

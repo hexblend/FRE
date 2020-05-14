@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
@@ -7,8 +7,8 @@ import moment from 'moment';
 import Badges from '../components/Badges';
 import Button from '../components/elements/Button';
 import CustomLink from '../components/elements/Link';
+import ConfirmationModal from '../components/ConfirmationModal';
 
-// import isEmpty from '../components/isEmpty';
 import { updateProfile } from '../redux/actions/ProfileActions';
 import { updateHeaderView } from '../redux/actions/HeaderActions';
 
@@ -50,13 +50,29 @@ const ConnectedProfile = (props) => {
 		updateProfile,
 	]);
 
+	// Modal
+	const [openModal, setOpenModal] = useState(true);
+
 	// Formating
 	const fullName =
 		profile.full_name &&
 		profile.full_name.first_name + ' ' + profile.full_name.last_name;
 	const firstName = profile.full_name && profile.full_name.first_name;
+
 	return (
 		<div className="Profile">
+			<ConfirmationModal
+				text="Are you sure you want to delete your profile? This action is not reversible."
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+			>
+				<Button
+					btnType="button"
+					type="delete"
+					text="Delete profile"
+				/>
+			</ConfirmationModal>
+
 			<div className="Profile__header">
 				<div className="Profile__header--left">
 					{/* Full Name */}
@@ -285,7 +301,11 @@ const ConnectedProfile = (props) => {
 			{profile._id === loggedUser._id && (
 				<div className="Profile__buttons">
 					<Button text="Edit profile" btnType="button" />
-					<Button text="Delete profile" btnType="button" />
+					<Button
+						text="Delete profile"
+						btnType="button"
+						type="delete"
+					/>
 				</div>
 			)}
 		</div>
