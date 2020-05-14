@@ -3,11 +3,7 @@ import querySearch from 'stringquery';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import Header from '../layout/Header';
 import SearchResult from '../components/SearchResult';
-import Sidebar from '../components/Sidebar';
-import AuthNavbar from '../components/AuthNavbar';
-import isEmpty from '../components/isEmpty';
 import InfoBar from '../components/InfoBar';
 
 import {
@@ -15,6 +11,8 @@ import {
 	addSearchTag,
 	updateSearchLocation,
 } from '../redux/actions/SearchActions';
+
+import { updateHeaderView } from '../redux/actions/HeaderActions';
 
 const mapStateToProps = (state) => ({
 	loggedUser: state.AuthReducer.loggedUser,
@@ -24,12 +22,16 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	updateSearchResults: (results) => dispatch(updateSearchResults(results)),
+	updateSearchResults: (results) =>
+		dispatch(updateSearchResults(results)),
 	addSearchTag: (tag) => dispatch(addSearchTag(tag)),
-	updateSearchLocation: (location) => dispatch(updateSearchLocation(location)),
+	updateSearchLocation: (location) =>
+		dispatch(updateSearchLocation(location)),
+	updateHeaderView: (view) => dispatch(updateHeaderView(view)),
 });
 function ConnectedSearch(props) {
 	useEffect(() => {
+		props.updateHeaderView('results');
 		const API_URL = process.env.REACT_APP_API_URL;
 		const query = querySearch(props.location.search);
 		// Generate results without client search
@@ -88,18 +90,16 @@ function ConnectedSearch(props) {
 	}, [props.location.search]);
 
 	return (
-		<div className="Search">
-			{isEmpty(props.loggedUser) && <AuthNavbar bg={true} />}
-			<Header />
-			<Sidebar />
-			<div className="Search__content">
-				<InfoBar />
-				{props.searchResults.map((profile) => (
-					<SearchResult profile={profile} key={profile._id} />
-				))}
-			</div>
+		<div className="Search__content">
+			<InfoBar />
+			{props.searchResults.map((profile) => (
+				<SearchResult profile={profile} key={profile._id} />
+			))}
 		</div>
 	);
 }
-const Search = connect(mapStateToProps, mapDispatchToProps)(ConnectedSearch);
+const Search = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ConnectedSearch);
 export default Search;

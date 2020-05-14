@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,9 +10,7 @@ import {
 	faGraduationCap,
 } from '@fortawesome/free-solid-svg-icons';
 
-const mapStateToProps = (state) => ({ profile: state.AuthReducer.loggedUser });
-
-function ConnectedBadges({ profile }) {
+function Badges({ profile }) {
 	return (
 		<div className="Badges">
 			{profile.type === 'candidate' && (
@@ -87,9 +83,4 @@ function ConnectedBadges({ profile }) {
 	);
 }
 
-ConnectedBadges.propTypes = {
-	profile: PropTypes.object.isRequired,
-};
-
-const Badges = connect(mapStateToProps)(ConnectedBadges);
 export default Badges;

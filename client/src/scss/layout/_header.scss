@@ -4,6 +4,9 @@
 .Header {
 	background: $white;
 	border-bottom: 1px solid $gray;
+	position: sticky;
+	top: 0;
+	z-index: 10;
 }
 .Header__search {
 	display: flex;
@@ -40,5 +43,16 @@
 	a:first-child {
 		margin-right: 2.4rem;
 		padding-top: 0.5rem;
+	}
+}
+
+.Header__title {
+	font-size: $h4-desktop;
+}
+
+.profileView {
+	margin-left: 0;
+	button {
+		font-size: $p-small-desktop;
 	}
 }

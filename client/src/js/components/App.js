@@ -8,7 +8,10 @@ import Home from '../pages/Home';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
 import Search from '../pages/Search';
+import Profile from '../pages/Profile';
 import Footer from '../layout/Footer';
+
+import MainLayout from '../layout/MainLayout';
 
 import { addLoggedUser } from '../redux/actions/AuthActions';
 
@@ -55,7 +58,10 @@ function ConnectedApp({ addLoggedUser }) {
 					<Login type="employer" />
 				</Route>
 
-				<Route path="/search" component={Search} />
+				<MainLayout>
+					<Route path="/search" component={Search} />
+					<Route path="/profile/:id" component={Profile} />
+				</MainLayout>
 			</Switch>
 			<Footer />
 		</Router>

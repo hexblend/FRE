@@ -1,0 +1,54 @@
+.ConfirmationModal {
+	position: absolute;
+	background: rgba(255, 255, 255, 0.95);
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 30;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	animation: 0.3s ease-in-out zoomIn forwards;
+	overflow: hidden;
+}
+@keyframes zoomIn {
+	0% {
+		transform: scale(1);
+	}
+	70% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+.ConfirmationModal__content {
+	max-width: 50rem;
+	text-align: center;
+	position: relative;
+}
+.ConfirmationModal__closeIcon {
+	position: absolute;
+	bottom: 15rem;
+	right: 0;
+	font-size: $h4-desktop;
+	color: $darkest-gray;
+	@include text-trans;
+	&:hover {
+		cursor: pointer;
+		color: $black;
+	}
+}
+.ConfirmationModal__text {
+	margin-bottom: 3.2rem;
+}
+.ConfirmationModal__buttons {
+	button {
+		font-size: 1.4rem;
+		&:first-child {
+			margin-right: 1.6rem;
+		}
+	}
+}

@@ -5,17 +5,20 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartPie, faBriefcase } from '@fortawesome/free-solid-svg-icons';
+import {
+	faChartPie,
+	faBriefcase,
+} from '@fortawesome/free-solid-svg-icons';
 
 import Badges from '../components/Badges';
-import Alert from '../layout/Alert';
+import Alert from './Alert';
 import isEmpty from '../components/isEmpty';
 
 import { addLoggedUser } from '../redux/actions/AuthActions';
 
-const mapDispatchToProps = (dispatch) => {
-	return { addLoggedUser: (user) => dispatch(addLoggedUser(user)) };
-};
+const mapDispatchToProps = (dispatch) => ({
+	addLoggedUser: (user) => dispatch(addLoggedUser(user)),
+});
 
 const mapStateToProps = (state) => {
 	return { loggedUser: state.AuthReducer.loggedUser };
@@ -54,7 +57,7 @@ function ConnectedSidebar({ loggedUser }) {
 				<div className="Sidebar">
 					<Alert type={alert.type} text={alert.text} />
 					<div
-						style={{ background: loggedUser.avatar }}
+						style={{ backgroundImage: `url(${loggedUser.avatar})` }}
 						className="Sidebar__avatar"
 					/>
 
@@ -66,12 +69,16 @@ function ConnectedSidebar({ loggedUser }) {
 
 					<p className="Sidebar__userType">
 						<FontAwesomeIcon
-							icon={loggedUser.type === 'candidate' ? faBriefcase : faChartPie}
+							icon={
+								loggedUser.type === 'candidate'
+									? faBriefcase
+									: faChartPie
+							}
 						/>{' '}
 						Candidate
 					</p>
 					<div className="Sidebar__badges">
-						<Badges />
+						<Badges profile={loggedUser} />
 					</div>
 					<div className="Sidebar__links">
 						<div>
@@ -109,5 +116,8 @@ ConnectedSidebar.propTypes = {
 	loggedUser: PropTypes.object.isRequired,
 };
 
-const Sidebar = connect(mapStateToProps, mapDispatchToProps)(ConnectedSidebar);
+const Sidebar = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ConnectedSidebar);
 export default Sidebar;

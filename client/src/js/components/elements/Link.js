@@ -12,7 +12,16 @@ const iconList = Object.keys(Icons)
 	.map((icon) => Icons[icon]);
 library.add(...iconList);
 
-function CustomLink({ to, text, type, border, icon, iconSide, onClick }) {
+function CustomLink({
+	to,
+	href,
+	text,
+	type,
+	border,
+	icon,
+	iconSide,
+	onClick,
+}) {
 	return (
 		<Link
 			className={`link 
@@ -23,11 +32,13 @@ function CustomLink({ to, text, type, border, icon, iconSide, onClick }) {
 				${!border && 'no-border'}
 			`}
 			to={to}
+			href={href}
 			onClick={onClick}
+			target={href && '_blank'}
 		>
 			{icon && iconSide === 'left' && (
 				<FontAwesomeIcon icon={icon} className="link-icon" />
-			)}{' '}
+			)}
 			{text}{' '}
 			{icon && iconSide === 'right' && (
 				<FontAwesomeIcon icon={icon} className="link-icon" />
