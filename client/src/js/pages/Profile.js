@@ -51,7 +51,7 @@ const ConnectedProfile = (props) => {
 	]);
 
 	// Modal
-	const [openModal, setOpenModal] = useState(true);
+	const [openModal, setOpenModal] = useState(false);
 
 	// Formating
 	const fullName =
@@ -62,7 +62,7 @@ const ConnectedProfile = (props) => {
 	return (
 		<div className="Profile">
 			<ConfirmationModal
-				text="Are you sure you want to delete your profile? This action is not reversible."
+				text="Are you sure you want to delete your profile? This action can't be reversed."
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 			>
@@ -305,6 +305,7 @@ const ConnectedProfile = (props) => {
 						text="Delete profile"
 						btnType="button"
 						type="delete"
+						onClick={() => setOpenModal(true)}
 					/>
 				</div>
 			)}
