@@ -8,9 +8,11 @@ import Badges from '../components/Badges';
 import Button from '../components/elements/Button';
 import CustomLink from '../components/elements/Link';
 import ConfirmationModal from '../components/ConfirmationModal';
+import Alert from '../layout/Alert';
 
 import { updateProfile } from '../redux/actions/ProfileActions';
 import { updateHeaderView } from '../redux/actions/HeaderActions';
+import { addLoggedUser } from '../redux/actions/AuthActions';
 
 const mapStateToProps = (state) => ({
 	loggedUser: state.AuthReducer.loggedUser,
@@ -20,6 +22,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	updateProfile: (profile) => dispatch(updateProfile(profile)),
 	updateHeaderView: (view) => dispatch(updateHeaderView(view)),
+	addLoggedUser: (user) => dispatch(addLoggedUser(user)),
 });
 
 const ConnectedProfile = (props) => {
@@ -28,6 +31,7 @@ const ConnectedProfile = (props) => {
 		loggedUser,
 		updateProfile,
 		updateHeaderView,
+		addLoggedUser,
 	} = props;
 
 	const history = useHistory();
@@ -53,14 +57,56 @@ const ConnectedProfile = (props) => {
 	// Modal
 	const [openModal, setOpenModal] = useState(false);
 
+	// Alert
+	const [alert, setAlert] = useState({
+		type: '',
+		text: '',
+	});
+
 	// Formating
 	const fullName =
 		profile.full_name &&
 		profile.full_name.first_name + ' ' + profile.full_name.last_name;
 	const firstName = profile.full_name && profile.full_name.first_name;
 
+	// Handle User Removal
+	const handleDeleteUser = () => {
+		// Log user out
+		axios
+			.get(`${API_URL}/api/logout`, { withCredentials: true })
+			.then(() => {
+				addLoggedUser({});
+			})
+			.catch(() => {
+				setAlert({
+					type: 'error',
+					text: 'Something went wrong',
+				});
+			});
+		// Delete user account
+		axios
+			.delete(`${API_URL}/api/users/${loggedUser._id}`, {
+				withCredentials: true,
+			})
+			.then(() => {
+				setAlert({
+					type: 'success',
+					text:
+						'Your account and all the data has been deleted from our system',
+				});
+				setTimeout(() => (window.location.href = '/'), 1700);
+			})
+			.catch(() => {
+				setAlert({
+					type: 'error',
+					text: 'Something went wrong',
+				});
+			});
+	};
+
 	return (
 		<div className="Profile">
+			<Alert type={alert.type} text={alert.text} />
 			<ConfirmationModal
 				text="Are you sure you want to delete your profile? This action can't be reversed."
 				openModal={openModal}
@@ -70,6 +116,7 @@ const ConnectedProfile = (props) => {
 					btnType="button"
 					type="delete"
 					text="Delete profile"
+					onClick={() => handleDeleteUser()}
 				/>
 			</ConfirmationModal>
 
