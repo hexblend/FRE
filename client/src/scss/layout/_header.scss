@@ -56,3 +56,13 @@
 		font-size: $p-small-desktop;
 	}
 }
+.editProfileView {
+	.Header__buttons {
+		button {
+			font-size: 1.4rem;
+			&:first-child {
+				margin-right: 1.6rem;
+			}
+		}
+	}
+}

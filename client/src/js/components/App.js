@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+} from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -9,6 +13,7 @@ import Register from '../pages/Register';
 import Login from '../pages/Login';
 import Search from '../pages/Search';
 import Profile from '../pages/Profile';
+import EditProfile from '../pages/EditProfile';
 import Footer from '../layout/Footer';
 
 import MainLayout from '../layout/MainLayout';
@@ -60,7 +65,8 @@ function ConnectedApp({ addLoggedUser }) {
 
 				<MainLayout>
 					<Route path="/search" component={Search} />
-					<Route path="/profile/:id" component={Profile} />
+					<Route exact path="/profile/:id" component={Profile} />
+					<Route path="/profile/:id/edit" component={EditProfile} />
 				</MainLayout>
 			</Switch>
 			<Footer />
