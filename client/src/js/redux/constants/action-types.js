@@ -1,5 +1,7 @@
+// Root Actions
 export const ADD_ARTICLE = 'ADD_ARTICLE';
 export const DATA_LOADED = 'DATA_LOADED';
+export const UPDATE_LOADING = 'UPDATE_LOADING';
 
 // Auth Actions
 export const ADD_LOGGED_USER = 'ADD_LOGGED_USER';
@@ -20,7 +22,9 @@ export const UPDATE_LOCATION_INPUT_SUGGESTIONS =
 	'UPDATE_LOCATION_INPUT_SUGGESTIONS';
 // Search results
 export const UPDATE_SEARCH_RESULTS = 'UPDATE_SEARCH_RESULTS';
-// Profile
+
+// Profile Actions
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
-// Header
+
+// Header Actions
 export const UPDATE_HEADER_VIEW = 'UPDATE_HEADER_VIEW';

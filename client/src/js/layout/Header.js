@@ -188,16 +188,11 @@ function ConnectedHeader({
 						<div></div>
 						<h3 className="Header__title">Edit your profile</h3>
 						<div className="Header__buttons">
+							<Button text="Save profile" wide={true} icon="check" />
 							<Button
 								text="Go back"
 								type="secondary"
 								onClick={history.goBack}
-							/>
-							<Button
-								text="Save profile"
-								wide={true}
-								onClick={history.goBack}
-								icon="check"
 							/>
 						</div>
 					</div>
