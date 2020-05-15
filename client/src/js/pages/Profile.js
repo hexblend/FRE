@@ -348,7 +348,9 @@ const ConnectedProfile = (props) => {
 			</div>
 			{profile._id === loggedUser._id && (
 				<div className="Profile__buttons">
-					<Button text="Update profile" btnType="button" />
+					<Link to={`/profile/${loggedUser._id}/edit`}>
+						<Button text="Update profile" btnType="button" />
+					</Link>
 					<Button
 						text="Delete profile"
 						btnType="button"

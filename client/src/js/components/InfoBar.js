@@ -11,7 +11,9 @@ export const ConnectedInfoBar = ({ loggedUser, searchResults }) => {
 			{searchResults.length === 0 && (
 				<div
 					className="InfoBar"
-					style={{ marginLeft: `${!isEmpty(loggedUser) && '2.4rem'}` }}
+					style={{
+						marginLeft: `${!isEmpty(loggedUser) && '2.4rem'}`,
+					}}
 				>
 					<div className="InfoBar__left">
 						<FontAwesomeIcon icon={faInfoCircle} />
@@ -24,7 +26,9 @@ export const ConnectedInfoBar = ({ loggedUser, searchResults }) => {
 			{searchResults.length !== 0 && isEmpty(loggedUser) && (
 				<div
 					className="InfoBar"
-					style={{ marginLeft: `${!isEmpty(loggedUser) && '2.4rem'}` }}
+					style={{
+						marginLeft: `${!isEmpty(loggedUser) && '2.4rem'}`,
+					}}
 				>
 					<div className="InfoBar__left">
 						<FontAwesomeIcon icon={faInfoCircle} />
@@ -36,16 +40,19 @@ export const ConnectedInfoBar = ({ loggedUser, searchResults }) => {
 			)}
 			{!isEmpty(loggedUser) &&
 				loggedUser.type === 'candidate' &&
-				(loggedUser.job_title === '' || loggedUser.location === '') && (
+				(loggedUser.job_title === '' ||
+					loggedUser.location === '') && (
 					<div
 						className="InfoBar"
-						style={{ marginLeft: `${!isEmpty(loggedUser) && '2.4rem'}` }}
+						style={{
+							marginLeft: `${!isEmpty(loggedUser) && '2.4rem'}`,
+						}}
 					>
 						<div className="InfoBar__left">
 							<FontAwesomeIcon icon={faInfoCircle} />
 							<span className="InfoBar__text">
-								Please update your profile in order to maximize your chances for
-								an employer to contact you.
+								Please update your profile in order to maximize your
+								chances for an employer to contact you.
 							</span>
 						</div>
 					</div>
@@ -56,13 +63,15 @@ export const ConnectedInfoBar = ({ loggedUser, searchResults }) => {
 					loggedUser.company.website === '') && (
 					<div
 						className="InfoBar"
-						style={{ marginLeft: `${!isEmpty(loggedUser) && '2.4rem'}` }}
+						style={{
+							marginLeft: `${!isEmpty(loggedUser) && '2.4rem'}`,
+						}}
 					>
 						<div className="InfoBar__left">
 							<FontAwesomeIcon icon={faInfoCircle} />
 							<span className="InfoBar__text">
-								Please update your profile in order to maximize your chances for
-								a candidate to contact you.
+								Please update your profile in order to maximize your
+								chances for a candidate to contact you.
 							</span>
 						</div>
 					</div>
