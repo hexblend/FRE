@@ -1,0 +1,28 @@
+.EditProfile__content {
+	margin: 4rem 0 4rem 4rem;
+}
+.EditProfile__splitView {
+	display: flex;
+	justify-content: space-between;
+}
+.EditProfile__splitView--left,
+.EditProfile__splitView--right {
+	width: 40%;
+}
+
+.EditProfile__section {
+	margin-bottom: 3.2rem;
+	input {
+		margin-bottom: 1.6rem;
+	}
+}
+.EditProfile__section--title {
+	margin-bottom: 1.6rem;
+}
+
+.EditProfile__buttons {
+	margin-top: 4rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
