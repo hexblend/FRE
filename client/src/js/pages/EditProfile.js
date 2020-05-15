@@ -4,23 +4,33 @@ import { connect } from 'react-redux';
 
 import Button from '../components/elements/Button';
 import Input from '../components/elements/Input';
+import isEmpty from '../components/isEmpty';
 
 import { updateHeaderView } from '../redux/actions/HeaderActions';
 import { updateLoading } from '../redux/actions/index';
-import isEmpty from '../components/isEmpty';
+import { updateLoggedProfile } from '../redux/actions/ProfileActions';
 
 const mapStateToProps = (state) => ({
 	loading: state.RootReducer.loading,
 	loggedUser: state.AuthReducer.loggedUser,
+	loggedProfile: state.ProfileReducer.loggedProfile,
 });
 
 const mapDispatchToProps = (dispatch) => ({
 	updateLoading: (bool) => dispatch(updateLoading(bool)),
 	updateHeaderView: (view) => dispatch(updateHeaderView(view)),
+	updateLoggedProfile: (profile) => dispatch(updateLoggedProfile(profile)),
 });
 
 export const ConnectedEditProfile = (props) => {
-	const { loading, updateLoading, loggedUser, updateHeaderView } = props;
+	const {
+		loading,
+		updateLoading,
+		loggedUser,
+		updateHeaderView,
+		loggedProfile,
+		updateLoggedProfile,
+	} = props;
 
 	const history = useHistory();
 
