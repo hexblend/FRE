@@ -9,9 +9,11 @@ const initialState = {
 	loggedUser: {},
 	updatedLoggedUser: {
 		full_name: '',
+		email: '',
 
 		errors: {
 			full_name: '',
+			email: '',
 		},
 
 		formSubmitted: false,

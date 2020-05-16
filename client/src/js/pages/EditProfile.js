@@ -66,6 +66,7 @@ export const ConnectedEditProfile = (props) => {
 					' ' +
 					loggedUser.full_name.last_name,
 			});
+			updateLoggedField({ fieldName: 'email', fieldValue: loggedUser.email });
 		}
 	}, [loggedUser]);
 
@@ -88,6 +89,21 @@ export const ConnectedEditProfile = (props) => {
 			} else {
 				updateLoggedFieldError({ fieldName: 'full_name', error: '' });
 			}
+
+			// Email
+			if (updatedLoggedUser.email === '') {
+				updateLoggedFieldError({
+					fieldName: 'email',
+					error: "You can't leave your email empty.",
+				});
+			} else if (!/\S+@\S+/.test(updatedLoggedUser.email.toLowerCase())) {
+				updateLoggedFieldError({
+					fieldName: 'email',
+					error: 'You must enter a valie email type',
+				});
+			} else {
+				updateLoggedFieldError({ fieldName: 'email', error: '' });
+			}
 		}
 	}, [formSubmitted]);
 
@@ -105,21 +121,38 @@ export const ConnectedEditProfile = (props) => {
 								General Information
 							</h3>
 							{!isEmpty(updatedLoggedUser) && (
-								<Input
-									type="text"
-									id="fullName"
-									label="Full Name"
-									placeholder="First and last name"
-									minWidth="100%"
-									value={updatedLoggedUser.full_name}
-									handleChange={(fullName) =>
-										updateLoggedField({
-											fieldName: 'full_name',
-											fieldValue: fullName,
-										})
-									}
-									error={updatedLoggedUser.errors.full_name}
-								/>
+								<>
+									<Input
+										type="text"
+										id="fullName"
+										label="Full Name"
+										placeholder="First and last name"
+										minWidth="100%"
+										value={updatedLoggedUser.full_name}
+										handleChange={(fullName) =>
+											updateLoggedField({
+												fieldName: 'full_name',
+												fieldValue: fullName,
+											})
+										}
+										error={updatedLoggedUser.errors.full_name}
+									/>
+									<Input
+										type="email"
+										id="email"
+										label="Your email"
+										placeholder="Your email"
+										minWidth="100%"
+										value={updatedLoggedUser.email}
+										handleChange={(email) =>
+											updateLoggedField({
+												fieldName: 'email',
+												fieldValue: email,
+											})
+										}
+										error={updatedLoggedUser.errors.email}
+									/>
+								</>
 							)}
 						</section>
 						<h3 className="EditProfile__sectionTitle">Badges</h3>
