@@ -1,7 +1,7 @@
 import {
 	ADD_LOGGED_USER,
-	UPDATE_LOGGED_FULLNAME,
-	UPDATE_LOGGED_FULLNAME_ERROR,
+	UPDATE_LOGGED_FIELD,
+	UPDATE_LOGGED_FIELD_ERROR,
 	SET_UPDATE_FORM_SUBMITTED,
 } from '../constants/action-types';
 
@@ -22,22 +22,22 @@ function AuthReducer(state = initialState, action) {
 	switch (action.type) {
 		case ADD_LOGGED_USER:
 			return { ...state, loggedUser: action.payload };
-		case UPDATE_LOGGED_FULLNAME:
+		case UPDATE_LOGGED_FIELD:
 			return {
 				...state,
 				updatedLoggedUser: {
 					...state.updatedLoggedUser,
-					full_name: action.payload,
+					[action.payload.fieldName]: action.payload.fieldValue,
 				},
 			};
-		case UPDATE_LOGGED_FULLNAME_ERROR: {
+		case UPDATE_LOGGED_FIELD_ERROR: {
 			return {
 				...state,
 				updatedLoggedUser: {
 					...state.updatedLoggedUser,
 					errors: {
 						...state.updatedLoggedUser.errors,
-						full_name: action.payload,
+						[action.payload.fieldName]: action.payload.error,
 					},
 				},
 			};

@@ -158,9 +158,7 @@ const ConnectedProfile = (props) => {
 					{/* Key abilities */}
 					{!isEmpty(profile.key_abilities) && (
 						<div className="Profile__keyAbilities">
-							<h3 className="Profile__sectionTitle">
-								Key abilities:{' '}
-							</h3>
+							<h3 className="Profile__sectionTitle">Key abilities: </h3>
 							<ul>
 								{profile.key_abilities.map((ability, index) => (
 									<li key={index}>{ability}</li>
@@ -174,10 +172,7 @@ const ConnectedProfile = (props) => {
 							<h3 className="Profile__sectionTitle">Experience: </h3>
 
 							{profile.experience.map((exp) => (
-								<div
-									className="Profile__experience--single"
-									key={exp._id}
-								>
+								<div className="Profile__experience--single" key={exp._id}>
 									<p className="Profile__experience--jobTitle">
 										{exp.job_title}
 									</p>
@@ -215,13 +210,8 @@ const ConnectedProfile = (props) => {
 							</h3>
 
 							{profile.projects.map((prj) => (
-								<div
-									className="Profile__projects--single"
-									key={prj._id}
-								>
-									<p className="Profile__projects--projectTitle">
-										{prj.title}
-									</p>
+								<div className="Profile__projects--single" key={prj._id}>
+									<p className="Profile__projects--projectTitle">{prj.title}</p>
 									{prj.description && (
 										<>
 											<p className="Profile__projects--subsectionTitle">
@@ -247,11 +237,7 @@ const ConnectedProfile = (props) => {
 											<span className="Profile__projects--subsectionTitle">
 												Link:
 											</span>
-											<CustomLink
-												to={prj.link}
-												text={prj.link}
-												border={true}
-											/>
+											<CustomLink to={prj.link} text={prj.link} border={true} />
 										</div>
 									)}
 								</div>
@@ -260,79 +246,81 @@ const ConnectedProfile = (props) => {
 					)}
 
 					{/* Useful links */}
-					<div className="Profile__links">
-						<h3 className="Profile__sectionTitle">Useful Links:</h3>
-						{/* Email */}
-						{!isEmpty(profile.email) && (
-							<div className="Profile__links--link">
-								<span>Email -</span>
-								<CustomLink
-									to={profile.email}
-									text={profile.email}
-									border={true}
-								/>
-							</div>
-						)}
-						{profile.social_media && (
-							<>
-								{/* Facebook */}
-								{profile.social_media.facebook && (
-									<div className="Profile__links--link">
-										<span>Facebook -</span>
-										<CustomLink
-											to={profile.social_media.facebook}
-											text={profile.social_media.facebook}
-											border={true}
-										/>
-									</div>
-								)}
-								{/* Twitter */}
-								{profile.social_media.twitter && (
-									<div className="Profile__links--link">
-										<span>Twitter -</span>
-										<CustomLink
-											to={profile.social_media.twitter}
-											text={profile.social_media.twitter}
-											border={true}
-										/>
-									</div>
-								)}
-								{/* Instagram */}
-								{profile.social_media.instagram && (
-									<div className="Profile__links--link">
-										<span>Instagram -</span>
-										<CustomLink
-											to={profile.social_media.instagram}
-											text={profile.social_media.instagram}
-											border={true}
-										/>
-									</div>
-								)}
-								{/* LinkedIn */}
-								{profile.social_media.linkedin && (
-									<div className="Profile__links--link">
-										<span>LinkedIn -</span>
-										<CustomLink
-											to={profile.social_media.linkedin}
-											text={profile.social_media.linkedin}
-											border={true}
-										/>
-									</div>
-								)}
-								{/* GitHub */}
-								{profile.social_media.github && (
-									<div className="Profile__links--link">
-										<span>GitHub -</span>
-										<CustomLink
-											to={profile.social_media.github}
-											text={profile.social_media.github}
-											border={true}
-										/>
-									</div>
-								)}
-							</>
-						)}
-					</div>
+					{!isEmpty(profile.social_media) && (
+						<div className="Profile__links">
+							<h3 className="Profile__sectionTitle">Useful Links:</h3>
+							{/* Email */}
+							{!isEmpty(profile.email) && (
+								<div className="Profile__links--link">
+									<span>Email -</span>
+									<CustomLink
+										to={profile.email}
+										text={profile.email}
+										border={true}
+									/>
+								</div>
+							)}
+							{profile.social_media && (
+								<>
+									{/* Facebook */}
+									{profile.social_media.facebook && (
+										<div className="Profile__links--link">
+											<span>Facebook -</span>
+											<CustomLink
+												to={profile.social_media.facebook}
+												text={profile.social_media.facebook}
+												border={true}
+											/>
+										</div>
+									)}
+									{/* Twitter */}
+									{profile.social_media.twitter && (
+										<div className="Profile__links--link">
+											<span>Twitter -</span>
+											<CustomLink
+												to={profile.social_media.twitter}
+												text={profile.social_media.twitter}
+												border={true}
+											/>
+										</div>
+									)}
+									{/* Instagram */}
+									{profile.social_media.instagram && (
+										<div className="Profile__links--link">
+											<span>Instagram -</span>
+											<CustomLink
+												to={profile.social_media.instagram}
+												text={profile.social_media.instagram}
+												border={true}
+											/>
+										</div>
+									)}
+									{/* LinkedIn */}
+									{profile.social_media.linkedin && (
+										<div className="Profile__links--link">
+											<span>LinkedIn -</span>
+											<CustomLink
+												to={profile.social_media.linkedin}
+												text={profile.social_media.linkedin}
+												border={true}
+											/>
+										</div>
+									)}
+									{/* GitHub */}
+									{profile.social_media.github && (
+										<div className="Profile__links--link">
+											<span>GitHub -</span>
+											<CustomLink
+												to={profile.social_media.github}
+												text={profile.social_media.github}
+												border={true}
+											/>
+										</div>
+									)}
+								</>
+							)}
+						</div>
+					)}
 					{/* Get in touch */}
 					<div className="Profile__getInTouch">
 						<h3 className="Profile__sectionTitle">Get in touch:</h3>
@@ -363,8 +351,5 @@ const ConnectedProfile = (props) => {
 	);
 };
 
-const Profile = connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(ConnectedProfile);
+const Profile = connect(mapStateToProps, mapDispatchToProps)(ConnectedProfile);
 export default Profile;

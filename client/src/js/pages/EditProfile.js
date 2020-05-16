@@ -8,8 +8,8 @@ import isEmpty from '../components/isEmpty';
 
 import { updateHeaderView } from '../redux/actions/HeaderActions';
 import {
-	updateLoggedFullName,
-	updateLoggedFullNameError,
+	updateLoggedField,
+	updateLoggedFieldError,
 	setUpdateFormSubmitted,
 } from '../redux/actions/AuthActions';
 
@@ -21,9 +21,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	updateHeaderView: (view) => dispatch(updateHeaderView(view)),
-	updateLoggedFullName: (fullName) => dispatch(updateLoggedFullName(fullName)),
-	updateLoggedFullNameError: (error) =>
-		dispatch(updateLoggedFullNameError(error)),
+	updateLoggedField: (obj) => dispatch(updateLoggedField(obj)),
+	updateLoggedFieldError: (obj) => dispatch(updateLoggedFieldError(obj)),
 	setUpdateFormSubmitted: (bool) => dispatch(setUpdateFormSubmitted(bool)),
 });
 
@@ -33,8 +32,8 @@ export const ConnectedEditProfile = (props) => {
 		loggedUser,
 		updatedLoggedUser,
 
-		updateLoggedFullName,
-		updateLoggedFullNameError,
+		updateLoggedField,
+		updateLoggedFieldError,
 
 		formSubmitted,
 		setUpdateFormSubmitted,
@@ -60,9 +59,13 @@ export const ConnectedEditProfile = (props) => {
 	// Update updatedLoggedUser
 	useEffect(() => {
 		if (!isEmpty(loggedUser)) {
-			updateLoggedFullName(
-				loggedUser.full_name.first_name + ' ' + loggedUser.full_name.last_name
-			);
+			updateLoggedField({
+				fieldName: 'full_name',
+				fieldValue:
+					loggedUser.full_name.first_name +
+					' ' +
+					loggedUser.full_name.last_name,
+			});
 		}
 	}, [loggedUser]);
 
@@ -73,11 +76,17 @@ export const ConnectedEditProfile = (props) => {
 
 			// Full name
 			if (updatedLoggedUser.full_name === '') {
-				updateLoggedFullNameError('Your full name must not be empty.');
+				updateLoggedFieldError({
+					fieldName: 'full_name',
+					error: 'Your full name must not be empty.',
+				});
 			} else if (updatedLoggedUser.full_name.split(' ').length !== 2) {
-				updateLoggedFullNameError('You must include your first and last name.');
+				updateLoggedFieldError({
+					fieldName: 'full_name',
+					error: 'Your must include your first and last name.',
+				});
 			} else {
-				updateLoggedFullNameError('');
+				updateLoggedFieldError({ fieldName: 'full_name', error: '' });
 			}
 		}
 	}, [formSubmitted]);
@@ -103,7 +112,12 @@ export const ConnectedEditProfile = (props) => {
 									placeholder="First and last name"
 									minWidth="100%"
 									value={updatedLoggedUser.full_name}
-									handleChange={(fullName) => updateLoggedFullName(fullName)}
+									handleChange={(fullName) =>
+										updateLoggedField({
+											fieldName: 'full_name',
+											fieldValue: fullName,
+										})
+									}
 									error={updatedLoggedUser.errors.full_name}
 								/>
 							)}
