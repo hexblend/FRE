@@ -37,7 +37,7 @@ function Input({
                                 ${noBG && 'noBG'} 
                                 ${noShadow && 'noShadow'}
                               `}
-						style={{ minWidth: `${minWidth}` }}
+						style={{ minWidth: `${minWidth}`, maxWidth: `${minWidth}` }}
 						autoComplete="off"
 					/>
 					{error && <p className="customInput__error">{error}</p>}
@@ -53,6 +53,7 @@ function Input({
 					value={value}
 					onChange={(e) => handleChange(e.target.value)}
 					placeholder={placeholder}
+					style={{ minWidth: `${minWidth}`, maxWidth: `${minWidth}` }}
 					autocomplete="off"
 				></textarea>
 			)}

@@ -72,6 +72,12 @@ export const ConnectedEditProfile = (props) => {
 			});
 			updateLoggedField({ fieldName: 'email', fieldValue: loggedUser.email });
 			updateLoggedField({ fieldName: 'status', fieldValue: loggedUser.status });
+			if (loggedUser.description) {
+				updateLoggedField({
+					fieldName: 'description',
+					fieldValue: loggedUser.description,
+				});
+			}
 		}
 	}, [loggedUser]);
 
@@ -190,6 +196,21 @@ export const ConnectedEditProfile = (props) => {
 										menuClassName="EditProfile__statusDropdown--menu"
 										arrowClosed={<FontAwesomeIcon icon={faCaretDown} />}
 										arrowOpen={<FontAwesomeIcon icon={faCaretDown} />}
+									/>
+									<Input
+										type="textarea"
+										id="description"
+										label="Description"
+										placeholder="Profile description"
+										minWidth="100%"
+										value={updatedLoggedUser.description}
+										handleChange={(description) =>
+											updateLoggedField({
+												fieldName: 'description',
+												fieldValue: description,
+											})
+										}
+										error={updatedLoggedUser.errors.full_name}
 									/>
 								</>
 							)}
