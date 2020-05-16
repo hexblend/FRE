@@ -13,11 +13,11 @@
 .EditProfile__section {
 	margin-bottom: 3.2rem;
 	input {
-		margin-bottom: 1.6rem;
+		margin-bottom: 3.2rem;
 	}
 }
 .EditProfile__section--title {
-	margin-bottom: 1.6rem;
+	margin-bottom: 3.2rem;
 }
 
 .EditProfile__buttons {
@@ -25,4 +25,71 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+}
+.EditProfile__section--label {
+	font-size: 1.4rem;
+	margin-bottom: 0.8rem;
+}
+
+.EditProfile__statusDropdown--wrapper {
+	width: 100%;
+}
+.EditProfile__statusDropdown {
+	background: $white;
+	width: 100%;
+	border: 0;
+	font-size: $p-small-desktop;
+	color: $darkest-gray;
+	padding: 1.2rem 1.6rem;
+	border-radius: 0.5rem;
+	margin-top: 0.8rem;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
+	display: flex;
+	justify-content: space-between;
+	cursor: pointer;
+	.Dropdown-arrow-wrapper {
+		color: $dark-gray;
+	}
+}
+.EditProfile__statusDropdown--placeholder {
+	color: $green;
+	position: relative;
+	padding-left: 1.6rem;
+	text-transform: capitalize;
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0.6rem;
+		left: 0;
+		width: 0.6rem;
+		height: 0.6rem;
+		background: $green;
+		border-radius: 50%;
+	}
+}
+.EditProfile__statusDropdown--menu {
+	background: $white;
+	border-radius: 0.5rem;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+	margin-top: 0.8rem;
+	width: 100%;
+	.Dropdown-option {
+		color: $darkest-gray;
+		border-bottom: 1px solid $gray;
+		padding: 1.6rem 0 1.6rem 0.8rem;
+		font-size: $p-small-desktop;
+		&:hover {
+			cursor: pointer;
+			background: $lightest-gray;
+		}
+		&:first-child {
+			border-top-left-radius: 0.5rem;
+			border-top-right-radius: 0.5rem;
+		}
+		&:last-child {
+			border-bottom: 0;
+			border-bottom-left-radius: 0.5rem;
+			border-bottom-right-radius: 0.5rem;
+		}
+	}
 }

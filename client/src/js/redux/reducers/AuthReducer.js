@@ -10,6 +10,7 @@ const initialState = {
 	updatedLoggedUser: {
 		full_name: '',
 		email: '',
+		status: '',
 
 		errors: {
 			full_name: '',

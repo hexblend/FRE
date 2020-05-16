@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 import Button from '../components/elements/Button';
 import Input from '../components/elements/Input';
 import isEmpty from '../components/isEmpty';
+import Dropdown from 'react-dropdown';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 import { updateHeaderView } from '../redux/actions/HeaderActions';
 import {
@@ -67,6 +71,7 @@ export const ConnectedEditProfile = (props) => {
 					loggedUser.full_name.last_name,
 			});
 			updateLoggedField({ fieldName: 'email', fieldValue: loggedUser.email });
+			updateLoggedField({ fieldName: 'status', fieldValue: loggedUser.status });
 		}
 	}, [loggedUser]);
 
@@ -110,6 +115,24 @@ export const ConnectedEditProfile = (props) => {
 	// Modal
 	const [openModal, setOpenModal] = useState(false);
 
+	// Status
+	let statusOptions = [];
+	if (!isEmpty(loggedUser)) {
+		if (loggedUser.type === 'candidate') {
+			statusOptions = [
+				{ label: 'None', value: 'None' },
+				{ label: 'Waiting for offers', value: 'waiting for offers' },
+				{ label: 'Interviewing', value: 'interviewing' },
+				{ label: 'Employed', value: 'employed' },
+			];
+		}
+		if (loggedUser.type === 'employer') {
+			statusOptions = [
+				{ label: 'Hiring', value: 'hiring' },
+				{ label: 'Not Hiring', value: 'not hiring' },
+			];
+		}
+	}
 	return (
 		<>
 			<div className="EditProfile__content">
@@ -151,6 +174,23 @@ export const ConnectedEditProfile = (props) => {
 											})
 										}
 										error={updatedLoggedUser.errors.email}
+									/>
+									<p className="EditProfile__section--label">Status</p>
+									<Dropdown
+										value={updatedLoggedUser.status}
+										onChange={(option) =>
+											updateLoggedField({
+												fieldName: 'status',
+												fieldValue: option,
+											})
+										}
+										options={statusOptions}
+										className="EditProfile__statusDropdown--wrapper"
+										controlClassName="EditProfile__statusDropdown"
+										placeholderClassName="EditProfile__statusDropdown--placeholder"
+										menuClassName="EditProfile__statusDropdown--menu"
+										arrowClosed={<FontAwesomeIcon icon={faCaretDown} />}
+										arrowOpen={<FontAwesomeIcon icon={faCaretDown} />}
 									/>
 								</>
 							)}
