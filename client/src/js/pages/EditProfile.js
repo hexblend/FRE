@@ -110,7 +110,7 @@ export const ConnectedEditProfile = (props) => {
 			} else if (!/\S+@\S+/.test(updatedLoggedUser.email.toLowerCase())) {
 				updateLoggedFieldError({
 					fieldName: 'email',
-					error: 'You must enter a valie email type',
+					error: 'You must enter a valid email type',
 				});
 			} else {
 				updateLoggedFieldError({ fieldName: 'email', error: '' });
