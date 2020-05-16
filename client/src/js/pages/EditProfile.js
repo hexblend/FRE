@@ -185,7 +185,6 @@ export const ConnectedEditProfile = (props) => {
 											})
 										}
 										options={statusOptions}
-										className="EditProfile__statusDropdown--wrapper"
 										controlClassName="EditProfile__statusDropdown"
 										placeholderClassName="EditProfile__statusDropdown--placeholder"
 										menuClassName="EditProfile__statusDropdown--menu"
