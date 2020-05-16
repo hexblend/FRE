@@ -7,124 +7,130 @@ import Input from '../components/elements/Input';
 import isEmpty from '../components/isEmpty';
 
 import { updateHeaderView } from '../redux/actions/HeaderActions';
-import { updateLoading } from '../redux/actions/index';
-import { updateLoggedProfile } from '../redux/actions/ProfileActions';
+import {
+	updateLoggedFullName,
+	updateLoggedFullNameError,
+	setUpdateFormSubmitted,
+} from '../redux/actions/AuthActions';
 
 const mapStateToProps = (state) => ({
-	loading: state.RootReducer.loading,
 	loggedUser: state.AuthReducer.loggedUser,
-	loggedProfile: state.ProfileReducer.loggedProfile,
+	updatedLoggedUser: state.AuthReducer.updatedLoggedUser,
+	formSubmitted: state.AuthReducer.updatedLoggedUser.formSubmitted,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	updateLoading: (bool) => dispatch(updateLoading(bool)),
 	updateHeaderView: (view) => dispatch(updateHeaderView(view)),
-	updateLoggedProfile: (profile) => dispatch(updateLoggedProfile(profile)),
+	updateLoggedFullName: (fullName) => dispatch(updateLoggedFullName(fullName)),
+	updateLoggedFullNameError: (error) =>
+		dispatch(updateLoggedFullNameError(error)),
+	setUpdateFormSubmitted: (bool) => dispatch(setUpdateFormSubmitted(bool)),
 });
 
 export const ConnectedEditProfile = (props) => {
+	const { updateHeaderView } = props;
 	const {
-		loading,
-		updateLoading,
 		loggedUser,
-		updateHeaderView,
-		loggedProfile,
-		updateLoggedProfile,
+		updatedLoggedUser,
+
+		updateLoggedFullName,
+		updateLoggedFullNameError,
+
+		formSubmitted,
+		setUpdateFormSubmitted,
 	} = props;
 
 	const history = useHistory();
 
-	// Loading
-	useEffect(() => {
-		if (!isEmpty(loggedUser)) {
-			updateLoading(false);
-		}
-	}, [loggedUser, updateLoading]);
-
 	// Check User IDs
 	useEffect(() => {
 		const paramID = props.match.params.id;
-		if (!loading) {
-			if (!isEmpty(loggedUser)) {
-				if (loggedUser._id !== paramID) {
-					history.goBack();
-				}
+		if (!isEmpty(loggedUser)) {
+			if (loggedUser._id !== paramID) {
+				history.goBack();
 			}
 		}
 	});
 
 	// Update Header View
 	useEffect(() => {
-		if (!loading) {
-			updateHeaderView('editProfile');
+		updateHeaderView('editProfile');
+	}, [updateHeaderView]);
+
+	// Update updatedLoggedUser
+	useEffect(() => {
+		if (!isEmpty(loggedUser)) {
+			updateLoggedFullName(
+				loggedUser.full_name.first_name + ' ' + loggedUser.full_name.last_name
+			);
 		}
-	}, [updateHeaderView, loading]);
+	}, [loggedUser]);
+
+	// Validation
+	useEffect(() => {
+		if (formSubmitted) {
+			setUpdateFormSubmitted(false);
+
+			// Full name
+			if (updatedLoggedUser.full_name === '') {
+				updateLoggedFullNameError('Your full name must not be empty.');
+			} else if (updatedLoggedUser.full_name.split(' ').length !== 2) {
+				updateLoggedFullNameError('You must include your first and last name.');
+			} else {
+				updateLoggedFullNameError('');
+			}
+		}
+	}, [formSubmitted]);
 
 	// Modal
 	const [openModal, setOpenModal] = useState(false);
 
-	const [fullName, setFullName] = useState('');
-	const [fullNameError, setFullNameError] = useState('');
-
-	const [email, setEmail] = useState('');
-	const [emailError, setEmailError] = useState('');
-
 	return (
 		<>
-			{!loading && (
-				<div className="EditProfile__content">
-					<div className="EditProfile__splitView">
-						{/* Left Side */}
-						<div className="EditProfile__splitView--left">
-							<section className="EditProfile__section">
-								<h3 className="EditProfile__section--title">
-									General Information
-								</h3>
+			<div className="EditProfile__content">
+				<div className="EditProfile__splitView">
+					{/* Left Side */}
+					<div className="EditProfile__splitView--left">
+						<section className="EditProfile__section">
+							<h3 className="EditProfile__section--title">
+								General Information
+							</h3>
+							{!isEmpty(updatedLoggedUser) && (
 								<Input
 									type="text"
 									id="fullName"
-									label="Full name"
+									label="Full Name"
 									placeholder="First and last name"
 									minWidth="100%"
-									value={fullName}
-									handleChange={setFullName}
-									error={fullNameError}
+									value={updatedLoggedUser.full_name}
+									handleChange={(fullName) => updateLoggedFullName(fullName)}
+									error={updatedLoggedUser.errors.full_name}
 								/>
-								<Input
-									type="email"
-									id="email"
-									label="Your email"
-									placeholder="Your email"
-									minWidth="100%"
-									value={email}
-									handleChange={setEmail}
-									error={emailError}
-								/>
-							</section>
-							<h3 className="EditProfile__sectionTitle">Badges</h3>
-							<h3 className="EditProfile__sectionTitle">Key abilities</h3>
-							<h3 className="EditProfile__sectionTitle">Experience</h3>
-						</div>
-						{/* Right Side */}
-						<div className="EditProfile__splitView--right">
-							<h3 className="EditProfile__sectionTitle">
-								Projects / Achivements / Activities
-							</h3>
-							<h3 className="EditProfile__sectionTitle">Useful links</h3>
-						</div>
+							)}
+						</section>
+						<h3 className="EditProfile__sectionTitle">Badges</h3>
+						<h3 className="EditProfile__sectionTitle">Key abilities</h3>
+						<h3 className="EditProfile__sectionTitle">Experience</h3>
 					</div>
-
-					<div className="EditProfile__buttons">
-						<div></div>
-						<Button
-							text="Delete profile"
-							btnType="button"
-							type="delete"
-							onClick={() => setOpenModal(true)}
-						/>
+					{/* Right Side */}
+					<div className="EditProfile__splitView--right">
+						<h3 className="EditProfile__sectionTitle">
+							Projects / Achivements / Activities
+						</h3>
+						<h3 className="EditProfile__sectionTitle">Useful links</h3>
 					</div>
 				</div>
-			)}
+
+				<div className="EditProfile__buttons">
+					<div></div>
+					<Button
+						text="Delete profile"
+						btnType="button"
+						type="delete"
+						onClick={() => setOpenModal(true)}
+					/>
+				</div>
+			</div>
 		</>
 	);
 };

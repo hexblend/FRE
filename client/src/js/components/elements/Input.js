@@ -38,6 +38,7 @@ function Input({
                                 ${noShadow && 'noShadow'}
                               `}
 						style={{ minWidth: `${minWidth}` }}
+						autoComplete="off"
 					/>
 					{error && <p className="customInput__error">{error}</p>}
 				</>
@@ -52,6 +53,7 @@ function Input({
 					value={value}
 					onChange={(e) => handleChange(e.target.value)}
 					placeholder={placeholder}
+					autocomplete="off"
 				></textarea>
 			)}
 		</div>
