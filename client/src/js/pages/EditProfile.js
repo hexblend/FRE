@@ -95,6 +95,18 @@ export const ConnectedEditProfile = (props) => {
 					fieldValue: loggedUser.years_of_activity,
 				});
 			}
+			if (loggedUser.remote_worker) {
+				updateLoggedField({
+					fieldName: 'remote_worker',
+					fieldValue: loggedUser.remote_worker,
+				});
+			}
+			if (loggedUser.higher_education) {
+				updateLoggedField({
+					fieldName: 'higher_education',
+					fieldValue: loggedUser.higher_education,
+				});
+			}
 		}
 	}, [loggedUser]);
 
@@ -235,9 +247,6 @@ export const ConnectedEditProfile = (props) => {
 			}, 500)
 		);
 	};
-	// Remote & Studies
-	const [remoteWork, setRemoteWork] = useState(false);
-	const [superiorStudies, setSuperiorStudies] = useState(false);
 
 	return (
 		<>
@@ -249,6 +258,7 @@ export const ConnectedEditProfile = (props) => {
 							<h3 className="EditProfile__sectionTitle">General Information</h3>
 							{!isEmpty(updatedLoggedUser) && (
 								<>
+									{/* Full name */}
 									<Input
 										type="text"
 										id="fullName"
@@ -264,6 +274,7 @@ export const ConnectedEditProfile = (props) => {
 										}
 										error={updatedLoggedUser.errors.full_name}
 									/>
+									{/* Email */}
 									<Input
 										type="email"
 										id="email"
@@ -279,6 +290,7 @@ export const ConnectedEditProfile = (props) => {
 										}
 										error={updatedLoggedUser.errors.email}
 									/>
+									{/* Status */}
 									<p className="EditProfile__section--label">Status</p>
 									<Dropdown
 										value={updatedLoggedUser.status}
@@ -295,6 +307,7 @@ export const ConnectedEditProfile = (props) => {
 										arrowClosed={<FontAwesomeIcon icon={faCaretDown} />}
 										arrowOpen={<FontAwesomeIcon icon={faCaretDown} />}
 									/>
+									{/* Description */}
 									<Input
 										type="textarea"
 										id="description"
@@ -399,12 +412,31 @@ export const ConnectedEditProfile = (props) => {
 								error={updatedLoggedUser.errors.years_of_activity}
 								icon="calendar-alt"
 							/>
+							{/* Remote Worker */}
 							<Checkbox
 								label="Keen to work remotely?"
-								checked={remoteWork}
-								setChecked={setRemoteWork}
-								textChecked="Available to work from home."
-								textUnchecked="Not available to work from home."
+								checked={updatedLoggedUser.remote_worker}
+								setChecked={(checked) =>
+									updateLoggedField({
+										fieldName: 'remote_worker',
+										fieldValue: checked,
+									})
+								}
+								textChecked="Available to work from home"
+								textUnchecked="Not available to work from home"
+							/>
+							{/* Higher education */}
+							<Checkbox
+								label="Higher education?"
+								checked={updatedLoggedUser.higher_education}
+								setChecked={(checked) =>
+									updateLoggedField({
+										fieldName: 'higher_education',
+										fieldValue: checked,
+									})
+								}
+								textChecked="I do have a higher education"
+								textUnchecked="I do not have a higher education"
 							/>
 						</section>
 

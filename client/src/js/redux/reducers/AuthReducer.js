@@ -15,6 +15,8 @@ const initialState = {
 		job_title: '',
 		city: '',
 		years_of_activity: '',
+		remote_worker: '',
+		higher_education: '',
 
 		errors: {
 			full_name: '',
