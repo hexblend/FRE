@@ -13,11 +13,13 @@ const initialState = {
 		status: '',
 		description: '',
 		job_title: '',
+		city: '',
 
 		errors: {
 			full_name: '',
 			email: '',
 			job_title: '',
+			city: ''
 		},
 
 		formSubmitted: false,

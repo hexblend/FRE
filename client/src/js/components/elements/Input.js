@@ -52,7 +52,7 @@ function Input({
 							maxWidth: `${minWidth}`,
 							paddingLeft: `${icon && '4.4rem'}`,
 						}}
-						autoComplete="off"
+						autoComplete={id}
 					/>
 					{error && <p className="customInput__error">{error}</p>}
 					{icon && (
