@@ -8,6 +8,7 @@ import Input from '../components/elements/Input';
 import isEmpty from '../components/isEmpty';
 import Dropdown from 'react-dropdown';
 import Checkbox from '../components/elements/Checkbox';
+import Link from '../components/elements/Link';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -16,6 +17,8 @@ import { updateHeaderView } from '../redux/actions/HeaderActions';
 import {
 	updateLoggedField,
 	updateLoggedFieldError,
+	updateLoggedObjField,
+	updateLoggedObjFieldError,
 	setUpdateFormSubmitted,
 } from '../redux/actions/AuthActions';
 
@@ -29,6 +32,8 @@ const mapDispatchToProps = (dispatch) => ({
 	updateHeaderView: (view) => dispatch(updateHeaderView(view)),
 	updateLoggedField: (obj) => dispatch(updateLoggedField(obj)),
 	updateLoggedFieldError: (obj) => dispatch(updateLoggedFieldError(obj)),
+	updateLoggedObjField: (obj) => dispatch(updateLoggedObjField(obj)),
+	updateLoggedObjFieldError: (obj) => dispatch(updateLoggedObjFieldError(obj)),
 	setUpdateFormSubmitted: (bool) => dispatch(setUpdateFormSubmitted(bool)),
 });
 
@@ -40,6 +45,8 @@ export const ConnectedEditProfile = (props) => {
 
 		updateLoggedField,
 		updateLoggedFieldError,
+		updateLoggedObjField,
+		updateLoggedObjFieldError,
 
 		formSubmitted,
 		setUpdateFormSubmitted,
@@ -111,6 +118,12 @@ export const ConnectedEditProfile = (props) => {
 				updateLoggedField({
 					fieldName: 'key_abilities',
 					fieldValue: loggedUser.key_abilities,
+				});
+			}
+			if (loggedUser.experience) {
+				updateLoggedField({
+					fieldName: 'experience',
+					fieldValue: loggedUser.experience,
 				});
 			}
 		}
@@ -476,7 +489,7 @@ export const ConnectedEditProfile = (props) => {
 							{/* Label */}
 							<label htmlFor="key_abilities" className="customLabel">
 								You can add {tagsLeft} more
-								{tagsLeft === 1 ? ' lability' : ' abilities'}.
+								{tagsLeft === 1 ? ' ability' : ' abilities'}.
 							</label>
 							{/* Input */}
 							<input
@@ -510,7 +523,78 @@ export const ConnectedEditProfile = (props) => {
 								))}
 							</ul>
 						</section>
+
+						{/* Experience */}
 						<h3 className="EditProfile__sectionTitle">Experience</h3>
+						<Button
+							btnType="button"
+							type="full-width"
+							icon="plus"
+							minWidth="100%"
+							noShadow={true}
+							text="Add a new experience"
+						/>
+						{updatedLoggedUser.experience.map((experience, index) => (
+							<div className="EditProfile__experience" key={experience._id}>
+								<div className="EditProfile__experience--header">
+									<p>{index + 1}:</p>
+									<Link
+										type="red"
+										to="#"
+										href="#"
+										icon="times"
+										iconSide="right"
+										text="Delete"
+										border={true}
+									/>
+								</div>
+								<Input
+									type="text"
+									id={`job_title_${experience._id}`}
+									label="Job Title"
+									placeholder="Web developer"
+									minWidth="100%"
+									value={experience.job_title}
+									handleChange={(job_title) =>
+										updateLoggedObjField({
+											id: experience._id,
+											fieldName: 'job_title',
+											fieldValue: job_title,
+										})
+									}
+								/>
+								<Input
+									type="text"
+									id={`company_name_${experience._id}`}
+									label="Company name"
+									placeholder="ABC inc"
+									minWidth="100%"
+									value={experience.company_name}
+									handleChange={(company_name) =>
+										updateLoggedObjField({
+											id: experience._id,
+											fieldName: 'company_name',
+											fieldValue: company_name,
+										})
+									}
+								/>
+								<Input
+									type="textarea"
+									id={`long_description_${experience._id}`}
+									label="Description"
+									placeholder="ABC inc"
+									minWidth="100%"
+									value={experience.long_description}
+									handleChange={(long_description) =>
+										updateLoggedObjField({
+											id: experience._id,
+											fieldName: 'long_description',
+											fieldValue: long_description,
+										})
+									}
+								/>
+							</div>
+						))}
 					</div>
 					{/* Right Side */}
 					<div className="EditProfile__splitView--right">

@@ -26,6 +26,11 @@ function Checkbox(props) {
 	);
 }
 
-Checkbox.propTypes = {};
+Checkbox.propTypes = {
+	textUnchecked: PropTypes.string,
+	textChecked: PropTypes.string,
+	setChecked: PropTypes.func.isRequired,
+	label: PropTypes.string,
+};
 
 export default Checkbox;

@@ -111,3 +111,27 @@
 		margin-bottom: 0.8rem;
 	}
 }
+.EditProfile__experience {
+	margin: 4rem 0;
+	width: 100%;
+	&:hover {
+		.EditProfile__experience--header a {
+			display: block;
+		}
+	}
+	input {
+		margin-bottom: 3.2rem;
+	}
+}
+.EditProfile__experience--header {
+	margin: 3.2rem 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	p {
+		font-size: $h3-desktop;
+	}
+	a {
+		display: none;
+	}
+}

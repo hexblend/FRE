@@ -2,6 +2,8 @@ import {
 	ADD_LOGGED_USER,
 	UPDATE_LOGGED_FIELD,
 	UPDATE_LOGGED_FIELD_ERROR,
+	UPDATE_LOGGED_OBJ_FIELD,
+	UPDATE_LOGGED_OBJ_FIELD_ERROR,
 	SET_UPDATE_FORM_SUBMITTED,
 } from '../constants/action-types';
 
@@ -18,13 +20,13 @@ const initialState = {
 		remote_worker: '',
 		higher_education: '',
 		key_abilities: [],
+		experience: [],
 
 		errors: {
 			full_name: '',
 			email: '',
 			job_title: '',
 			city: '',
-			years_of_activity: '',
 		},
 
 		formSubmitted: false,
@@ -52,6 +54,22 @@ function AuthReducer(state = initialState, action) {
 						...state.updatedLoggedUser.errors,
 						[action.payload.fieldName]: action.payload.error,
 					},
+				},
+			};
+		}
+		case UPDATE_LOGGED_OBJ_FIELD: {
+			return {
+				...state,
+				updatedLoggedUser: {
+					...state.updatedLoggedUser,
+					experience: state.updatedLoggedUser.experience.map((experience) =>
+						experience._id === action.payload.id
+							? {
+									...experience,
+									[action.payload.fieldName]: action.payload.fieldValue,
+							  }
+							: experience
+					),
 				},
 			};
 		}
