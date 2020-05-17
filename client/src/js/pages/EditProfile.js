@@ -146,9 +146,7 @@ export const ConnectedEditProfile = (props) => {
 					{/* Left Side */}
 					<div className="EditProfile__splitView--left">
 						<section className="EditProfile__section">
-							<h3 className="EditProfile__section--title">
-								General Information
-							</h3>
+							<h3 className="EditProfile__sectionTitle">General Information</h3>
 							{!isEmpty(updatedLoggedUser) && (
 								<>
 									<Input
@@ -215,7 +213,26 @@ export const ConnectedEditProfile = (props) => {
 								</>
 							)}
 						</section>
-						<h3 className="EditProfile__sectionTitle">Badges</h3>
+						<section className="EditProfile__section">
+							<h3 className="EditProfile__sectionTitle">Badges</h3>
+							<Input
+								type="text"
+								id="jobTitle"
+								label="Desired job title"
+								placeholder="Job Title"
+								minWidth="100%"
+								value={updatedLoggedUser.job_title}
+								handleChange={(jobTitle) =>
+									updateLoggedField({
+										fieldName: 'job_title',
+										fieldValue: jobTitle,
+									})
+								}
+								error={updatedLoggedUser.errors.job_title}
+								icon="suitcase"
+							/>
+						</section>
+
 						<h3 className="EditProfile__sectionTitle">Key abilities</h3>
 						<h3 className="EditProfile__sectionTitle">Experience</h3>
 					</div>

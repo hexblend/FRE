@@ -1,5 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
+
+// Use all icons instead of one at the time
+const iconList = Object.keys(Icons)
+	.filter((key) => key !== 'fas' && key !== 'prefix')
+	.map((icon) => Icons[icon]);
+library.add(...iconList);
 
 function Input({
 	id,
@@ -13,6 +22,7 @@ function Input({
 	error,
 	value,
 	handleChange,
+	icon,
 }) {
 	return (
 		<div className="customInput__wrapper">
@@ -37,10 +47,17 @@ function Input({
                                 ${noBG && 'noBG'} 
                                 ${noShadow && 'noShadow'}
                               `}
-						style={{ minWidth: `${minWidth}`, maxWidth: `${minWidth}` }}
+						style={{
+							minWidth: `${minWidth}`,
+							maxWidth: `${minWidth}`,
+							paddingLeft: `${icon && '4.4rem'}`,
+						}}
 						autoComplete="off"
 					/>
 					{error && <p className="customInput__error">{error}</p>}
+					{icon && (
+						<FontAwesomeIcon icon={icon} className="customInput__icon" />
+					)}
 				</>
 			)}
 			{type === 'textarea' && (
@@ -73,6 +90,7 @@ Input.propTypes = {
 	value: PropTypes.string,
 	handleChange: PropTypes.func,
 	error: PropTypes.string,
+	icon: PropTypes.string,
 };
 
 export default Input;
