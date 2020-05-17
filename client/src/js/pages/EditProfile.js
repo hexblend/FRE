@@ -88,6 +88,12 @@ export const ConnectedEditProfile = (props) => {
 			if (loggedUser.city) {
 				updateLoggedField({ fieldName: 'city', fieldValue: loggedUser.city });
 			}
+			if (loggedUser.years_of_activity) {
+				updateLoggedField({
+					fieldName: 'years_of_activity',
+					fieldValue: loggedUser.years_of_activity,
+				});
+			}
 		}
 	}, [loggedUser]);
 
@@ -159,6 +165,18 @@ export const ConnectedEditProfile = (props) => {
 						setLocationSuggestions([]);
 					}
 				});
+			}
+			// Years of activity
+			if (updatedLoggedUser.years_of_activity) {
+				const pattern = /^(0|([1-9]\d*))$/;
+				if (!pattern.test(updatedLoggedUser.years_of_activity)) {
+					updateLoggedFieldError({
+						fieldName: 'years_of_activity',
+						error: 'You must enter a valid number.',
+					});
+				} else {
+					updateLoggedFieldError({ fieldName: 'years_of_activity', error: '' });
+				}
 			}
 		}
 	}, [formSubmitted]);
@@ -291,6 +309,7 @@ export const ConnectedEditProfile = (props) => {
 								</>
 							)}
 						</section>
+
 						<section className="EditProfile__section">
 							<h3 className="EditProfile__sectionTitle">Badges</h3>
 							{/* Job Title Input */}
@@ -359,6 +378,23 @@ export const ConnectedEditProfile = (props) => {
 									</li>
 								))}
 							</ul>
+							{/* Years of activity */}
+							<Input
+								type="text"
+								id="years_of_activity"
+								label="Years of activity"
+								placeholder="Career duration"
+								minWidth="100%"
+								value={updatedLoggedUser.years_of_activity}
+								handleChange={(years) =>
+									updateLoggedField({
+										fieldName: 'years_of_activity',
+										fieldValue: years,
+									})
+								}
+								error={updatedLoggedUser.errors.years_of_activity}
+								icon="calendar-alt"
+							/>
 						</section>
 
 						<h3 className="EditProfile__sectionTitle">Key abilities</h3>

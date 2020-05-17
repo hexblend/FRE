@@ -14,12 +14,14 @@ const initialState = {
 		description: '',
 		job_title: '',
 		city: '',
+		years_of_activity: '',
 
 		errors: {
 			full_name: '',
 			email: '',
 			job_title: '',
-			city: ''
+			city: '',
+			years_of_activity: '',
 		},
 
 		formSubmitted: false,
