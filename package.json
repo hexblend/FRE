@@ -40,6 +40,7 @@
 		"passport": "^0.4.1",
 		"passport-local": "^1.0.0",
 		"random-words": "^1.1.1",
+		"react-datepicker": "^1.8.0",
 		"react-dropdown": "^1.7.0",
 		"stringquery": "^1.0.8"
 	},

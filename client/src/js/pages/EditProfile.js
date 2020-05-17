@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import moment from 'moment';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import Button from '../components/elements/Button';
 import Input from '../components/elements/Input';
@@ -291,6 +294,8 @@ export const ConnectedEditProfile = (props) => {
 		updateLoggedField({ fieldName: 'key_abilities', fieldValue: remainedTags });
 		setTagsLeft(tagsLeft + 1);
 	};
+	// Experience
+	const [startDate, setStartDate] = useState(new Date());
 	return (
 		<>
 			<div className="EditProfile__content">
@@ -578,6 +583,38 @@ export const ConnectedEditProfile = (props) => {
 										})
 									}
 								/>
+								<div className="EditProfile__experience--date">
+									<div>
+										<p className="customLabel">Starting date:</p>
+										<DatePicker
+											selected={new Date(experience.starting_date)}
+											onChange={(date) => {
+												updateLoggedObjField({
+													id: experience._id,
+													fieldName: 'starting_date',
+													fieldValue: date,
+												});
+											}}
+											dateFormat="MM/yyyy"
+											className="customInput"
+										/>
+									</div>
+									<div>
+										<p className="customLabel">Ending date:</p>
+										<DatePicker
+											selected={new Date(experience.ending_date)}
+											onChange={(date) => {
+												updateLoggedObjField({
+													id: experience._id,
+													fieldName: 'ending_date',
+													fieldValue: date,
+												});
+											}}
+											dateFormat="MM/yyyy"
+											className="customInput"
+										/>
+									</div>
+								</div>
 								<Input
 									type="textarea"
 									id={`long_description_${experience._id}`}
