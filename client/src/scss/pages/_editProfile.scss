@@ -97,3 +97,17 @@
 	z-index: 2;
 	margin-bottom: 3.2rem;
 }
+.EditProfile__skillsTags {
+	position: relative;
+	top: 0;
+	left: 0;
+	margin-left: 1.6rem;
+	margin-top: -0.8rem;
+	max-width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	.tag {
+		margin-right: 3.2rem;
+		margin-bottom: 0.8rem;
+	}
+}

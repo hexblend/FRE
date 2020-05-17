@@ -10,7 +10,7 @@ import Dropdown from 'react-dropdown';
 import Checkbox from '../components/elements/Checkbox';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { updateHeaderView } from '../redux/actions/HeaderActions';
 import {
@@ -105,6 +105,12 @@ export const ConnectedEditProfile = (props) => {
 				updateLoggedField({
 					fieldName: 'higher_education',
 					fieldValue: loggedUser.higher_education,
+				});
+			}
+			if (loggedUser.key_abilities) {
+				updateLoggedField({
+					fieldName: 'key_abilities',
+					fieldValue: loggedUser.key_abilities,
 				});
 			}
 		}
@@ -248,6 +254,30 @@ export const ConnectedEditProfile = (props) => {
 		);
 	};
 
+	// Key abilities
+	const [tagsLeft, setTagsLeft] = useState(0);
+	useEffect(() => {
+		setTagsLeft(12 - updatedLoggedUser.key_abilities.length);
+	}, [updatedLoggedUser]);
+	const [tagsInput, setTagsInput] = useState('');
+	const addTag = (e) => {
+		if (e.key === 'Enter') {
+			setTagsInput('');
+			if (tagsLeft > 0) {
+				updateLoggedField({
+					fieldName: 'key_abilities',
+					fieldValue: [...updatedLoggedUser.key_abilities, e.target.value],
+				});
+				setTagsLeft(tagsLeft - 1);
+			}
+		}
+	};
+	const removeTag = (index) => {
+		const tags = updatedLoggedUser.key_abilities;
+		const remainedTags = tags.filter((tag) => tags.indexOf(tag) !== index);
+		updateLoggedField({ fieldName: 'key_abilities', fieldValue: remainedTags });
+		setTagsLeft(tagsLeft + 1);
+	};
 	return (
 		<>
 			<div className="EditProfile__content">
@@ -402,7 +432,7 @@ export const ConnectedEditProfile = (props) => {
 								label="Years of activity"
 								placeholder="Career duration"
 								minWidth="100%"
-								value={updatedLoggedUser.years_of_activity}
+								value={`${updatedLoggedUser.years_of_activity}`}
 								handleChange={(years) =>
 									updateLoggedField({
 										fieldName: 'years_of_activity',
@@ -440,7 +470,46 @@ export const ConnectedEditProfile = (props) => {
 							/>
 						</section>
 
-						<h3 className="EditProfile__sectionTitle">Key abilities</h3>
+						<section className="EditProfile__section">
+							{/* Key abilities */}
+							<h3 className="EditProfile__sectionTitle">Key abilities</h3>
+							{/* Label */}
+							<label htmlFor="key_abilities" className="customLabel">
+								You can add {tagsLeft} more
+								{tagsLeft === 1 ? ' lability' : ' abilities'}.
+							</label>
+							{/* Input */}
+							<input
+								type="text"
+								id="key_abilities"
+								name="key_abilities"
+								autoComplete="off"
+								placeholder="Add skill"
+								className="customInput"
+								style={{
+									minWidth: `100%`,
+									marginTop: '1.6rem',
+								}}
+								value={tagsInput}
+								onChange={(e) => setTagsInput(e.target.value)}
+								onKeyPress={addTag}
+								readOnly={tagsLeft === 0 ? true : false}
+							/>
+							{/* Tags */}
+							<ul className="Tags EditProfile__skillsTags">
+								{updatedLoggedUser.key_abilities.map((tag, index) => (
+									<li className="tag" key={index}>
+										<span className="tag__text">{tag}</span>
+										<span
+											className="tag__icon"
+											onClick={() => removeTag(index)}
+										>
+											<FontAwesomeIcon icon={faTimes} />
+										</span>
+									</li>
+								))}
+							</ul>
+						</section>
 						<h3 className="EditProfile__sectionTitle">Experience</h3>
 					</div>
 					{/* Right Side */}
