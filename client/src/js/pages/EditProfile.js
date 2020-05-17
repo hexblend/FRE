@@ -7,6 +7,7 @@ import Button from '../components/elements/Button';
 import Input from '../components/elements/Input';
 import isEmpty from '../components/isEmpty';
 import Dropdown from 'react-dropdown';
+import Checkbox from '../components/elements/Checkbox';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
@@ -234,6 +235,9 @@ export const ConnectedEditProfile = (props) => {
 			}, 500)
 		);
 	};
+	// Remote & Studies
+	const [remoteWork, setRemoteWork] = useState(false);
+	const [superiorStudies, setSuperiorStudies] = useState(false);
 
 	return (
 		<>
@@ -394,6 +398,13 @@ export const ConnectedEditProfile = (props) => {
 								}
 								error={updatedLoggedUser.errors.years_of_activity}
 								icon="calendar-alt"
+							/>
+							<Checkbox
+								label="Keen to work remotely?"
+								checked={remoteWork}
+								setChecked={setRemoteWork}
+								textChecked="Available to work from home."
+								textUnchecked="Not available to work from home."
 							/>
 						</section>
 
