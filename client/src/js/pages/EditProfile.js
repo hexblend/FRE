@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 import Button from '../components/elements/Button';
 import Input from '../components/elements/Input';
@@ -78,6 +79,12 @@ export const ConnectedEditProfile = (props) => {
 					fieldValue: loggedUser.description,
 				});
 			}
+			if (loggedUser.job_title) {
+				updateLoggedField({
+					fieldName: 'job_title',
+					fieldValue: loggedUser.job_title,
+				});
+			}
 		}
 	}, [loggedUser]);
 
@@ -110,11 +117,26 @@ export const ConnectedEditProfile = (props) => {
 			} else if (!/\S+@\S+/.test(updatedLoggedUser.email.toLowerCase())) {
 				updateLoggedFieldError({
 					fieldName: 'email',
-					error: 'You must enter a valid email type',
+					error: 'You must enter a valid email type.',
 				});
 			} else {
 				updateLoggedFieldError({ fieldName: 'email', error: '' });
 			}
+
+			// Job Title
+			const jobTitle = updatedLoggedUser.job_title;
+			const words = jobTitle.split(' ');
+			words.forEach((word) => {
+				if (word[0] !== word[0].toUpperCase()) {
+					updateLoggedFieldError({
+						fieldName: 'job_title',
+						error: 'You must select a valid job title.',
+					});
+					setJobsSuggestions([]);
+				} else {
+					updateLoggedFieldError({ fieldName: 'job_title', error: '' });
+				}
+			});
 		}
 	}, [formSubmitted]);
 
@@ -139,6 +161,27 @@ export const ConnectedEditProfile = (props) => {
 			];
 		}
 	}
+	// Jobs
+	const [typingTimeout, setTypingTimeout] = useState(0);
+	const [jobsSuggestions, setJobsSuggestions] = useState([]);
+
+	const getJobSuggestions = (query) => {
+		updateLoggedField({
+			fieldName: 'job_title',
+			fieldValue: query,
+		});
+		if (typingTimeout) clearTimeout(typingTimeout);
+		setTypingTimeout(
+			setTimeout(() => {
+				axios
+					.get(
+						`http://api.dataatwork.org/v1/jobs/autocomplete?contains=${updatedLoggedUser.job_title}`
+					)
+					.then((res) => setJobsSuggestions(res.data.slice(0, 4).reverse()));
+			}, 500)
+		);
+	};
+
 	return (
 		<>
 			<div className="EditProfile__content">
@@ -222,15 +265,31 @@ export const ConnectedEditProfile = (props) => {
 								placeholder="Job Title"
 								minWidth="100%"
 								value={updatedLoggedUser.job_title}
-								handleChange={(jobTitle) =>
-									updateLoggedField({
-										fieldName: 'job_title',
-										fieldValue: jobTitle,
-									})
-								}
+								handleChange={(jobTitle) => getJobSuggestions(jobTitle)}
 								error={updatedLoggedUser.errors.job_title}
 								icon="suitcase"
 							/>
+							{/* Suggestions */}
+							<ul
+								className="Suggestions EditProfile__suggestions"
+								style={{ width: `100%`, top: '5.85rem' }}
+							>
+								{jobsSuggestions.map((suggestion) => (
+									<li
+										key={suggestion.uuid}
+										onClick={() => {
+											updateLoggedField({
+												fieldName: 'job_title',
+												fieldValue: suggestion.suggestion,
+											});
+											setJobsSuggestions([]);
+										}}
+										className="Suggestions__suggestion"
+									>
+										{suggestion.suggestion}
+									</li>
+								))}
+							</ul>
 						</section>
 
 						<h3 className="EditProfile__sectionTitle">Key abilities</h3>

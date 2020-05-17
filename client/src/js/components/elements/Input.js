@@ -71,7 +71,7 @@ function Input({
 					onChange={(e) => handleChange(e.target.value)}
 					placeholder={placeholder}
 					style={{ minWidth: `${minWidth}`, maxWidth: `${minWidth}` }}
-					autocomplete="off"
+					autoComplete="off"
 				></textarea>
 			)}
 		</div>

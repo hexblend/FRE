@@ -11,10 +11,13 @@ const initialState = {
 		full_name: '',
 		email: '',
 		status: '',
+		description: '',
+		job_title: '',
 
 		errors: {
 			full_name: '',
 			email: '',
+			job_title: '',
 		},
 
 		formSubmitted: false,

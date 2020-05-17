@@ -15,9 +15,6 @@
 	input {
 		margin-bottom: 3.2rem;
 	}
-	section {
-		margin-bottom: 3.2rem;
-	}
 }
 .EditProfile__sectionTitle {
 	margin-bottom: 3.2rem;
@@ -93,4 +90,8 @@
 			border-bottom-right-radius: 0.5rem;
 		}
 	}
+}
+.EditProfile__suggestions {
+	position: relative;
+	top: -1.6rem !important;
 }
