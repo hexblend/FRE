@@ -4,6 +4,7 @@ import {
 	UPDATE_LOGGED_FIELD_ERROR,
 	UPDATE_LOGGED_OBJ_FIELD,
 	UPDATE_LOGGED_OBJ_FIELD_ERROR,
+	ADD_LOGGED_OBJ,
 	SET_UPDATE_FORM_SUBMITTED,
 } from '../constants/action-types';
 
@@ -73,6 +74,16 @@ function AuthReducer(state = initialState, action) {
 				},
 			};
 		}
+		case ADD_LOGGED_OBJ:
+			const array = action.payload.array;
+			const object = action.payload.object;
+			return {
+				...state,
+				updatedLoggedUser: {
+					...state.updatedLoggedUser,
+					[array]: [object, ...state.updatedLoggedUser[array]],
+				},
+			};
 		case SET_UPDATE_FORM_SUBMITTED: {
 			return {
 				...state,

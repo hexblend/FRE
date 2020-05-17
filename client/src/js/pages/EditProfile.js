@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import moment from 'moment';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { v4 as uuidv4 } from 'uuid';
 
 import Button from '../components/elements/Button';
 import Input from '../components/elements/Input';
@@ -23,6 +22,7 @@ import {
 	updateLoggedObjField,
 	updateLoggedObjFieldError,
 	setUpdateFormSubmitted,
+	addLoggedObj,
 } from '../redux/actions/AuthActions';
 
 const mapStateToProps = (state) => ({
@@ -38,6 +38,7 @@ const mapDispatchToProps = (dispatch) => ({
 	updateLoggedObjField: (obj) => dispatch(updateLoggedObjField(obj)),
 	updateLoggedObjFieldError: (obj) => dispatch(updateLoggedObjFieldError(obj)),
 	setUpdateFormSubmitted: (bool) => dispatch(setUpdateFormSubmitted(bool)),
+	addLoggedObj: (obj) => dispatch(addLoggedObj(obj)),
 });
 
 export const ConnectedEditProfile = (props) => {
@@ -50,6 +51,7 @@ export const ConnectedEditProfile = (props) => {
 		updateLoggedFieldError,
 		updateLoggedObjField,
 		updateLoggedObjFieldError,
+		addLoggedObj,
 
 		formSubmitted,
 		setUpdateFormSubmitted,
@@ -294,8 +296,21 @@ export const ConnectedEditProfile = (props) => {
 		updateLoggedField({ fieldName: 'key_abilities', fieldValue: remainedTags });
 		setTagsLeft(tagsLeft + 1);
 	};
+
 	// Experience
-	const [startDate, setStartDate] = useState(new Date());
+	const addNewExperience = () => {
+		addLoggedObj({
+			array: 'experience',
+			object: {
+				_id: uuidv4(),
+				company_name: '',
+				job_title: '',
+				starting_date: new Date(),
+				ending_date: new Date(),
+				long_description: '',
+			},
+		});
+	};
 	return (
 		<>
 			<div className="EditProfile__content">
@@ -538,6 +553,7 @@ export const ConnectedEditProfile = (props) => {
 							minWidth="100%"
 							noShadow={true}
 							text="Add a new experience"
+							onClick={addNewExperience}
 						/>
 						{updatedLoggedUser.experience.map((experience, index) => (
 							<div className="EditProfile__experience" key={experience._id}>
@@ -557,7 +573,7 @@ export const ConnectedEditProfile = (props) => {
 									type="text"
 									id={`job_title_${experience._id}`}
 									label="Job Title"
-									placeholder="Web developer"
+									placeholder="Your job title"
 									minWidth="100%"
 									value={experience.job_title}
 									handleChange={(job_title) =>
@@ -572,7 +588,7 @@ export const ConnectedEditProfile = (props) => {
 									type="text"
 									id={`company_name_${experience._id}`}
 									label="Company name"
-									placeholder="ABC inc"
+									placeholder="Company name"
 									minWidth="100%"
 									value={experience.company_name}
 									handleChange={(company_name) =>
@@ -619,7 +635,7 @@ export const ConnectedEditProfile = (props) => {
 									type="textarea"
 									id={`long_description_${experience._id}`}
 									label="Description"
-									placeholder="ABC inc"
+									placeholder="Job duties, responsabilities, etc."
 									minWidth="100%"
 									value={experience.long_description}
 									handleChange={(long_description) =>
