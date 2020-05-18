@@ -319,6 +319,20 @@ export const ConnectedEditProfile = (props) => {
 			},
 		});
 	};
+
+	// Projects
+	const addNewProject = () => {
+		addLoggedObj({
+			array: 'projects',
+			object: {
+				_id: uuidv4(),
+				title: '',
+				description: '',
+				accomplishments: '',
+				link: '',
+			},
+		});
+	};
 	return (
 		<>
 			<div className="EditProfile__content">
@@ -677,7 +691,7 @@ export const ConnectedEditProfile = (props) => {
 								minWidth="100%"
 								noShadow={true}
 								text="Add a new project"
-								onClick={addNewExperience}
+								onClick={addNewProject}
 							/>
 							{updatedLoggedUser.projects.map((project, index) => (
 								<div className="EditProfile__experience" key={project._id}>
@@ -691,7 +705,7 @@ export const ConnectedEditProfile = (props) => {
 											text="Delete"
 											border={true}
 											onClick={() =>
-												deleteLoggedObj({ array: 'experience', index })
+												deleteLoggedObj({ array: 'projects', index })
 											}
 										/>
 									</div>
