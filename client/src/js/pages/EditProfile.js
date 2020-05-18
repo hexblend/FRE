@@ -11,12 +11,15 @@ import isEmpty from '../components/isEmpty';
 import Dropdown from 'react-dropdown';
 import Checkbox from '../components/elements/Checkbox';
 import Link from '../components/elements/Link';
+import ConfirmationModal from '../components/ConfirmationModal';
+import Alert from '../layout/Alert';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { updateHeaderView } from '../redux/actions/HeaderActions';
 import {
+	addLoggedUser,
 	updateLoggedField,
 	updateLoggedFieldError,
 	updateLoggedObjField,
@@ -34,6 +37,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+	addLoggedUser: (user) => dispatch(addLoggedUser(user)),
+
 	updateHeaderView: (view) => dispatch(updateHeaderView(view)),
 
 	updateLoggedField: (obj) => dispatch(updateLoggedField(obj)),
@@ -71,6 +76,7 @@ export const ConnectedEditProfile = (props) => {
 	} = props;
 
 	const history = useHistory();
+	const API_URL = process.env.REACT_APP_API_URL;
 
 	// Check User IDs
 	useEffect(() => {
@@ -208,9 +214,6 @@ export const ConnectedEditProfile = (props) => {
 		}
 	}, [formSubmitted]);
 
-	// Modal
-	const [openModal, setOpenModal] = useState(false);
-
 	// Status
 	let statusOptions = [];
 	if (!isEmpty(loggedUser)) {
@@ -315,9 +318,61 @@ export const ConnectedEditProfile = (props) => {
 			},
 		});
 	};
+
+	// Modal
+	const [openModal, setOpenModal] = useState(false);
+	// Alert
+	const [alert, setAlert] = useState('');
+
+	// Handle User Removal
+	const handleDeleteUser = () => {
+		// Log user out
+		axios
+			.get(`${API_URL}/api/logout`, { withCredentials: true })
+			.then(() => {
+				addLoggedUser({});
+			})
+			.catch(() => {
+				setAlert({
+					type: 'error',
+					text: 'Something went wrong',
+				});
+			});
+		// Delete user account
+		axios
+			.delete(`${API_URL}/api/users/${loggedUser._id}`, {
+				withCredentials: true,
+			})
+			.then(() => {
+				setAlert({
+					type: 'success',
+					text: 'Your account and all the data has been deleted from our system.',
+				});
+				setTimeout(() => (window.location.href = '/'), 3000);
+			})
+			.catch(() => {
+				setAlert({
+					type: 'error',
+					text: 'Something went wrong',
+				});
+			});
+	};
 	return (
 		<>
 			<div className="EditProfile__content">
+				<Alert type={alert.type} text={alert.text} />
+				<ConfirmationModal
+					text="Are you sure you want to delete your profile? This action can't be reversed."
+					openModal={openModal}
+					setOpenModal={setOpenModal}
+				>
+					<Button
+						btnType="button"
+						type="delete"
+						text="Delete profile"
+						onClick={() => handleDeleteUser()}
+					/>
+				</ConfirmationModal>
 				<div className="EditProfile__splitView">
 					{/* Left Side */}
 					<div className="EditProfile__splitView--left">
