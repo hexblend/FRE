@@ -23,6 +23,7 @@ import {
 	updateLoggedObjFieldError,
 	setUpdateFormSubmitted,
 	addLoggedObj,
+	deleteLoggedObj,
 } from '../redux/actions/AuthActions';
 
 const mapStateToProps = (state) => ({
@@ -39,6 +40,7 @@ const mapDispatchToProps = (dispatch) => ({
 	updateLoggedObjFieldError: (obj) => dispatch(updateLoggedObjFieldError(obj)),
 	setUpdateFormSubmitted: (bool) => dispatch(setUpdateFormSubmitted(bool)),
 	addLoggedObj: (obj) => dispatch(addLoggedObj(obj)),
+	deleteLoggedObj: (obj) => dispatch(deleteLoggedObj(obj)),
 });
 
 export const ConnectedEditProfile = (props) => {
@@ -50,8 +52,8 @@ export const ConnectedEditProfile = (props) => {
 		updateLoggedField,
 		updateLoggedFieldError,
 		updateLoggedObjField,
-		updateLoggedObjFieldError,
 		addLoggedObj,
+		deleteLoggedObj,
 
 		formSubmitted,
 		setUpdateFormSubmitted,
@@ -562,11 +564,13 @@ export const ConnectedEditProfile = (props) => {
 									<Link
 										type="red"
 										to="#"
-										href="#"
 										icon="times"
 										iconSide="right"
 										text="Delete"
 										border={true}
+										onClick={() =>
+											deleteLoggedObj({ array: 'experience', index })
+										}
 									/>
 								</div>
 								<Input

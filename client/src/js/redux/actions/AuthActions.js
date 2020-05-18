@@ -5,6 +5,7 @@ import {
 	UPDATE_LOGGED_OBJ_FIELD,
 	UPDATE_LOGGED_OBJ_FIELD_ERROR,
 	ADD_LOGGED_OBJ,
+	DELETE_LOGGED_OBJ,
 	SET_UPDATE_FORM_SUBMITTED,
 } from '../constants/action-types';
 
@@ -25,6 +26,9 @@ export function updateLoggedObjFieldError(payload) {
 }
 export function addLoggedObj(payload) {
 	return { type: ADD_LOGGED_OBJ, payload };
+}
+export function deleteLoggedObj(payload) {
+	return { type: DELETE_LOGGED_OBJ, payload };
 }
 export function setUpdateFormSubmitted(payload) {
 	return { type: SET_UPDATE_FORM_SUBMITTED, payload };

@@ -3,8 +3,8 @@ import {
 	UPDATE_LOGGED_FIELD,
 	UPDATE_LOGGED_FIELD_ERROR,
 	UPDATE_LOGGED_OBJ_FIELD,
-	UPDATE_LOGGED_OBJ_FIELD_ERROR,
 	ADD_LOGGED_OBJ,
+	DELETE_LOGGED_OBJ,
 	SET_UPDATE_FORM_SUBMITTED,
 } from '../constants/action-types';
 
@@ -75,13 +75,28 @@ function AuthReducer(state = initialState, action) {
 			};
 		}
 		case ADD_LOGGED_OBJ:
-			const array = action.payload.array;
-			const object = action.payload.object;
 			return {
 				...state,
 				updatedLoggedUser: {
 					...state.updatedLoggedUser,
-					[array]: [object, ...state.updatedLoggedUser[array]],
+					[action.payload.array]: [
+						action.payload.object,
+						...state.updatedLoggedUser[action.payload.array],
+					],
+				},
+			};
+		case DELETE_LOGGED_OBJ:
+			return {
+				...state,
+				updatedLoggedUser: {
+					...state.updatedLoggedUser,
+					[action.payload.array]: state.updatedLoggedUser[
+						action.payload.array
+					].filter(
+						(item) =>
+							state.updatedLoggedUser[action.payload.array].indexOf(item) !==
+							action.payload.index
+					),
 				},
 			};
 		case SET_UPDATE_FORM_SUBMITTED: {
