@@ -251,6 +251,18 @@ const userSchema = mongoose.Schema(
 			github: {
 				type: String,
 				trim: true,
+				validate: validate({
+					validator: 'isURL',
+					message: 'URL is not valid',
+				}),
+			},
+			personal_website: {
+				type: String,
+				trim: true,
+				validate: validate({
+					validator: 'isURL',
+					message: 'URL is not valid',
+				}),
 			},
 		},
 		favourites: [

@@ -22,6 +22,7 @@ import {
 	updateLoggedObjField,
 	updateLoggedObjFieldError,
 	setUpdateFormSubmitted,
+	updateLoggedKeyinObj,
 	addLoggedObj,
 	deleteLoggedObj,
 } from '../redux/actions/AuthActions';
@@ -34,13 +35,19 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	updateHeaderView: (view) => dispatch(updateHeaderView(view)),
+
 	updateLoggedField: (obj) => dispatch(updateLoggedField(obj)),
 	updateLoggedFieldError: (obj) => dispatch(updateLoggedFieldError(obj)),
+
 	updateLoggedObjField: (obj) => dispatch(updateLoggedObjField(obj)),
 	updateLoggedObjFieldError: (obj) => dispatch(updateLoggedObjFieldError(obj)),
+
 	setUpdateFormSubmitted: (bool) => dispatch(setUpdateFormSubmitted(bool)),
+
 	addLoggedObj: (obj) => dispatch(addLoggedObj(obj)),
 	deleteLoggedObj: (obj) => dispatch(deleteLoggedObj(obj)),
+
+	updateLoggedKeyinObj: (obj) => dispatch(updateLoggedKeyinObj(obj)),
 });
 
 export const ConnectedEditProfile = (props) => {
@@ -51,12 +58,16 @@ export const ConnectedEditProfile = (props) => {
 
 		updateLoggedField,
 		updateLoggedFieldError,
+
 		updateLoggedObjField,
+
 		addLoggedObj,
 		deleteLoggedObj,
 
 		formSubmitted,
 		setUpdateFormSubmitted,
+
+		updateLoggedKeyinObj,
 	} = props;
 
 	const history = useHistory();
@@ -137,6 +148,13 @@ export const ConnectedEditProfile = (props) => {
 				updateLoggedField({
 					fieldName: 'projects',
 					fieldValue: loggedUser.projects,
+				});
+			}
+			if (loggedUser.social_media.facebook) {
+				updateLoggedKeyinObj({
+					object: 'social_media',
+					key: 'facebook',
+					value: loggedUser.social_media.facebook,
 				});
 			}
 		}
@@ -781,6 +799,22 @@ export const ConnectedEditProfile = (props) => {
 							))}
 						</section>
 						<h3 className="EditProfile__sectionTitle">Useful links</h3>
+						{/* Project title */}
+						<Input
+							type="text"
+							id={`facebook_link`}
+							label="Facebook:"
+							placeholder="Facebook profile link"
+							minWidth="100%"
+							value={updatedLoggedUser.social_media.facebook}
+							handleChange={(url) =>
+								updateLoggedKeyinObj({
+									object: 'social_media',
+									key: 'facebook',
+									value: url,
+								})
+							}
+						/>
 					</div>
 				</div>
 

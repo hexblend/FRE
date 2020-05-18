@@ -3,6 +3,7 @@ import {
 	UPDATE_LOGGED_FIELD,
 	UPDATE_LOGGED_FIELD_ERROR,
 	UPDATE_LOGGED_OBJ_FIELD,
+	UPDATE_LOGGED_KEY_IN_OBJ,
 	ADD_LOGGED_OBJ,
 	DELETE_LOGGED_OBJ,
 	SET_UPDATE_FORM_SUBMITTED,
@@ -23,6 +24,16 @@ const initialState = {
 		key_abilities: [],
 		experience: [],
 		projects: [],
+		social_media: {
+			facebook: '',
+			twitter: '',
+			linkedin: '',
+			instagram: '',
+			github: '',
+			behance: '',
+			email: '',
+			personal_website: '',
+		},
 
 		errors: {
 			full_name: '',
@@ -77,6 +88,17 @@ function AuthReducer(state = initialState, action) {
 				},
 			};
 		}
+		case UPDATE_LOGGED_KEY_IN_OBJ:
+			return {
+				...state,
+				updatedLoggedUser: {
+					...state.updatedLoggedUser,
+					[action.payload.object]: {
+						...state.updatedLoggedUser[action.payload.object],
+						[action.payload.key]: action.payload.value,
+					},
+				},
+			};
 		case ADD_LOGGED_OBJ:
 			return {
 				...state,
