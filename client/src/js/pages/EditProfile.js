@@ -64,10 +64,10 @@ export const ConnectedEditProfile = (props) => {
 		addLoggedObj,
 		deleteLoggedObj,
 
+		updateLoggedKeyinObj,
+
 		formSubmitted,
 		setUpdateFormSubmitted,
-
-		updateLoggedKeyinObj,
 	} = props;
 
 	const history = useHistory();
@@ -90,73 +90,37 @@ export const ConnectedEditProfile = (props) => {
 	// Update updatedLoggedUser
 	useEffect(() => {
 		if (!isEmpty(loggedUser)) {
-			updateLoggedField({
-				fieldName: 'full_name',
-				fieldValue:
-					loggedUser.full_name.first_name +
-					' ' +
-					loggedUser.full_name.last_name,
-			});
-			updateLoggedField({ fieldName: 'email', fieldValue: loggedUser.email });
-			updateLoggedField({ fieldName: 'status', fieldValue: loggedUser.status });
-			if (loggedUser.description) {
-				updateLoggedField({
-					fieldName: 'description',
-					fieldValue: loggedUser.description,
-				});
-			}
-			if (loggedUser.job_title) {
-				updateLoggedField({
-					fieldName: 'job_title',
-					fieldValue: loggedUser.job_title,
-				});
-			}
-			if (loggedUser.city) {
-				updateLoggedField({ fieldName: 'city', fieldValue: loggedUser.city });
-			}
-			if (loggedUser.years_of_activity) {
-				updateLoggedField({
-					fieldName: 'years_of_activity',
-					fieldValue: loggedUser.years_of_activity,
-				});
-			}
-			if (loggedUser.remote_worker) {
-				updateLoggedField({
-					fieldName: 'remote_worker',
-					fieldValue: loggedUser.remote_worker,
-				});
-			}
-			if (loggedUser.higher_education) {
-				updateLoggedField({
-					fieldName: 'higher_education',
-					fieldValue: loggedUser.higher_education,
-				});
-			}
-			if (loggedUser.key_abilities) {
-				updateLoggedField({
-					fieldName: 'key_abilities',
-					fieldValue: loggedUser.key_abilities,
-				});
-			}
-			if (loggedUser.experience) {
-				updateLoggedField({
-					fieldName: 'experience',
-					fieldValue: loggedUser.experience,
-				});
-			}
-			if (loggedUser.projects) {
-				updateLoggedField({
-					fieldName: 'projects',
-					fieldValue: loggedUser.projects,
-				});
-			}
-			if (loggedUser.social_media.facebook) {
-				updateLoggedKeyinObj({
-					object: 'social_media',
-					key: 'facebook',
-					value: loggedUser.social_media.facebook,
-				});
-			}
+			const loadField = (fieldName, fieldValue) => {
+				if (loggedUser[fieldName]) {
+					updateLoggedField({ fieldName, fieldValue });
+				}
+			};
+			// prettier-ignore
+			loadField('full_name', loggedUser.full_name.first_name + ' ' + loggedUser.full_name.last_name);
+			loadField('email', loggedUser.email);
+			loadField('status', loggedUser.status);
+			loadField('description', loggedUser.description);
+			loadField('job_title', loggedUser.job_title);
+			loadField('city', loggedUser.city);
+			loadField('years_of_activity', loggedUser.years_of_activity);
+			loadField('remote_worker', loggedUser.remote_worker);
+			loadField('higher_education', loggedUser.higher_education);
+			loadField('key_abilities', loggedUser.key_abilities);
+			loadField('experience', loggedUser.experience);
+			loadField('projects', loggedUser.projects);
+
+			const loadKeyInObj = (object, key, value) => {
+				if (loggedUser[object][key]) {
+					updateLoggedKeyinObj({ object, key, value });
+				}
+			};
+			loadKeyInObj('social_media', 'facebook', loggedUser.social_media.facebook);
+			loadKeyInObj('social_media', 'twitter', loggedUser.social_media.twitter);
+			loadKeyInObj('social_media', 'linkedin', loggedUser.social_media.linkedin);
+			loadKeyInObj('social_media', 'instagram', loggedUser.social_media.instagram);
+			loadKeyInObj('social_media', 'github', loggedUser.social_media.github);
+			// prettier-ignore
+			loadKeyInObj('social_media','personal_website',loggedUser.social_media.personal_website);
 		}
 	}, [loggedUser]);
 
@@ -573,10 +537,7 @@ export const ConnectedEditProfile = (props) => {
 								{updatedLoggedUser.key_abilities.map((tag, index) => (
 									<li className="tag" key={index}>
 										<span className="tag__text">{tag}</span>
-										<span
-											className="tag__icon"
-											onClick={() => removeTag(index)}
-										>
+										<span className="tag__icon" onClick={() => removeTag(index)}>
 											<FontAwesomeIcon icon={faTimes} />
 										</span>
 									</li>
@@ -606,9 +567,7 @@ export const ConnectedEditProfile = (props) => {
 										iconSide="right"
 										text="Delete"
 										border={true}
-										onClick={() =>
-											deleteLoggedObj({ array: 'experience', index })
-										}
+										onClick={() => deleteLoggedObj({ array: 'experience', index })}
 									/>
 								</div>
 								<Input
@@ -722,9 +681,7 @@ export const ConnectedEditProfile = (props) => {
 											iconSide="right"
 											text="Delete"
 											border={true}
-											onClick={() =>
-												deleteLoggedObj({ array: 'projects', index })
-											}
+											onClick={() => deleteLoggedObj({ array: 'projects', index })}
 										/>
 									</div>
 									{/* Project title */}
@@ -798,23 +755,121 @@ export const ConnectedEditProfile = (props) => {
 								</div>
 							))}
 						</section>
-						<h3 className="EditProfile__sectionTitle">Useful links</h3>
-						{/* Project title */}
-						<Input
-							type="text"
-							id={`facebook_link`}
-							label="Facebook:"
-							placeholder="Facebook profile link"
-							minWidth="100%"
-							value={updatedLoggedUser.social_media.facebook}
-							handleChange={(url) =>
-								updateLoggedKeyinObj({
-									object: 'social_media',
-									key: 'facebook',
-									value: url,
-								})
-							}
-						/>
+						<section className="EditProfile__section">
+							<h3 className="EditProfile__sectionTitle">Useful links</h3>
+							{/* Facebook */}
+							<Input
+								type="text"
+								id={`facebook_link`}
+								label="Facebook:"
+								placeholder="Facebook profile link"
+								minWidth="100%"
+								value={updatedLoggedUser.social_media.facebook}
+								handleChange={(url) =>
+									updateLoggedKeyinObj({
+										object: 'social_media',
+										key: 'facebook',
+										value: url,
+									})
+								}
+							/>
+							{/* Twitter */}
+							<Input
+								type="text"
+								id={`twitter_link`}
+								label="Twitter:"
+								placeholder="Twitter profile link"
+								minWidth="100%"
+								value={updatedLoggedUser.social_media.twitter}
+								handleChange={(url) =>
+									updateLoggedKeyinObj({
+										object: 'social_media',
+										key: 'twitter',
+										value: url,
+									})
+								}
+							/>
+							{/* LinkedIn */}
+							<Input
+								type="text"
+								id={`linkedin_link`}
+								label="LinkedIn:"
+								placeholder="LinkedIn profile link"
+								minWidth="100%"
+								value={updatedLoggedUser.social_media.linkedin}
+								handleChange={(url) =>
+									updateLoggedKeyinObj({
+										object: 'social_media',
+										key: 'linkedin',
+										value: url,
+									})
+								}
+							/>
+							{/* Instagram */}
+							<Input
+								type="text"
+								id={`instagram_link`}
+								label="Instagram:"
+								placeholder="Instagram profile link"
+								minWidth="100%"
+								value={updatedLoggedUser.social_media.instagram}
+								handleChange={(url) =>
+									updateLoggedKeyinObj({
+										object: 'social_media',
+										key: 'instagram',
+										value: url,
+									})
+								}
+							/>
+							{/* GitHub */}
+							<Input
+								type="text"
+								id={`github_link`}
+								label="GitHub:"
+								placeholder="GitHub profile link"
+								minWidth="100%"
+								value={updatedLoggedUser.social_media.github}
+								handleChange={(url) =>
+									updateLoggedKeyinObj({
+										object: 'social_media',
+										key: 'github',
+										value: url,
+									})
+								}
+							/>
+							{/* Behance */}
+							<Input
+								type="text"
+								id={`behance_link`}
+								label="Behance:"
+								placeholder="Behance profile link"
+								minWidth="100%"
+								value={updatedLoggedUser.social_media.behance}
+								handleChange={(url) =>
+									updateLoggedKeyinObj({
+										object: 'social_media',
+										key: 'behance',
+										value: url,
+									})
+								}
+							/>
+							{/* Personal Website */}
+							<Input
+								type="text"
+								id={`personal_website_link`}
+								label="Personal website:"
+								placeholder="Personal website link"
+								minWidth="100%"
+								value={updatedLoggedUser.social_media.personal_website}
+								handleChange={(url) =>
+									updateLoggedKeyinObj({
+										object: 'social_media',
+										key: 'personal_website',
+										value: url,
+									})
+								}
+							/>
+						</section>
 					</div>
 				</div>
 
@@ -832,9 +887,6 @@ export const ConnectedEditProfile = (props) => {
 	);
 };
 
-const EditProfile = connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(ConnectedEditProfile);
+const EditProfile = connect(mapStateToProps, mapDispatchToProps)(ConnectedEditProfile);
 
 export default EditProfile;

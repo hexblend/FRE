@@ -31,7 +31,6 @@ const initialState = {
 			instagram: '',
 			github: '',
 			behance: '',
-			email: '',
 			personal_website: '',
 		},
 
@@ -75,15 +74,14 @@ function AuthReducer(state = initialState, action) {
 				...state,
 				updatedLoggedUser: {
 					...state.updatedLoggedUser,
-					[action.payload.array]: state.updatedLoggedUser[
-						action.payload.array
-					].map((field) =>
-						field._id === action.payload.id
-							? {
-									...field,
-									[action.payload.fieldName]: action.payload.fieldValue,
-							  }
-							: field
+					[action.payload.array]: state.updatedLoggedUser[action.payload.array].map(
+						(field) =>
+							field._id === action.payload.id
+								? {
+										...field,
+										[action.payload.fieldName]: action.payload.fieldValue,
+								  }
+								: field
 					),
 				},
 			};
@@ -115,9 +113,7 @@ function AuthReducer(state = initialState, action) {
 				...state,
 				updatedLoggedUser: {
 					...state.updatedLoggedUser,
-					[action.payload.array]: state.updatedLoggedUser[
-						action.payload.array
-					].filter(
+					[action.payload.array]: state.updatedLoggedUser[action.payload.array].filter(
 						(item) =>
 							state.updatedLoggedUser[action.payload.array].indexOf(item) !==
 							action.payload.index
