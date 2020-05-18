@@ -655,9 +655,20 @@ export const ConnectedEditProfile = (props) => {
 					</div>
 					{/* Right Side */}
 					<div className="EditProfile__splitView--right">
-						<h3 className="EditProfile__sectionTitle">
-							Projects / Achivements / Activities
-						</h3>
+						<section className="EditProfile__section">
+							<h3 className="EditProfile__sectionTitle">
+								Projects / Achivements / Activities
+							</h3>
+							<Button
+								btnType="button"
+								type="full-width"
+								icon="plus"
+								minWidth="100%"
+								noShadow={true}
+								text="Add a new project"
+								onClick={addNewExperience}
+							/>
+						</section>
 						<h3 className="EditProfile__sectionTitle">Useful links</h3>
 					</div>
 				</div>

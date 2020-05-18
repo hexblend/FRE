@@ -140,7 +140,8 @@
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: wrap;
-	.react-datepicker__tab-loop {
+	.react-datepicker__tab-loop,
+	.react-datepicker-popper {
 		display: none;
 	}
 }
