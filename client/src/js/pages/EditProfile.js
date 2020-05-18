@@ -712,6 +712,57 @@ export const ConnectedEditProfile = (props) => {
 											})
 										}
 									/>
+									{/* Project description */}
+									<Input
+										type="textarea"
+										id={`project_description_${project._id}`}
+										label="Project description"
+										placeholder="Your project description"
+										minWidth="100%"
+										value={project.description}
+										handleChange={(description) =>
+											updateLoggedObjField({
+												array: 'projects',
+												id: project._id,
+												fieldName: 'description',
+												fieldValue: description,
+											})
+										}
+									/>
+									{/* Project accomplishments */}
+									<Input
+										type="textarea"
+										id={`project_accomplishments_${project._id}`}
+										label="Project accomplishments"
+										placeholder="Your project accomplishments"
+										minWidth="100%"
+										value={project.accomplishments}
+										handleChange={(accomplishments) =>
+											updateLoggedObjField({
+												array: 'projects',
+												id: project._id,
+												fieldName: 'accomplishments',
+												fieldValue: accomplishments,
+											})
+										}
+									/>
+									{/* Project Link */}
+									<Input
+										type="text"
+										id={`project_link_${project._id}`}
+										label="Project link"
+										placeholder="Your project link"
+										minWidth="100%"
+										value={project.link}
+										handleChange={(link) =>
+											updateLoggedObjField({
+												array: 'projects',
+												id: project._id,
+												fieldName: 'link',
+												fieldValue: link,
+											})
+										}
+									/>
 								</div>
 							))}
 						</section>
