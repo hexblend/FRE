@@ -22,6 +22,7 @@ const initialState = {
 		higher_education: '',
 		key_abilities: [],
 		experience: [],
+		projects: [],
 
 		errors: {
 			full_name: '',
@@ -63,13 +64,15 @@ function AuthReducer(state = initialState, action) {
 				...state,
 				updatedLoggedUser: {
 					...state.updatedLoggedUser,
-					experience: state.updatedLoggedUser.experience.map((experience) =>
-						experience._id === action.payload.id
+					[action.payload.array]: state.updatedLoggedUser[
+						action.payload.array
+					].map((field) =>
+						field._id === action.payload.id
 							? {
-									...experience,
+									...field,
 									[action.payload.fieldName]: action.payload.fieldValue,
 							  }
-							: experience
+							: field
 					),
 				},
 			};

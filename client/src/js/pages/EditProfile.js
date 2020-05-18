@@ -133,6 +133,12 @@ export const ConnectedEditProfile = (props) => {
 					fieldValue: loggedUser.experience,
 				});
 			}
+			if (loggedUser.projects) {
+				updateLoggedField({
+					fieldName: 'projects',
+					fieldValue: loggedUser.projects,
+				});
+			}
 		}
 	}, [loggedUser]);
 
@@ -582,6 +588,7 @@ export const ConnectedEditProfile = (props) => {
 									value={experience.job_title}
 									handleChange={(job_title) =>
 										updateLoggedObjField({
+											array: 'experience',
 											id: experience._id,
 											fieldName: 'job_title',
 											fieldValue: job_title,
@@ -597,6 +604,7 @@ export const ConnectedEditProfile = (props) => {
 									value={experience.company_name}
 									handleChange={(company_name) =>
 										updateLoggedObjField({
+											array: 'experince',
 											id: experience._id,
 											fieldName: 'company_name',
 											fieldValue: company_name,
@@ -610,6 +618,7 @@ export const ConnectedEditProfile = (props) => {
 											selected={new Date(experience.starting_date)}
 											onChange={(date) => {
 												updateLoggedObjField({
+													array: 'experience',
 													id: experience._id,
 													fieldName: 'starting_date',
 													fieldValue: date,
@@ -625,6 +634,7 @@ export const ConnectedEditProfile = (props) => {
 											selected={new Date(experience.ending_date)}
 											onChange={(date) => {
 												updateLoggedObjField({
+													array: 'experience',
 													id: experience._id,
 													fieldName: 'ending_date',
 													fieldValue: date,
@@ -644,6 +654,7 @@ export const ConnectedEditProfile = (props) => {
 									value={experience.long_description}
 									handleChange={(long_description) =>
 										updateLoggedObjField({
+											array: 'experience',
 											id: experience._id,
 											fieldName: 'long_description',
 											fieldValue: long_description,
@@ -668,6 +679,41 @@ export const ConnectedEditProfile = (props) => {
 								text="Add a new project"
 								onClick={addNewExperience}
 							/>
+							{updatedLoggedUser.projects.map((project, index) => (
+								<div className="EditProfile__experience" key={project._id}>
+									<div className="EditProfile__experience--header">
+										<p>{index + 1}:</p>
+										<Link
+											type="red"
+											to="#"
+											icon="times"
+											iconSide="right"
+											text="Delete"
+											border={true}
+											onClick={() =>
+												deleteLoggedObj({ array: 'experience', index })
+											}
+										/>
+									</div>
+									{/* Project title */}
+									<Input
+										type="text"
+										id={`project_title_${project._id}`}
+										label="Project title"
+										placeholder="Your project title"
+										minWidth="100%"
+										value={project.title}
+										handleChange={(title) =>
+											updateLoggedObjField({
+												array: 'projects',
+												id: project._id,
+												fieldName: 'title',
+												fieldValue: title,
+											})
+										}
+									/>
+								</div>
+							))}
 						</section>
 						<h3 className="EditProfile__sectionTitle">Useful links</h3>
 					</div>
