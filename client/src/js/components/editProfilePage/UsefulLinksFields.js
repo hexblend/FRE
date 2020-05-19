@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import Input from '../elements/Input';
 
-import { updateLoggedField, updateLoggedKeyinObj } from '../../redux/actions/AuthActions';
+import { updateLoggedKeyinObj } from '../../redux/actions/AuthActions';
 
 const mapStateToProps = (state) => ({
 	updatedLoggedUser: state.AuthReducer.updatedLoggedUser,

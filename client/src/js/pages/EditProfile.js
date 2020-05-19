@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
 import { v4 as uuidv4 } from 'uuid';
 
 import Button from '../components/elements/Button';
@@ -16,6 +15,7 @@ import GeneralInformationFields from '../components/editProfilePage/GeneralInfor
 import BadgesFields from '../components/editProfilePage/BadgesFields';
 import KeyAbilitiesFields from '../components/editProfilePage/KeyAbilitiesFields';
 import UsefulLinksFields from '../components/editProfilePage/UsefulLinksFields';
+import ExperienceFields from '../components/editProfilePage/ExperienceFields';
 
 import { updateHeaderView } from '../redux/actions/HeaderActions';
 import {
@@ -80,6 +80,8 @@ export const ConnectedEditProfile = (props) => {
 
 	const [jobsSuggestions, setJobsSuggestions] = useState([]);
 	const [locationSuggestions, setLocationSuggestions] = useState([]);
+	const [openModal, setOpenModal] = useState(false);
+	const [alert, setAlert] = useState('');
 
 	// Check User IDs
 	useEffect(() => {
@@ -217,21 +219,6 @@ export const ConnectedEditProfile = (props) => {
 		}
 	}, [formSubmitted]);
 
-	// Experience
-	const addNewExperience = () => {
-		addLoggedObj({
-			array: 'experience',
-			object: {
-				_id: uuidv4(),
-				company_name: '',
-				job_title: '',
-				starting_date: new Date(),
-				ending_date: new Date(),
-				long_description: '',
-			},
-		});
-	};
-
 	// Projects
 	const addNewProject = () => {
 		addLoggedObj({
@@ -245,11 +232,6 @@ export const ConnectedEditProfile = (props) => {
 			},
 		});
 	};
-
-	// Modal
-	const [openModal, setOpenModal] = useState(false);
-	// Alert
-	const [alert, setAlert] = useState('');
 
 	// Handle User Removal
 	const handleDeleteUser = () => {
@@ -309,7 +291,6 @@ export const ConnectedEditProfile = (props) => {
 							<h3 className="EditProfile__sectionTitle">General Information</h3>
 							<GeneralInformationFields />
 						</section>
-
 						<section className="EditProfile__section">
 							<h3 className="EditProfile__sectionTitle">Badges</h3>
 							<BadgesFields
@@ -321,122 +302,12 @@ export const ConnectedEditProfile = (props) => {
 								}
 							/>
 						</section>
-
 						<section className="EditProfile__section">
-							{/* Key abilities */}
 							<h3 className="EditProfile__sectionTitle">Key abilities</h3>
 							<KeyAbilitiesFields />
 						</section>
-
-						{/* Experience */}
 						<h3 className="EditProfile__sectionTitle">Experience</h3>
-						<Button
-							btnType="button"
-							type="full-width"
-							icon="plus"
-							minWidth="100%"
-							noShadow={true}
-							text="Add a new experience"
-							onClick={addNewExperience}
-						/>
-						{updatedLoggedUser.experience.map((experience, index) => (
-							<div className="EditProfile__experience" key={experience._id}>
-								<div className="EditProfile__experience--header">
-									<p>{index + 1}:</p>
-									<Link
-										type="red"
-										to="#"
-										icon="times"
-										iconSide="right"
-										text="Delete"
-										border={true}
-										onClick={() => deleteLoggedObj({ array: 'experience', index })}
-									/>
-								</div>
-								<Input
-									type="text"
-									id={`job_title_${experience._id}`}
-									label="Job Title"
-									placeholder="Your job title"
-									minWidth="100%"
-									value={experience.job_title}
-									handleChange={(job_title) =>
-										updateLoggedObjField({
-											array: 'experience',
-											id: experience._id,
-											fieldName: 'job_title',
-											fieldValue: job_title,
-										})
-									}
-								/>
-								<Input
-									type="text"
-									id={`company_name_${experience._id}`}
-									label="Company name"
-									placeholder="Company name"
-									minWidth="100%"
-									value={experience.company_name}
-									handleChange={(company_name) =>
-										updateLoggedObjField({
-											array: 'experince',
-											id: experience._id,
-											fieldName: 'company_name',
-											fieldValue: company_name,
-										})
-									}
-								/>
-								<div className="EditProfile__experience--date">
-									<div>
-										<p className="customLabel">Starting date:</p>
-										<DatePicker
-											selected={new Date(experience.starting_date)}
-											onChange={(date) => {
-												updateLoggedObjField({
-													array: 'experience',
-													id: experience._id,
-													fieldName: 'starting_date',
-													fieldValue: date,
-												});
-											}}
-											dateFormat="MM/yyyy"
-											className="customInput"
-										/>
-									</div>
-									<div>
-										<p className="customLabel">Ending date:</p>
-										<DatePicker
-											selected={new Date(experience.ending_date)}
-											onChange={(date) => {
-												updateLoggedObjField({
-													array: 'experience',
-													id: experience._id,
-													fieldName: 'ending_date',
-													fieldValue: date,
-												});
-											}}
-											dateFormat="MM/yyyy"
-											className="customInput"
-										/>
-									</div>
-								</div>
-								<Input
-									type="textarea"
-									id={`long_description_${experience._id}`}
-									label="Description"
-									placeholder="Job duties, responsabilities, etc."
-									minWidth="100%"
-									value={experience.long_description}
-									handleChange={(long_description) =>
-										updateLoggedObjField({
-											array: 'experience',
-											id: experience._id,
-											fieldName: 'long_description',
-											fieldValue: long_description,
-										})
-									}
-								/>
-							</div>
-						))}
+						<ExperienceFields />
 					</div>
 					{/* Right Side */}
 					<div className="EditProfile__splitView--right">
