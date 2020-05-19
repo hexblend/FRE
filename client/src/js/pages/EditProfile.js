@@ -8,14 +8,13 @@ import { v4 as uuidv4 } from 'uuid';
 import Button from '../components/elements/Button';
 import Input from '../components/elements/Input';
 import isEmpty from '../components/isEmpty';
-import Dropdown from 'react-dropdown';
-import Checkbox from '../components/elements/Checkbox';
 import Link from '../components/elements/Link';
 import ConfirmationModal from '../components/ConfirmationModal';
 import Alert from '../layout/Alert';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faTimes } from '@fortawesome/free-solid-svg-icons';
+import GeneralInformationFields from '../components/editProfilePage/GeneralInformationFields';
+import BadgesFields from '../components/editProfilePage/BadgesFields';
+import KeyAbilitiesFields from '../components/editProfilePage/KeyAbilitiesFields';
 
 import { updateHeaderView } from '../redux/actions/HeaderActions';
 import {
@@ -77,6 +76,9 @@ export const ConnectedEditProfile = (props) => {
 
 	const history = useHistory();
 	const API_URL = process.env.REACT_APP_API_URL;
+
+	const [jobsSuggestions, setJobsSuggestions] = useState([]);
+	const [locationSuggestions, setLocationSuggestions] = useState([]);
 
 	// Check User IDs
 	useEffect(() => {
@@ -214,82 +216,6 @@ export const ConnectedEditProfile = (props) => {
 		}
 	}, [formSubmitted]);
 
-	// Status
-	let statusOptions = [];
-	if (!isEmpty(loggedUser)) {
-		if (loggedUser.type === 'candidate') {
-			statusOptions = [
-				{ label: 'None', value: 'None' },
-				{ label: 'Waiting for offers', value: 'waiting for offers' },
-				{ label: 'Interviewing', value: 'interviewing' },
-				{ label: 'Employed', value: 'employed' },
-			];
-		}
-		if (loggedUser.type === 'employer') {
-			statusOptions = [
-				{ label: 'Hiring', value: 'hiring' },
-				{ label: 'Not Hiring', value: 'not hiring' },
-			];
-		}
-	}
-	// Jobs
-	const [typingTimeout, setTypingTimeout] = useState(0);
-	const [jobsSuggestions, setJobsSuggestions] = useState([]);
-	const getJobSuggestions = (query) => {
-		updateLoggedField({
-			fieldName: 'job_title',
-			fieldValue: query,
-		});
-		if (typingTimeout) clearTimeout(typingTimeout);
-		setTypingTimeout(
-			setTimeout(() => {
-				axios
-					.get(
-						`http://api.dataatwork.org/v1/jobs/autocomplete?contains=${updatedLoggedUser.job_title}`
-					)
-					.then((res) => setJobsSuggestions(res.data.slice(0, 4).reverse()));
-			}, 500)
-		);
-	};
-	// Locations
-	const [locationSuggestions, setLocationSuggestions] = useState([]);
-	const getLocationSuggestions = (query) => {
-		updateLoggedField({ fieldName: 'city', fieldValue: query });
-		if (typingTimeout) clearTimeout(typingTimeout);
-		setTypingTimeout(
-			setTimeout(() => {
-				axios
-					.get(`https://api.postcodes.io/places?q=${updatedLoggedUser.city}`)
-					.then((res) => setLocationSuggestions(res.data.result.slice(0, 4)));
-			}, 500)
-		);
-	};
-
-	// Key abilities
-	const [tagsLeft, setTagsLeft] = useState(0);
-	useEffect(() => {
-		setTagsLeft(12 - updatedLoggedUser.key_abilities.length);
-	}, [updatedLoggedUser]);
-	const [tagsInput, setTagsInput] = useState('');
-	const addTag = (e) => {
-		if (e.key === 'Enter') {
-			setTagsInput('');
-			if (tagsLeft > 0) {
-				updateLoggedField({
-					fieldName: 'key_abilities',
-					fieldValue: [...updatedLoggedUser.key_abilities, e.target.value],
-				});
-				setTagsLeft(tagsLeft - 1);
-			}
-		}
-	};
-	const removeTag = (index) => {
-		const tags = updatedLoggedUser.key_abilities;
-		const remainedTags = tags.filter((tag) => tags.indexOf(tag) !== index);
-		updateLoggedField({ fieldName: 'key_abilities', fieldValue: remainedTags });
-		setTagsLeft(tagsLeft + 1);
-	};
-
 	// Experience
 	const addNewExperience = () => {
 		addLoggedObj({
@@ -360,6 +286,7 @@ export const ConnectedEditProfile = (props) => {
 	return (
 		<>
 			<div className="EditProfile__content">
+				{/* Alert / Modal */}
 				<Alert type={alert.type} text={alert.text} />
 				<ConfirmationModal
 					text="Are you sure you want to delete your profile? This action can't be reversed."
@@ -373,231 +300,33 @@ export const ConnectedEditProfile = (props) => {
 						onClick={() => handleDeleteUser()}
 					/>
 				</ConfirmationModal>
+
 				<div className="EditProfile__splitView">
 					{/* Left Side */}
 					<div className="EditProfile__splitView--left">
 						<section className="EditProfile__section">
 							<h3 className="EditProfile__sectionTitle">General Information</h3>
-							{!isEmpty(updatedLoggedUser) && (
-								<>
-									{/* Full name */}
-									<Input
-										type="text"
-										id="fullName"
-										label="Full Name"
-										placeholder="First and last name"
-										minWidth="100%"
-										value={updatedLoggedUser.full_name}
-										handleChange={(fullName) =>
-											updateLoggedField({
-												fieldName: 'full_name',
-												fieldValue: fullName,
-											})
-										}
-										error={updatedLoggedUser.errors.full_name}
-									/>
-									{/* Email */}
-									<Input
-										type="email"
-										id="email"
-										label="Your email"
-										placeholder="Your email"
-										minWidth="100%"
-										value={updatedLoggedUser.email}
-										handleChange={(email) =>
-											updateLoggedField({
-												fieldName: 'email',
-												fieldValue: email,
-											})
-										}
-										error={updatedLoggedUser.errors.email}
-									/>
-									{/* Status */}
-									<p className="EditProfile__section--label">Status</p>
-									<Dropdown
-										value={updatedLoggedUser.status}
-										onChange={(option) =>
-											updateLoggedField({
-												fieldName: 'status',
-												fieldValue: option,
-											})
-										}
-										options={statusOptions}
-										controlClassName="EditProfile__statusDropdown"
-										placeholderClassName="EditProfile__statusDropdown--placeholder"
-										menuClassName="EditProfile__statusDropdown--menu"
-										arrowClosed={<FontAwesomeIcon icon={faCaretDown} />}
-										arrowOpen={<FontAwesomeIcon icon={faCaretDown} />}
-									/>
-									{/* Description */}
-									<Input
-										type="textarea"
-										id="description"
-										label="Description"
-										placeholder="Profile description"
-										minWidth="100%"
-										value={updatedLoggedUser.description}
-										handleChange={(description) =>
-											updateLoggedField({
-												fieldName: 'description',
-												fieldValue: description,
-											})
-										}
-										error={updatedLoggedUser.errors.full_name}
-									/>
-								</>
-							)}
+							{!isEmpty(updatedLoggedUser) && <GeneralInformationFields />}
 						</section>
 
 						<section className="EditProfile__section">
 							<h3 className="EditProfile__sectionTitle">Badges</h3>
-							{/* Job Title Input */}
-							<Input
-								type="text"
-								id="jobTitle"
-								label="Desired job title"
-								placeholder="Job Title"
-								minWidth="100%"
-								value={updatedLoggedUser.job_title}
-								handleChange={(jobTitle) => getJobSuggestions(jobTitle)}
-								error={updatedLoggedUser.errors.job_title}
-								icon="suitcase"
-							/>
-							{/* Jobs Suggestions */}
-							<ul
-								className="Suggestions EditProfile__suggestions"
-								style={{ width: `100%`, top: '5.85rem' }}
-							>
-								{jobsSuggestions.map((suggestion) => (
-									<li
-										key={suggestion.uuid}
-										onClick={() => {
-											updateLoggedField({
-												fieldName: 'job_title',
-												fieldValue: suggestion.suggestion,
-											});
-											setJobsSuggestions([]);
-										}}
-										className="Suggestions__suggestion"
-									>
-										{suggestion.suggestion}
-									</li>
-								))}
-							</ul>
-							{/* Location Input */}
-							<Input
-								type="text"
-								id="city"
-								label="Your city"
-								placeholder="City name"
-								minWidth="100%"
-								value={updatedLoggedUser.city}
-								handleChange={(city) => getLocationSuggestions(city)}
-								error={updatedLoggedUser.errors.city}
-								icon="map-marker-alt"
-							/>
-							{/* Locations Suggestions */}
-							<ul
-								className="Suggestions EditProfile__suggestions"
-								style={{ width: `100%`, top: '5.85rem' }}
-							>
-								{locationSuggestions.map((suggestion) => (
-									<li
-										key={suggestion.uuid}
-										onClick={() => {
-											updateLoggedField({
-												fieldName: 'city',
-												fieldValue: suggestion.name_1,
-											});
-											setLocationSuggestions([]);
-										}}
-										className="Suggestions__suggestion"
-									>
-										{suggestion.name_1}
-									</li>
-								))}
-							</ul>
-							{/* Years of activity */}
-							<Input
-								type="text"
-								id="years_of_activity"
-								label="Years of activity"
-								placeholder="Career duration"
-								minWidth="100%"
-								value={`${updatedLoggedUser.years_of_activity}`}
-								handleChange={(years) =>
-									updateLoggedField({
-										fieldName: 'years_of_activity',
-										fieldValue: years,
-									})
-								}
-								error={updatedLoggedUser.errors.years_of_activity}
-								icon="calendar-alt"
-							/>
-							{/* Remote Worker */}
-							<Checkbox
-								label="Keen to work remotely?"
-								checked={updatedLoggedUser.remote_worker}
-								setChecked={(checked) =>
-									updateLoggedField({
-										fieldName: 'remote_worker',
-										fieldValue: checked,
-									})
-								}
-								textChecked="Available to work from home"
-								textUnchecked="Not available to work from home"
-							/>
-							{/* Higher education */}
-							<Checkbox
-								label="Higher education?"
-								checked={updatedLoggedUser.higher_education}
-								setChecked={(checked) =>
-									updateLoggedField({
-										fieldName: 'higher_education',
-										fieldValue: checked,
-									})
-								}
-								textChecked="I do have a higher education"
-								textUnchecked="I do not have a higher education"
-							/>
+							{!isEmpty(updatedLoggedUser) && (
+								<BadgesFields
+									jobsSuggestions={jobsSuggestions}
+									setJobsSuggestions={(suggestions) => setJobsSuggestions(suggestions)}
+									locationSuggestions={locationSuggestions}
+									setLocationSuggestions={(suggestions) =>
+										setLocationSuggestions(suggestions)
+									}
+								/>
+							)}
 						</section>
 
 						<section className="EditProfile__section">
 							{/* Key abilities */}
 							<h3 className="EditProfile__sectionTitle">Key abilities</h3>
-							{/* Label */}
-							<label htmlFor="key_abilities" className="customLabel">
-								You can add {tagsLeft} more
-								{tagsLeft === 1 ? ' ability' : ' abilities'}.
-							</label>
-							{/* Input */}
-							<input
-								type="text"
-								id="key_abilities"
-								name="key_abilities"
-								autoComplete="off"
-								placeholder="Add skill"
-								className="customInput"
-								style={{
-									minWidth: `100%`,
-									marginTop: '1.6rem',
-								}}
-								value={tagsInput}
-								onChange={(e) => setTagsInput(e.target.value)}
-								onKeyPress={addTag}
-								readOnly={tagsLeft === 0 ? true : false}
-							/>
-							{/* Tags */}
-							<ul className="Tags EditProfile__skillsTags">
-								{updatedLoggedUser.key_abilities.map((tag, index) => (
-									<li className="tag" key={index}>
-										<span className="tag__text">{tag}</span>
-										<span className="tag__icon" onClick={() => removeTag(index)}>
-											<FontAwesomeIcon icon={faTimes} />
-										</span>
-									</li>
-								))}
-							</ul>
+							<KeyAbilitiesFields />
 						</section>
 
 						{/* Experience */}

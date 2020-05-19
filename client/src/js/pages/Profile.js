@@ -27,13 +27,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ConnectedProfile = (props) => {
-	const {
-		profile,
-		loggedUser,
-		updateProfile,
-		updateHeaderView,
-		addLoggedUser,
-	} = props;
+	const { profile, loggedUser, updateProfile, updateHeaderView, addLoggedUser } = props;
 
 	const history = useHistory();
 	const API_URL = process.env.REACT_APP_API_URL;
@@ -66,8 +60,7 @@ const ConnectedProfile = (props) => {
 
 	// Formating
 	const fullName =
-		profile.full_name &&
-		profile.full_name.first_name + ' ' + profile.full_name.last_name;
+		profile.full_name && profile.full_name.first_name + ' ' + profile.full_name.last_name;
 	const firstName = profile.full_name && profile.full_name.first_name;
 
 	// Handle User Removal
@@ -92,8 +85,7 @@ const ConnectedProfile = (props) => {
 			.then(() => {
 				setAlert({
 					type: 'success',
-					text:
-						'Your account and all the data has been deleted from our system.',
+					text: 'Your account and all the data has been deleted from our system.',
 				});
 				setTimeout(() => (window.location.href = '/'), 3000);
 			})
@@ -124,13 +116,9 @@ const ConnectedProfile = (props) => {
 			<div className="Profile__header">
 				<div className="Profile__header--left">
 					{/* Full Name */}
-					{profile.full_name && (
-						<h1 className="Profile__fullName">{fullName}</h1>
-					)}
+					{profile.full_name && <h1 className="Profile__fullName">{fullName}</h1>}
 					{/* Status */}
-					{profile.status && (
-						<p className="Profile__status">{profile.status}</p>
-					)}
+					{profile.status && <p className="Profile__status">{profile.status}</p>}
 					{/* Badges */}
 					<div className="Profile__badges">
 						<Badges profile={profile} />
@@ -173,12 +161,8 @@ const ConnectedProfile = (props) => {
 
 							{profile.experience.map((exp) => (
 								<div className="Profile__experience--single" key={exp._id}>
-									<p className="Profile__experience--jobTitle">
-										{exp.job_title}
-									</p>
-									<p className="Profile__experience--companyName">
-										{exp.company_name}
-									</p>
+									<p className="Profile__experience--jobTitle">{exp.job_title}</p>
+									<p className="Profile__experience--companyName">{exp.company_name}</p>
 									<div className="Profile__experience--date">
 										<p className="Profile__experience--startingDate">
 											{moment(exp.starting_date).format('MMM') +
@@ -192,9 +176,7 @@ const ConnectedProfile = (props) => {
 												moment(exp.ending_date).format('YYYY')}
 										</p>
 									</div>
-									<p className="Profile__experinece--longDesc">
-										{exp.long_description}
-									</p>
+									<p className="Profile__experinece--longDesc">{exp.long_description}</p>
 								</div>
 							))}
 						</div>
@@ -214,9 +196,7 @@ const ConnectedProfile = (props) => {
 									<p className="Profile__projects--projectTitle">{prj.title}</p>
 									{prj.description && (
 										<>
-											<p className="Profile__projects--subsectionTitle">
-												Description
-											</p>
+											<p className="Profile__projects--subsectionTitle">Description</p>
 											<p className="Profile__projects--projectDescription">
 												{prj.description}
 											</p>
@@ -234,9 +214,7 @@ const ConnectedProfile = (props) => {
 									)}
 									{prj.link && (
 										<div className="Profile__projects--link">
-											<span className="Profile__projects--subsectionTitle">
-												Link:
-											</span>
+											<span className="Profile__projects--subsectionTitle">Link:</span>
 											<CustomLink to={prj.link} text={prj.link} border={true} />
 										</div>
 									)}
@@ -253,11 +231,7 @@ const ConnectedProfile = (props) => {
 							{!isEmpty(profile.email) && (
 								<div className="Profile__links--link">
 									<span>Email -</span>
-									<CustomLink
-										to={profile.email}
-										text={profile.email}
-										border={true}
-									/>
+									<CustomLink to={profile.email} text={profile.email} border={true} />
 								</div>
 							)}
 							{profile.social_media && (
@@ -325,11 +299,7 @@ const ConnectedProfile = (props) => {
 					<div className="Profile__getInTouch">
 						<h3 className="Profile__sectionTitle">Get in touch:</h3>
 						<Link to="#">
-							<Button
-								text={`Message ${firstName}`}
-								type="secondary"
-								btnType="button"
-							/>
+							<Button text={`Message ${firstName}`} type="secondary" btnType="button" />
 						</Link>
 					</div>
 				</div>
