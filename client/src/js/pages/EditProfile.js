@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 
 import Button from '../components/elements/Button';
-import Input from '../components/elements/Input';
 import isEmpty from '../components/isEmpty';
-import Link from '../components/elements/Link';
 import ConfirmationModal from '../components/ConfirmationModal';
 import Alert from '../layout/Alert';
 
@@ -16,18 +13,16 @@ import BadgesFields from '../components/editProfilePage/BadgesFields';
 import KeyAbilitiesFields from '../components/editProfilePage/KeyAbilitiesFields';
 import UsefulLinksFields from '../components/editProfilePage/UsefulLinksFields';
 import ExperienceFields from '../components/editProfilePage/ExperienceFields';
+import ProjectsFields from '../components/editProfilePage/ProjectsFields';
 
 import { updateHeaderView } from '../redux/actions/HeaderActions';
 import {
 	addLoggedUser,
 	updateLoggedField,
 	updateLoggedFieldError,
-	updateLoggedObjField,
 	updateLoggedObjFieldError,
 	setUpdateFormSubmitted,
 	updateLoggedKeyinObj,
-	addLoggedObj,
-	deleteLoggedObj,
 } from '../redux/actions/AuthActions';
 
 const mapStateToProps = (state) => ({
@@ -37,21 +32,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	addLoggedUser: (user) => dispatch(addLoggedUser(user)),
-
 	updateHeaderView: (view) => dispatch(updateHeaderView(view)),
-
+	addLoggedUser: (user) => dispatch(addLoggedUser(user)),
 	updateLoggedField: (obj) => dispatch(updateLoggedField(obj)),
 	updateLoggedFieldError: (obj) => dispatch(updateLoggedFieldError(obj)),
-
-	updateLoggedObjField: (obj) => dispatch(updateLoggedObjField(obj)),
 	updateLoggedObjFieldError: (obj) => dispatch(updateLoggedObjFieldError(obj)),
-
 	setUpdateFormSubmitted: (bool) => dispatch(setUpdateFormSubmitted(bool)),
-
-	addLoggedObj: (obj) => dispatch(addLoggedObj(obj)),
-	deleteLoggedObj: (obj) => dispatch(deleteLoggedObj(obj)),
-
 	updateLoggedKeyinObj: (obj) => dispatch(updateLoggedKeyinObj(obj)),
 });
 
@@ -60,17 +46,9 @@ export const ConnectedEditProfile = (props) => {
 	const {
 		loggedUser,
 		updatedLoggedUser,
-
 		updateLoggedField,
 		updateLoggedFieldError,
-
-		updateLoggedObjField,
-
-		addLoggedObj,
-		deleteLoggedObj,
-
 		updateLoggedKeyinObj,
-
 		formSubmitted,
 		setUpdateFormSubmitted,
 	} = props;
@@ -133,7 +111,7 @@ export const ConnectedEditProfile = (props) => {
 			// prettier-ignore
 			loadKeyInObj('social_media','personal_website',loggedUser.social_media.personal_website);
 		}
-	}, [loggedUser]);
+	}, [loggedUser, updateLoggedField, updateLoggedKeyinObj]);
 
 	// Validation
 	useEffect(() => {
@@ -217,21 +195,7 @@ export const ConnectedEditProfile = (props) => {
 				}
 			}
 		}
-	}, [formSubmitted]);
-
-	// Projects
-	const addNewProject = () => {
-		addLoggedObj({
-			array: 'projects',
-			object: {
-				_id: uuidv4(),
-				title: '',
-				description: '',
-				accomplishments: '',
-				link: '',
-			},
-		});
-	};
+	}, [formSubmitted, updatedLoggedUser, setUpdateFormSubmitted, updateLoggedFieldError]);
 
 	// Handle User Removal
 	const handleDeleteUser = () => {
@@ -306,8 +270,10 @@ export const ConnectedEditProfile = (props) => {
 							<h3 className="EditProfile__sectionTitle">Key abilities</h3>
 							<KeyAbilitiesFields />
 						</section>
-						<h3 className="EditProfile__sectionTitle">Experience</h3>
-						<ExperienceFields />
+						<section className="EditProfile__sction">
+							<h3 className="EditProfile__sectionTitle">Experience</h3>
+							<ExperienceFields />
+						</section>
 					</div>
 					{/* Right Side */}
 					<div className="EditProfile__splitView--right">
@@ -315,99 +281,7 @@ export const ConnectedEditProfile = (props) => {
 							<h3 className="EditProfile__sectionTitle">
 								Projects / Achivements / Activities
 							</h3>
-							<Button
-								btnType="button"
-								type="full-width"
-								icon="plus"
-								minWidth="100%"
-								noShadow={true}
-								text="Add a new project"
-								onClick={addNewProject}
-							/>
-							{updatedLoggedUser.projects.map((project, index) => (
-								<div className="EditProfile__experience" key={project._id}>
-									<div className="EditProfile__experience--header">
-										<p>{index + 1}:</p>
-										<Link
-											type="red"
-											to="#"
-											icon="times"
-											iconSide="right"
-											text="Delete"
-											border={true}
-											onClick={() => deleteLoggedObj({ array: 'projects', index })}
-										/>
-									</div>
-									{/* Project title */}
-									<Input
-										type="text"
-										id={`project_title_${project._id}`}
-										label="Project title"
-										placeholder="Your project title"
-										minWidth="100%"
-										value={project.title}
-										handleChange={(title) =>
-											updateLoggedObjField({
-												array: 'projects',
-												id: project._id,
-												fieldName: 'title',
-												fieldValue: title,
-											})
-										}
-									/>
-									{/* Project description */}
-									<Input
-										type="textarea"
-										id={`project_description_${project._id}`}
-										label="Project description"
-										placeholder="Your project description"
-										minWidth="100%"
-										value={project.description}
-										handleChange={(description) =>
-											updateLoggedObjField({
-												array: 'projects',
-												id: project._id,
-												fieldName: 'description',
-												fieldValue: description,
-											})
-										}
-									/>
-									{/* Project accomplishments */}
-									<Input
-										type="textarea"
-										id={`project_accomplishments_${project._id}`}
-										label="Project accomplishments"
-										placeholder="Your project accomplishments"
-										minWidth="100%"
-										value={project.accomplishments}
-										handleChange={(accomplishments) =>
-											updateLoggedObjField({
-												array: 'projects',
-												id: project._id,
-												fieldName: 'accomplishments',
-												fieldValue: accomplishments,
-											})
-										}
-									/>
-									{/* Project Link */}
-									<Input
-										type="text"
-										id={`project_link_${project._id}`}
-										label="Project link"
-										placeholder="Your project link"
-										minWidth="100%"
-										value={project.link}
-										handleChange={(link) =>
-											updateLoggedObjField({
-												array: 'projects',
-												id: project._id,
-												fieldName: 'link',
-												fieldValue: link,
-											})
-										}
-									/>
-								</div>
-							))}
+							<ProjectsFields />
 						</section>
 						<section className="EditProfile__section">
 							<h3 className="EditProfile__sectionTitle">Useful links</h3>
