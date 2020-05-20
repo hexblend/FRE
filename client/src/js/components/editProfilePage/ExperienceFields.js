@@ -8,6 +8,7 @@ import Button from '../elements/Button';
 import { addLoggedObj } from '../../redux/actions/AuthActions';
 
 const mapStateToProps = (state) => ({
+	loggedUser: state.AuthReducer.loggedUser,
 	updatedLoggedUser: state.AuthReducer.updatedLoggedUser,
 });
 
@@ -17,7 +18,7 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 function ExperienceFields(props) {
-	const { updatedLoggedUser, addLoggedObj } = props;
+	const { loggedUser, updatedLoggedUser, addLoggedObj } = props;
 
 	const addNewExperience = () => {
 		addLoggedObj({
@@ -43,9 +44,10 @@ function ExperienceFields(props) {
 				text="Add a new experience"
 				onClick={addNewExperience}
 			/>
-			{updatedLoggedUser.experience.map((experience, index) => (
-				<SingleExperience experience={experience} index={index} key={experience._id} />
-			))}
+			{loggedUser.experience &&
+				loggedUser.experience.map((experience, index) => (
+					<SingleExperience experience={experience} index={index} key={experience._id} />
+				))}
 		</>
 	);
 }

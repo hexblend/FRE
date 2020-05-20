@@ -83,16 +83,15 @@ function AuthReducer(state = initialState, action) {
 		case UPDATE_LOGGED_OBJ_FIELD: {
 			return {
 				...state,
-				updatedLoggedUser: {
-					...state.updatedLoggedUser,
-					[action.payload.array]: state.updatedLoggedUser[action.payload.array].map(
-						(field) =>
-							field._id === action.payload.id
-								? {
-										...field,
-										[action.payload.fieldName]: action.payload.fieldValue,
-								  }
-								: field
+				loggedUser: {
+					...state.loggedUser,
+					[action.payload.array]: state.loggedUser[action.payload.array].map((field) =>
+						field._id === action.payload.id
+							? {
+									...field,
+									[action.payload.fieldName]: action.payload.fieldValue,
+							  }
+							: field
 					),
 				},
 			};
@@ -100,10 +99,10 @@ function AuthReducer(state = initialState, action) {
 		case UPDATE_LOGGED_KEY_IN_OBJ:
 			return {
 				...state,
-				updatedLoggedUser: {
-					...state.updatedLoggedUser,
+				loggedUser: {
+					...state.loggedUser,
 					[action.payload.object]: {
-						...state.updatedLoggedUser[action.payload.object],
+						...state.loggedUser[action.payload.object],
 						[action.payload.key]: action.payload.value,
 					},
 				},
@@ -111,22 +110,22 @@ function AuthReducer(state = initialState, action) {
 		case ADD_LOGGED_OBJ:
 			return {
 				...state,
-				updatedLoggedUser: {
-					...state.updatedLoggedUser,
+				loggedUser: {
+					...state.loggedUser,
 					[action.payload.array]: [
 						action.payload.object,
-						...state.updatedLoggedUser[action.payload.array],
+						...state.loggedUser[action.payload.array],
 					],
 				},
 			};
 		case DELETE_LOGGED_OBJ:
 			return {
 				...state,
-				updatedLoggedUser: {
-					...state.updatedLoggedUser,
-					[action.payload.array]: state.updatedLoggedUser[action.payload.array].filter(
+				loggedUser: {
+					...state.loggedUser,
+					[action.payload.array]: state.loggedUser[action.payload.array].filter(
 						(item) =>
-							state.updatedLoggedUser[action.payload.array].indexOf(item) !==
+							state.loggedUser[action.payload.array].indexOf(item) !==
 							action.payload.index
 					),
 				},

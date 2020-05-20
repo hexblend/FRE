@@ -9,6 +9,7 @@ import { addLoggedObj } from '../../redux/actions/AuthActions';
 
 const mapStateToProps = (state) => ({
 	updatedLoggedUser: state.AuthReducer.updatedLoggedUser,
+	loggedUser: state.AuthReducer.loggedUser,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -17,7 +18,7 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 function ExperienceFields(props) {
-	const { updatedLoggedUser, addLoggedObj } = props;
+	const { loggedUser, updatedLoggedUser, addLoggedObj } = props;
 
 	const addNewProject = () => {
 		addLoggedObj({
@@ -43,9 +44,10 @@ function ExperienceFields(props) {
 				text="Add a new project"
 				onClick={addNewProject}
 			/>
-			{updatedLoggedUser.projects.map((project, index) => (
-				<SingleProject project={project} index={index} key={project._id} />
-			))}
+			{loggedUser.projects &&
+				loggedUser.projects.map((project, index) => (
+					<SingleProject project={project} index={index} key={project._id} />
+				))}
 		</>
 	);
 }
