@@ -33,13 +33,13 @@ function Badges({ profile }) {
 							<span>Remote Worker</span>
 						</div>
 					)}
-					{profile.years_of_activity && (
+					{profile.years_of_activity >= 0 && (
 						<div className="Badges__badgeRow">
 							<FontAwesomeIcon icon={faCalendarAlt} />
 							<span>
 								Years of activity:{' '}
 								{`${profile.years_of_activity} - ${
-									parseInt(profile.years_of_activity) + 1
+									Number(profile.years_of_activity) + 1
 								}`}
 							</span>
 						</div>
