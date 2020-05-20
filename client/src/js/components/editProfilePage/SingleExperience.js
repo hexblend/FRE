@@ -72,7 +72,7 @@ function SingleExperience(props) {
 					value={experience.company_name}
 					handleChange={(company_name) =>
 						updateLoggedObjField({
-							array: 'experince',
+							array: 'experience',
 							id: experience._id,
 							fieldName: 'company_name',
 							fieldValue: company_name,
