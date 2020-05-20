@@ -40,7 +40,7 @@ const search = async (req, res, next) => {
 	const job3 = req.params.job3;
 	const city = req.params.location;
 	try {
-		const users = await User.find({ type: ['candidate'] });
+		const users = await User.find({ type: ['candidate'], inactiveAccount: false });
 
 		const matchUsers = [];
 		users.forEach((user) => {
@@ -219,7 +219,7 @@ const updateUser = async (req, res, next) => {
 			updateStringField('password', hashedPassword);
 		}
 		req.body.type && updateStringField('type');
-		req.body.innactiveAccount && updateStringField('inactiveAccount');
+		req.body.inactiveAccount && updateStringField('inactiveAccount');
 		req.body.status && updateStringField('status');
 		req.body.job_title && updateStringField('job_title');
 		req.body.city && updateStringField('city');

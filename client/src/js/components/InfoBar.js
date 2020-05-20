@@ -17,9 +17,7 @@ export const ConnectedInfoBar = ({ loggedUser, searchResults }) => {
 				>
 					<div className="InfoBar__left">
 						<FontAwesomeIcon icon={faInfoCircle} />
-						<span className="InfoBar__text">
-							We're sorry for the inconvenience.
-						</span>
+						<span className="InfoBar__text">We're sorry for the inconvenience.</span>
 					</div>
 				</div>
 			)}
@@ -40,8 +38,7 @@ export const ConnectedInfoBar = ({ loggedUser, searchResults }) => {
 			)}
 			{!isEmpty(loggedUser) &&
 				loggedUser.type === 'candidate' &&
-				(loggedUser.job_title === '' ||
-					loggedUser.location === '') && (
+				(!loggedUser.job_title || !loggedUser.city) && (
 					<div
 						className="InfoBar"
 						style={{
@@ -51,16 +48,14 @@ export const ConnectedInfoBar = ({ loggedUser, searchResults }) => {
 						<div className="InfoBar__left">
 							<FontAwesomeIcon icon={faInfoCircle} />
 							<span className="InfoBar__text">
-								Please update your profile in order to maximize your
-								chances for an employer to contact you.
+								Please update your profile to appear in the search results of employers.
 							</span>
 						</div>
 					</div>
 				)}
 			{!isEmpty(loggedUser) &&
 				loggedUser.type === 'employer' &&
-				(loggedUser.company.type === '' ||
-					loggedUser.company.website === '') && (
+				(loggedUser.company.type === '' || loggedUser.company.website === '') && (
 					<div
 						className="InfoBar"
 						style={{
@@ -70,8 +65,8 @@ export const ConnectedInfoBar = ({ loggedUser, searchResults }) => {
 						<div className="InfoBar__left">
 							<FontAwesomeIcon icon={faInfoCircle} />
 							<span className="InfoBar__text">
-								Please update your profile in order to maximize your
-								chances for a candidate to contact you.
+								Please update your profile in order to maximize your chances for a
+								candidate to contact you.
 							</span>
 						</div>
 					</div>

@@ -19,8 +19,7 @@ const mapStateToProps = (state) => ({
 });
 
 function ConnectedSearchResult({ profile, loggedUser }) {
-	const fullName =
-		profile.full_name.first_name + ' ' + profile.full_name.last_name;
+	const fullName = profile.full_name.first_name + ' ' + profile.full_name.last_name;
 	const fullNameArray = fullName.split(' ');
 	const hiddenFullName = `${fullNameArray[0]} ${fullNameArray[1].slice(0, 1)}.`;
 	return (
@@ -58,9 +57,7 @@ function ConnectedSearchResult({ profile, loggedUser }) {
 									<FontAwesomeIcon icon={faCalendarAlt} />
 									<span>
 										Years of activity:{' '}
-										{`${profile.years_of_activity} - ${
-											profile.years_of_activity + 1
-										}`}
+										{`${profile.years_of_activity} - ${profile.years_of_activity + 1}`}
 									</span>
 								</div>
 							)}
@@ -72,22 +69,20 @@ function ConnectedSearchResult({ profile, loggedUser }) {
 							)}
 						</div>
 					</div>
-					<div
-						className={`SearchResult__description ${
-							isEmpty(loggedUser) && 'h'
-						}`}
-					>
-						<h4>Description:</h4>
-						{isEmpty(loggedUser) ? (
-							<p>{randomWords(50).map((word) => `${word} `)}</p>
-						) : (
-							<p>
-								{profile.description.length > 500
-									? `${profile.description.slice(0, 500)}...`
-									: profile.description}
-							</p>
-						)}
-					</div>
+					{profile.description && (
+						<div className={`SearchResult__description ${isEmpty(loggedUser) && 'h'}`}>
+							<h4>Description:</h4>
+							{isEmpty(loggedUser) ? (
+								<p>{randomWords(50).map((word) => `${word} `)}</p>
+							) : (
+								<p>
+									{profile.description.length > 500
+										? `${profile.description.slice(0, 500)}...`
+										: profile.description}
+								</p>
+							)}
+						</div>
+					)}
 				</div>
 			</Link>
 		</div>
