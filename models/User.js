@@ -34,11 +34,6 @@ const projectsSchema = mongoose.Schema({
 	},
 	link: {
 		type: String,
-		trim: true,
-		validate: validate({
-			validator: 'isURL',
-			message: 'Link must be a valid URL',
-		}),
 	},
 });
 
