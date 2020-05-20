@@ -220,7 +220,6 @@ export const ConnectedEditProfile = (props) => {
 				updatedFields.inactiveAccount = 'false';
 			}
 
-			console.log(updatedFields);
 			axios
 				.put(`${API_URL}/api/users/${loggedUser._id}`, updatedFields)
 				.then(() => {

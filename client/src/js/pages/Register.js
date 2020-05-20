@@ -46,9 +46,7 @@ function Register({ type }) {
 			setFullNameError('You must add your full name');
 			activeErrors = true;
 		} else if (fullName.split(' ').length === 1) {
-			setFullNameError(
-				'Your Full name must contain your First name + Last name'
-			);
+			setFullNameError('Your Full name must contain your First name + Last name');
 			activeErrors = true;
 		} else {
 			setFullNameError('');
@@ -207,20 +205,14 @@ function Register({ type }) {
 						error={rePasswordError}
 					/>
 					<Button
-						text={`Register as ${
-							type === 'employer' ? 'Employer' : 'Candidate'
-						}`}
+						text={`Register as ${type === 'employer' ? 'Employer' : 'Candidate'}`}
 						btnType="submit"
 					/>
 				</form>
 				<div className="Register__loginLink">
 					<>
 						...or{' '}
-						<CustomLink
-							to={`${PUBLIC_URL}/${type}/login`}
-							text="log in"
-							border={true}
-						/>
+						<CustomLink to={`${PUBLIC_URL}/${type}/login`} text="log in" border={true} />
 					</>
 				</div>
 			</div>

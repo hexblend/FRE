@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
@@ -33,8 +33,6 @@ function ConnectedLogin({ type, addLoggedUser }) {
 		type: '',
 		text: '',
 	});
-
-	let history = useHistory();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -82,8 +80,7 @@ function ConnectedLogin({ type, addLoggedUser }) {
 					});
 
 					setTimeout(() => {
-						console.log(history);
-						window.location.href = PUBLIC_URL;
+						window.location.href = '/';
 						setAlert({ type: '', text: '' });
 					}, 1750);
 				})

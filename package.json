@@ -42,6 +42,7 @@
 		"random-words": "^1.1.1",
 		"react-datepicker": "^2.16.0",
 		"react-dropdown": "^1.7.0",
+		"react-router-last-location": "^2.0.1",
 		"stringquery": "^1.0.8",
 		"uuid": "^8.0.0"
 	},

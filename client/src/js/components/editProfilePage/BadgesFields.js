@@ -140,7 +140,7 @@ export const BadgesFields = (props) => {
 				label="Years of activity"
 				placeholder="Career duration"
 				minWidth="100%"
-				value={`${loggedUser.years_of_activity}`}
+				value={`${loggedUser.years_of_activity ? loggedUser.years_of_activity : ''}`}
 				handleChange={(years) =>
 					updateLoggedField({
 						fieldName: 'years_of_activity',
