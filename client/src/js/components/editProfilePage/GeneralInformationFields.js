@@ -29,7 +29,7 @@ export const GeneralInformationFields = (props) => {
 	if (!isEmpty(loggedUser)) {
 		if (loggedUser.type === 'candidate') {
 			statusOptions = [
-				{ label: 'None', value: 'None' },
+				{ label: 'None', value: 'none' },
 				{ label: 'Waiting for offers', value: 'waiting for offers' },
 				{ label: 'Interviewing', value: 'interviewing' },
 				{ label: 'Employed', value: 'employed' },

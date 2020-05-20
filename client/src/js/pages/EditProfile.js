@@ -167,21 +167,55 @@ export const ConnectedEditProfile = (props) => {
 	// Submit form
 	const handleSubmit = (valid) => {
 		if (valid) {
-			const full_name = {
-				first_name: updatedLoggedUser.full_name.split(' ')[0],
-				last_name: updatedLoggedUser.full_name.split(' ')[1],
+			const updatedFields = {};
+
+			const addField = (field) => {
+				if (updatedLoggedUser[field]) {
+					updatedFields[field] = updatedLoggedUser[field];
+				}
 			};
-			const experience = loggedUser.experience;
-			const projects = loggedUser.projects;
-			const user = { ...updatedLoggedUser, full_name, experience, projects };
+
+			if (updatedLoggedUser.full_name.split(' ').length === 2) {
+				updatedFields.full_name = {
+					first_name: updatedLoggedUser.full_name.split(' ')[0],
+					last_name: updatedLoggedUser.full_name.split(' ')[1],
+				};
+			}
+			addField('email');
+			addField('type');
+			addField('job_title');
+			addField('city');
+			addField('inactiveAccount');
+			addField('status');
+			addField('remote_worker');
+			addField('years_of_activity');
+			addField('higher_education');
+			addField('description');
+			addField('location');
+			if (updatedLoggedUser.key_abilities.length !== 0) {
+				updatedFields.key_abilities = updatedLoggedUser.key_abilities;
+			}
+			if (
+				updatedLoggedUser.social_media.facebook !== '' ||
+				updatedLoggedUser.social_media.twitter !== '' ||
+				updatedLoggedUser.social_media.instagram !== '' ||
+				updatedLoggedUser.social_media.github !== '' ||
+				updatedLoggedUser.social_media.linkedin !== '' ||
+				updatedLoggedUser.social_media.behance !== '' ||
+				updatedLoggedUser.social_media.personal_website !== ''
+			)
+				updatedFields.social_media = updatedLoggedUser.social_media;
+			updatedFields.experience = loggedUser.experience;
+			updatedFields.projects = loggedUser.projects;
+			updatedFields.available_positions = loggedUser.available_positions;
+
 			axios
-				.put(`${API_URL}/api/users/${loggedUser._id}`, loggedUser)
+				.put(`${API_URL}/api/users/${loggedUser._id}`, updatedFields)
 				.then(() => {
 					setAlert({ type: 'success', text: 'Profile updated.' });
-					history.push(`${PUBLIC_URL}/profile/${loggedUser._id}`);
+					setTimeout(() => history.push(`${PUBLIC_URL}/profile/${loggedUser._id}`), 2000);
 				})
-				.catch((err) => {
-					console.log(err);
+				.catch(() => {
 					setAlert({ type: 'error', text: 'Something went wrong.' });
 				});
 		}
