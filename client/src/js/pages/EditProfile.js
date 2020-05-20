@@ -148,13 +148,15 @@ export const ConnectedEditProfile = (props) => {
 				});
 			}
 			// Years of activity
-			const pattern = /^(0|([1-9]\d*))$/;
-			if (!pattern.test(loggedUser.years_of_activity)) {
-				updateLoggedFieldError({
-					fieldName: 'years_of_activity',
-					error: 'You must enter a valid number.',
-				});
-				valid = false;
+			const years_of_activity = loggedUser.years_of_activity;
+			if (years_of_activity) {
+				if (isNaN(years_of_activity) || years_of_activity < 0) {
+					updateLoggedFieldError({
+						fieldName: 'years_of_activity',
+						error: 'You must enter a valid number.',
+					});
+					valid = false;
+				}
 			} else {
 				updateLoggedFieldError({ fieldName: 'years_of_activity', error: '' });
 			}
