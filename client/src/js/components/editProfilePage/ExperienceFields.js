@@ -24,11 +24,10 @@ function ExperienceFields(props) {
 		addLoggedObj({
 			array: 'experience',
 			object: {
-				_id: uuidv4(),
 				company_name: '',
 				job_title: '',
-				starting_date: new Date(),
-				ending_date: new Date(),
+				starting_date: new Date().toISOString(),
+				ending_date: new Date().toISOString(),
 				long_description: '',
 			},
 		});

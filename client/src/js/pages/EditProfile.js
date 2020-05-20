@@ -209,10 +209,10 @@ export const ConnectedEditProfile = (props) => {
 			updatedFields.projects = loggedUser.projects;
 			updatedFields.available_positions = loggedUser.available_positions;
 
+			console.log(updatedFields);
 			axios
 				.put(`${API_URL}/api/users/${loggedUser._id}`, updatedFields)
 				.then(() => {
-					console.log(updatedFields);
 					setAlert({ type: 'success', text: 'Profile updated.' });
 					setTimeout(() => history.push(`${PUBLIC_URL}/profile/${loggedUser._id}`), 2000);
 				})

@@ -102,7 +102,7 @@
 }
 .Profile__experience--single,
 .Profile__projects--single {
-	margin-bottom: 1.6rem;
+	margin-bottom: 2.4rem;
 	&:last-child {
 		margin-bottom: 0;
 	}
@@ -120,7 +120,7 @@
 }
 .Profile__experience--date {
 	display: flex;
-	margin-bottom: 1.6rem;
+	margin-bottom: 0.8rem;
 }
 .Profile__experience--startingDate,
 .Profile__experience--endingDate,
@@ -131,7 +131,7 @@
 }
 .Profile__experinece--longDesc {
 	color: $darkest-gray;
-	font-size: $p-small-desktop;
+	font-size: 1.4rem;
 }
 // Content - right
 .Profile__projects {
