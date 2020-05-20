@@ -171,7 +171,9 @@ export const ConnectedEditProfile = (props) => {
 				first_name: updatedLoggedUser.full_name.split(' ')[0],
 				last_name: updatedLoggedUser.full_name.split(' ')[1],
 			};
-			const user = { ...updatedLoggedUser, full_name };
+			const experience = loggedUser.experience;
+			const projects = loggedUser.projects;
+			const user = { ...updatedLoggedUser, full_name, experience, projects };
 			axios
 				.put(`${API_URL}/api/users/${loggedUser._id}`, loggedUser)
 				.then(() => {

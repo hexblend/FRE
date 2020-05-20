@@ -106,6 +106,13 @@ function AuthReducer(state = initialState, action) {
 						[action.payload.key]: action.payload.value,
 					},
 				},
+				updatedLoggedUser: {
+					...state.updatedLoggedUser,
+					[action.payload.object]: {
+						...state.updatedLoggedUser[action.payload.object],
+						[action.payload.key]: action.payload.value,
+					},
+				},
 			};
 		case ADD_LOGGED_OBJ:
 			return {

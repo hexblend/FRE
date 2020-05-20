@@ -7,6 +7,7 @@ import { updateLoggedKeyinObj } from '../../redux/actions/AuthActions';
 
 const mapStateToProps = (state) => ({
 	updatedLoggedUser: state.AuthReducer.updatedLoggedUser,
+	loggedUser: state.AuthReducer.loggedUser,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -15,7 +16,17 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 function UsefulLinksFields(props) {
-	const { updatedLoggedUser, updateLoggedKeyinObj } = props;
+	const { loggedUser, updatedLoggedUser, updateLoggedKeyinObj } = props;
+	let facebook, twitter, instagram, linkedin, github, behance, personal_website;
+	if (loggedUser.social_media) {
+		facebook = loggedUser.social_media.facebook;
+		twitter = loggedUser.social_media.twitter;
+		instagram = loggedUser.social_media.instagram;
+		linkedin = loggedUser.social_media.linkedin;
+		github = loggedUser.social_media.github;
+		behance = loggedUser.social_media.behance;
+		personal_website = loggedUser.social_media.personal_website;
+	}
 	return (
 		<>
 			{/* Facebook */}
@@ -25,7 +36,7 @@ function UsefulLinksFields(props) {
 				label="Facebook:"
 				placeholder="Facebook profile link"
 				minWidth="100%"
-				value={updatedLoggedUser.social_media.facebook}
+				value={facebook && facebook}
 				handleChange={(url) =>
 					updateLoggedKeyinObj({
 						object: 'social_media',
@@ -41,7 +52,7 @@ function UsefulLinksFields(props) {
 				label="Twitter:"
 				placeholder="Twitter profile link"
 				minWidth="100%"
-				value={updatedLoggedUser.social_media.twitter}
+				value={twitter && twitter}
 				handleChange={(url) =>
 					updateLoggedKeyinObj({
 						object: 'social_media',
@@ -57,7 +68,7 @@ function UsefulLinksFields(props) {
 				label="LinkedIn:"
 				placeholder="LinkedIn profile link"
 				minWidth="100%"
-				value={updatedLoggedUser.social_media.linkedin}
+				value={linkedin && linkedin}
 				handleChange={(url) =>
 					updateLoggedKeyinObj({
 						object: 'social_media',
@@ -73,7 +84,7 @@ function UsefulLinksFields(props) {
 				label="Instagram:"
 				placeholder="Instagram profile link"
 				minWidth="100%"
-				value={updatedLoggedUser.social_media.instagram}
+				value={instagram && instagram}
 				handleChange={(url) =>
 					updateLoggedKeyinObj({
 						object: 'social_media',
@@ -89,7 +100,7 @@ function UsefulLinksFields(props) {
 				label="GitHub:"
 				placeholder="GitHub profile link"
 				minWidth="100%"
-				value={updatedLoggedUser.social_media.github}
+				value={github && github}
 				handleChange={(url) =>
 					updateLoggedKeyinObj({
 						object: 'social_media',
@@ -105,7 +116,7 @@ function UsefulLinksFields(props) {
 				label="Behance:"
 				placeholder="Behance profile link"
 				minWidth="100%"
-				value={updatedLoggedUser.social_media.behance}
+				value={behance && behance}
 				handleChange={(url) =>
 					updateLoggedKeyinObj({
 						object: 'social_media',
@@ -121,7 +132,7 @@ function UsefulLinksFields(props) {
 				label="Personal website:"
 				placeholder="Personal website link"
 				minWidth="100%"
-				value={updatedLoggedUser.social_media.personal_website}
+				value={personal_website && personal_website}
 				handleChange={(url) =>
 					updateLoggedKeyinObj({
 						object: 'social_media',
