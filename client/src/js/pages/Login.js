@@ -82,7 +82,7 @@ function ConnectedLogin({ type, addLoggedUser }) {
 					});
 
 					setTimeout(() => {
-						history.goBack();
+						history.push(PUBLIC_URL);
 						setAlert({ type: '', text: '' });
 					}, 1750);
 				})

@@ -296,12 +296,14 @@ const ConnectedProfile = (props) => {
 						</div>
 					)}
 					{/* Get in touch */}
-					<div className="Profile__getInTouch">
-						<h3 className="Profile__sectionTitle">Get in touch:</h3>
-						<Link to="#">
-							<Button text={`Message ${firstName}`} type="secondary" btnType="button" />
-						</Link>
-					</div>
+					{profile._id !== loggedUser._id && (
+						<div className="Profile__getInTouch">
+							<h3 className="Profile__sectionTitle">Get in touch:</h3>
+							<Link to="#">
+								<Button text={`Message ${firstName}`} type="secondary" btnType="button" />
+							</Link>
+						</div>
+					)}
 				</div>
 			</div>
 			{profile._id === loggedUser._id && (
