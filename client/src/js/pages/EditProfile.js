@@ -53,6 +53,7 @@ export const ConnectedEditProfile = (props) => {
 
 	const history = useHistory();
 	const API_URL = process.env.REACT_APP_API_URL;
+	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
 	const [jobsSuggestions, setJobsSuggestions] = useState([]);
 	const [locationSuggestions, setLocationSuggestions] = useState([]);
@@ -75,41 +76,41 @@ export const ConnectedEditProfile = (props) => {
 	}, [updateHeaderView]);
 
 	// Update updatedLoggedUser
-	useEffect(() => {
-		if (!isEmpty(loggedUser)) {
-			const loadField = (fieldName, fieldValue) => {
-				if (loggedUser[fieldName]) {
-					updateLoggedField({ fieldName, fieldValue });
-				}
-			};
-			// prettier-ignore
-			loadField('full_name', loggedUser.full_name.first_name + ' ' + loggedUser.full_name.last_name);
-			loadField('email', loggedUser.email);
-			loadField('status', loggedUser.status);
-			loadField('description', loggedUser.description);
-			loadField('job_title', loggedUser.job_title);
-			loadField('city', loggedUser.city);
-			loadField('years_of_activity', loggedUser.years_of_activity);
-			loadField('remote_worker', loggedUser.remote_worker);
-			loadField('higher_education', loggedUser.higher_education);
-			loadField('key_abilities', loggedUser.key_abilities);
-			loadField('experience', loggedUser.experience);
-			loadField('projects', loggedUser.projects);
+	// useEffect(() => {
+	// 	if (!isEmpty(loggedUser)) {
+	// 		const loadField = (fieldName, fieldValue) => {
+	// 			if (loggedUser[fieldName]) {
+	// 				updateLoggedField({ fieldName, fieldValue });
+	// 			}
+	// 		};
+	// 		// prettier-ignore
+	// 		loadField('full_name', loggedUser.full_name.first_name + ' ' + loggedUser.full_name.last_name);
+	// 		loadField('email', loggedUser.email);
+	// 		loadField('status', loggedUser.status);
+	// 		loadField('description', loggedUser.description);
+	// 		loadField('job_title', loggedUser.job_title);
+	// 		loadField('city', loggedUser.city);
+	// 		loadField('years_of_activity', loggedUser.years_of_activity);
+	// 		loadField('remote_worker', loggedUser.remote_worker);
+	// 		loadField('higher_education', loggedUser.higher_education);
+	// 		loadField('key_abilities', loggedUser.key_abilities);
+	// 		loadField('experience', loggedUser.experience);
+	// 		loadField('projects', loggedUser.projects);
 
-			const loadKeyInObj = (object, key, value) => {
-				if (loggedUser[object][key]) {
-					updateLoggedKeyinObj({ object, key, value });
-				}
-			};
-			loadKeyInObj('social_media', 'facebook', loggedUser.social_media.facebook);
-			loadKeyInObj('social_media', 'twitter', loggedUser.social_media.twitter);
-			loadKeyInObj('social_media', 'linkedin', loggedUser.social_media.linkedin);
-			loadKeyInObj('social_media', 'instagram', loggedUser.social_media.instagram);
-			loadKeyInObj('social_media', 'github', loggedUser.social_media.github);
-			// prettier-ignore
-			loadKeyInObj('social_media','personal_website',loggedUser.social_media.personal_website);
-		}
-	}, [loggedUser, updateLoggedField, updateLoggedKeyinObj]);
+	// 		const loadKeyInObj = (object, key, value) => {
+	// 			if (loggedUser[object][key]) {
+	// 				updateLoggedKeyinObj({ object, key, value });
+	// 			}
+	// 		};
+	// 		loadKeyInObj('social_media', 'facebook', loggedUser.social_media.facebook);
+	// 		loadKeyInObj('social_media', 'twitter', loggedUser.social_media.twitter);
+	// 		loadKeyInObj('social_media', 'linkedin', loggedUser.social_media.linkedin);
+	// 		loadKeyInObj('social_media', 'instagram', loggedUser.social_media.instagram);
+	// 		loadKeyInObj('social_media', 'github', loggedUser.social_media.github);
+	// 		// prettier-ignore
+	// 		loadKeyInObj('social_media','personal_website',loggedUser.social_media.personal_website);
+	// 	}
+	// }, [loggedUser, updateLoggedField, updateLoggedKeyinObj]);
 
 	// Validation
 	useEffect(() => {
@@ -117,13 +118,13 @@ export const ConnectedEditProfile = (props) => {
 			setUpdateFormSubmitted(false);
 			let valid = true;
 			// Full name
-			if (updatedLoggedUser.full_name === '') {
+			if (loggedUser.full_name === '') {
 				updateLoggedFieldError({
 					fieldName: 'full_name',
 					error: 'Your full name must not be empty.',
 				});
 				valid = false;
-			} else if (updatedLoggedUser.full_name.split(' ').length !== 2) {
+			} else if (loggedUser.full_name.split(' ').length !== 2) {
 				updateLoggedFieldError({
 					fieldName: 'full_name',
 					error: 'Your must include your first and last name.',
@@ -203,7 +204,21 @@ export const ConnectedEditProfile = (props) => {
 	// Submit form
 	const handleSubmit = (valid) => {
 		if (valid) {
-			setAlert({ type: 'success', text: 'Profile updated.' });
+			const full_name = {
+				first_name: updatedLoggedUser.full_name.split(' ')[0],
+				last_name: updatedLoggedUser.full_name.split(' ')[1],
+			};
+			const user = { ...updatedLoggedUser, full_name };
+			axios
+				.put(`${API_URL}/api/users/${loggedUser._id}`, loggedUser)
+				.then(() => {
+					setAlert({ type: 'success', text: 'Profile updated.' });
+					history.push(`${PUBLIC_URL}/profile/${loggedUser._id}`);
+				})
+				.catch((err) => {
+					console.log(err);
+					setAlert({ type: 'error', text: 'Something went wrong.' });
+				});
 		}
 	};
 
