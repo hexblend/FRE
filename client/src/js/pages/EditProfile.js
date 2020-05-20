@@ -174,7 +174,6 @@ export const ConnectedEditProfile = (props) => {
 					updatedFields[field] = updatedLoggedUser[field];
 				}
 			};
-
 			if (updatedLoggedUser.full_name.split(' ').length === 2) {
 				updatedFields.full_name = {
 					first_name: updatedLoggedUser.full_name.split(' ')[0],
@@ -195,16 +194,24 @@ export const ConnectedEditProfile = (props) => {
 			if (updatedLoggedUser.key_abilities.length !== 0) {
 				updatedFields.key_abilities = updatedLoggedUser.key_abilities;
 			}
-			if (
-				updatedLoggedUser.social_media.facebook !== '' ||
-				updatedLoggedUser.social_media.twitter !== '' ||
-				updatedLoggedUser.social_media.instagram !== '' ||
-				updatedLoggedUser.social_media.github !== '' ||
-				updatedLoggedUser.social_media.linkedin !== '' ||
-				updatedLoggedUser.social_media.behance !== '' ||
-				updatedLoggedUser.social_media.personal_website !== ''
-			)
-				updatedFields.social_media = updatedLoggedUser.social_media;
+
+			const social_media = {};
+			const addSMField = (field) => {
+				if (updatedLoggedUser['social_media'][field] === '') {
+					social_media[field] = ' ';
+				} else {
+					social_media[field] = updatedLoggedUser['social_media'][field];
+				}
+			};
+			addSMField('facebook');
+			addSMField('twitter');
+			addSMField('instagram');
+			addSMField('linkedin');
+			addSMField('github');
+			addSMField('behance');
+			addSMField('personal_website');
+			updatedFields.social_media = social_media;
+
 			updatedFields.experience = loggedUser.experience;
 			updatedFields.projects = loggedUser.projects;
 			updatedFields.available_positions = loggedUser.available_positions;

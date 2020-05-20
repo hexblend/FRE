@@ -256,14 +256,24 @@ const updateUser = async (req, res, next) => {
 		// Social Media
 		if (req.body.social_media) {
 			const socialMediaObj = req.body.social_media;
-			// prettier-ignore
-			const { facebook, twitter, instagram, linkedin, github, personal_website } = socialMediaObj;
-			user.social_media.facebook = facebook;
-			user.social_media.twitter = twitter;
-			user.social_media.instagram = instagram;
-			user.social_media.linkedin = linkedin;
-			user.social_media.github = github;
-			user.personal_website = personal_website;
+			user.social_media.facebook = socialMediaObj.facebook
+				? socialMediaObj.facebook
+				: user.social_media.facebook;
+			user.social_media.twitter = socialMediaObj.twitter
+				? socialMediaObj.twitter
+				: user.social_media.twitter;
+			user.social_media.instagram = socialMediaObj.instagram
+				? socialMediaObj.instagram
+				: user.social_media.instagram;
+			user.social_media.linkedin = socialMediaObj.linkedin
+				? socialMediaObj.linkedin
+				: user.social_media.linkedin;
+			user.social_media.github = socialMediaObj.github
+				? socialMediaObj.github
+				: user.social_media.github;
+			user.social_media.personal_website = socialMediaObj.personal_website
+				? socialMediaObj.personal_website
+				: user.social_media.personal_website;
 		}
 
 		// Fields with Subdocuments
