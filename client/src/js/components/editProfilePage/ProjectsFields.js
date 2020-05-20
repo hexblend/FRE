@@ -24,7 +24,6 @@ function ExperienceFields(props) {
 		addLoggedObj({
 			array: 'projects',
 			object: {
-				_id: uuidv4(),
 				title: '',
 				description: '',
 				accomplishments: '',
