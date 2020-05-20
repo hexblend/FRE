@@ -34,7 +34,7 @@ function SingleExperience(props) {
 
 	return (
 		<>
-			<div className="EditProfile__experience" key={experience._id}>
+			<div className="EditProfile__experience">
 				<div className="EditProfile__experience--header">
 					<p>{index + 1}:</p>
 					<Link

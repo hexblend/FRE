@@ -28,7 +28,6 @@ import {
 const mapStateToProps = (state) => ({
 	loggedUser: state.AuthReducer.loggedUser,
 	updatedLoggedUser: state.AuthReducer.updatedLoggedUser,
-	formSubmitted: state.AuthReducer.updatedLoggedUser.formSubmitted,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -49,7 +48,6 @@ export const ConnectedEditProfile = (props) => {
 		updateLoggedField,
 		updateLoggedFieldError,
 		updateLoggedKeyinObj,
-		formSubmitted,
 		setUpdateFormSubmitted,
 	} = props;
 
@@ -59,7 +57,7 @@ export const ConnectedEditProfile = (props) => {
 	const [jobsSuggestions, setJobsSuggestions] = useState([]);
 	const [locationSuggestions, setLocationSuggestions] = useState([]);
 	const [openModal, setOpenModal] = useState(false);
-	const [alert, setAlert] = useState('');
+	const [alert, setAlert] = useState({ type: '', text: '' });
 
 	// Check User IDs
 	useEffect(() => {
@@ -115,67 +113,70 @@ export const ConnectedEditProfile = (props) => {
 
 	// Validation
 	useEffect(() => {
-		if (formSubmitted) {
+		if (updatedLoggedUser.formSubmitted) {
 			setUpdateFormSubmitted(false);
-
+			let valid = true;
 			// Full name
 			if (updatedLoggedUser.full_name === '') {
 				updateLoggedFieldError({
 					fieldName: 'full_name',
 					error: 'Your full name must not be empty.',
 				});
+				valid = false;
 			} else if (updatedLoggedUser.full_name.split(' ').length !== 2) {
 				updateLoggedFieldError({
 					fieldName: 'full_name',
 					error: 'Your must include your first and last name.',
 				});
+				valid = false;
 			} else {
 				updateLoggedFieldError({ fieldName: 'full_name', error: '' });
 			}
-
 			// Email
 			if (updatedLoggedUser.email === '') {
 				updateLoggedFieldError({
 					fieldName: 'email',
 					error: "You can't leave your email empty.",
 				});
+				valid = false;
 			} else if (!/\S+@\S+/.test(updatedLoggedUser.email.toLowerCase())) {
 				updateLoggedFieldError({
 					fieldName: 'email',
 					error: 'You must enter a valid email type.',
 				});
+				valid = false;
 			} else {
 				updateLoggedFieldError({ fieldName: 'email', error: '' });
 			}
-
 			// Job Title
-			if (updatedLoggedUser.job_title) {
-				const jobTitle = updatedLoggedUser.job_title;
-				const words = jobTitle.split(' ');
-				words.forEach((word) => {
+			const jobTitle = updatedLoggedUser.job_title;
+			if (jobTitle) {
+				const jobWords = jobTitle.split(' ');
+				jobWords.forEach((word) => {
 					if (word[0] !== word[0].toUpperCase()) {
 						updateLoggedFieldError({
 							fieldName: 'job_title',
 							error: 'You must select a valid job title.',
 						});
 						setJobsSuggestions([]);
+						valid = false;
 					} else {
 						updateLoggedFieldError({ fieldName: 'job_title', error: '' });
 					}
 				});
 			}
-
 			// Location
-			if (updatedLoggedUser.city) {
-				const cityName = updatedLoggedUser.city;
-				const words = cityName.split(' ');
-				words.forEach((word) => {
+			const cityName = updatedLoggedUser.city;
+			if (cityName) {
+				const cityWords = cityName.split(' ');
+				cityWords.forEach((word) => {
 					if (word[0] !== word[0].toUpperCase()) {
 						updateLoggedFieldError({
 							fieldName: 'city',
 							error: 'Please select a location from the list.',
 						});
 						setLocationSuggestions([]);
+						valid = false;
 					} else {
 						updateLoggedFieldError({ fieldName: 'city', error: '' });
 						setLocationSuggestions([]);
@@ -183,19 +184,28 @@ export const ConnectedEditProfile = (props) => {
 				});
 			}
 			// Years of activity
-			if (updatedLoggedUser.years_of_activity) {
-				const pattern = /^(0|([1-9]\d*))$/;
-				if (!pattern.test(updatedLoggedUser.years_of_activity)) {
-					updateLoggedFieldError({
-						fieldName: 'years_of_activity',
-						error: 'You must enter a valid number.',
-					});
-				} else {
-					updateLoggedFieldError({ fieldName: 'years_of_activity', error: '' });
-				}
+			const pattern = /^(0|([1-9]\d*))$/;
+			if (!pattern.test(updatedLoggedUser.years_of_activity)) {
+				updateLoggedFieldError({
+					fieldName: 'years_of_activity',
+					error: 'You must enter a valid number.',
+				});
+				valid = false;
+			} else {
+				updateLoggedFieldError({ fieldName: 'years_of_activity', error: '' });
 			}
+
+			// Submit form
+			handleSubmit(valid);
 		}
-	}, [formSubmitted, updatedLoggedUser, setUpdateFormSubmitted, updateLoggedFieldError]);
+	}, [updatedLoggedUser, setUpdateFormSubmitted, updateLoggedFieldError]);
+
+	// Submit form
+	const handleSubmit = (valid) => {
+		if (valid) {
+			setAlert({ type: 'success', text: 'Profile updated.' });
+		}
+	};
 
 	// Handle User Removal
 	const handleDeleteUser = () => {

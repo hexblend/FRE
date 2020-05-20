@@ -39,6 +39,7 @@ const initialState = {
 			email: '',
 			job_title: '',
 			city: '',
+			years_of_activity: '',
 		},
 
 		formSubmitted: false,

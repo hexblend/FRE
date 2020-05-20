@@ -44,7 +44,7 @@ function ExperienceFields(props) {
 				onClick={addNewProject}
 			/>
 			{updatedLoggedUser.projects.map((project, index) => (
-				<SingleProject project={project} index={index} />
+				<SingleProject project={project} index={index} key={project._id} />
 			))}
 		</>
 	);

@@ -44,7 +44,7 @@ function ExperienceFields(props) {
 				onClick={addNewExperience}
 			/>
 			{updatedLoggedUser.experience.map((experience, index) => (
-				<SingleExperience experience={experience} index={index} />
+				<SingleExperience experience={experience} index={index} key={experience._id} />
 			))}
 		</>
 	);
