@@ -7,6 +7,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { updateLoggedField } from '../../redux/actions/AuthActions';
 
 const mapStateToProps = (state) => ({
+	loggedUser: state.AuthReducer.loggedUser,
 	updatedLoggedUser: state.AuthReducer.updatedLoggedUser,
 });
 
@@ -16,14 +17,16 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 function KeyAbilitiesFields(props) {
-	const { updatedLoggedUser, updateLoggedField } = props;
+	const { loggedUser, updatedLoggedUser, updateLoggedField } = props;
 
 	const [tagsLeft, setTagsLeft] = useState(0);
 	const [tagsInput, setTagsInput] = useState('');
 
 	useEffect(() => {
-		setTagsLeft(12 - updatedLoggedUser.key_abilities.length);
-	}, [updatedLoggedUser]);
+		if (loggedUser.key_abilities) {
+			setTagsLeft(12 - loggedUser.key_abilities.length);
+		}
+	}, [loggedUser]);
 
 	const addTag = (e) => {
 		if (e.key === 'Enter') {
@@ -31,7 +34,7 @@ function KeyAbilitiesFields(props) {
 			if (tagsLeft > 0) {
 				updateLoggedField({
 					fieldName: 'key_abilities',
-					fieldValue: [...updatedLoggedUser.key_abilities, e.target.value],
+					fieldValue: [...loggedUser.key_abilities, e.target.value],
 				});
 				setTagsLeft(tagsLeft - 1);
 			}
@@ -39,7 +42,7 @@ function KeyAbilitiesFields(props) {
 	};
 
 	const removeTag = (index) => {
-		const tags = updatedLoggedUser.key_abilities;
+		const tags = loggedUser.key_abilities;
 		const remainedTags = tags.filter((tag) => tags.indexOf(tag) !== index);
 		updateLoggedField({ fieldName: 'key_abilities', fieldValue: remainedTags });
 		setTagsLeft(tagsLeft + 1);
@@ -70,14 +73,15 @@ function KeyAbilitiesFields(props) {
 			/>
 			{/* Tags */}
 			<ul className="Tags EditProfile__skillsTags">
-				{updatedLoggedUser.key_abilities.map((tag, index) => (
-					<li className="tag" key={index}>
-						<span className="tag__text">{tag}</span>
-						<span className="tag__icon" onClick={() => removeTag(index)}>
-							<FontAwesomeIcon icon={faTimes} />
-						</span>
-					</li>
-				))}
+				{loggedUser.key_abilities &&
+					loggedUser.key_abilities.map((tag, index) => (
+						<li className="tag" key={index}>
+							<span className="tag__text">{tag}</span>
+							<span className="tag__icon" onClick={() => removeTag(index)}>
+								<FontAwesomeIcon icon={faTimes} />
+							</span>
+						</li>
+					))}
 			</ul>
 		</>
 	);

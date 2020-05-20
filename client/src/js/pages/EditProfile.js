@@ -75,43 +75,6 @@ export const ConnectedEditProfile = (props) => {
 		updateHeaderView('editProfile');
 	}, [updateHeaderView]);
 
-	// Update updatedLoggedUser
-	// useEffect(() => {
-	// 	if (!isEmpty(loggedUser)) {
-	// 		const loadField = (fieldName, fieldValue) => {
-	// 			if (loggedUser[fieldName]) {
-	// 				updateLoggedField({ fieldName, fieldValue });
-	// 			}
-	// 		};
-	// 		// prettier-ignore
-	// 		loadField('full_name', loggedUser.full_name.first_name + ' ' + loggedUser.full_name.last_name);
-	// 		loadField('email', loggedUser.email);
-	// 		loadField('status', loggedUser.status);
-	// 		loadField('description', loggedUser.description);
-	// 		loadField('job_title', loggedUser.job_title);
-	// 		loadField('city', loggedUser.city);
-	// 		loadField('years_of_activity', loggedUser.years_of_activity);
-	// 		loadField('remote_worker', loggedUser.remote_worker);
-	// 		loadField('higher_education', loggedUser.higher_education);
-	// 		loadField('key_abilities', loggedUser.key_abilities);
-	// 		loadField('experience', loggedUser.experience);
-	// 		loadField('projects', loggedUser.projects);
-
-	// 		const loadKeyInObj = (object, key, value) => {
-	// 			if (loggedUser[object][key]) {
-	// 				updateLoggedKeyinObj({ object, key, value });
-	// 			}
-	// 		};
-	// 		loadKeyInObj('social_media', 'facebook', loggedUser.social_media.facebook);
-	// 		loadKeyInObj('social_media', 'twitter', loggedUser.social_media.twitter);
-	// 		loadKeyInObj('social_media', 'linkedin', loggedUser.social_media.linkedin);
-	// 		loadKeyInObj('social_media', 'instagram', loggedUser.social_media.instagram);
-	// 		loadKeyInObj('social_media', 'github', loggedUser.social_media.github);
-	// 		// prettier-ignore
-	// 		loadKeyInObj('social_media','personal_website',loggedUser.social_media.personal_website);
-	// 	}
-	// }, [loggedUser, updateLoggedField, updateLoggedKeyinObj]);
-
 	// Validation
 	useEffect(() => {
 		if (updatedLoggedUser.formSubmitted) {
@@ -134,13 +97,13 @@ export const ConnectedEditProfile = (props) => {
 				updateLoggedFieldError({ fieldName: 'full_name', error: '' });
 			}
 			// Email
-			if (updatedLoggedUser.email === '') {
+			if (loggedUser.email === '') {
 				updateLoggedFieldError({
 					fieldName: 'email',
 					error: "You can't leave your email empty.",
 				});
 				valid = false;
-			} else if (!/\S+@\S+/.test(updatedLoggedUser.email.toLowerCase())) {
+			} else if (!/\S+@\S+/.test(loggedUser.email.toLowerCase())) {
 				updateLoggedFieldError({
 					fieldName: 'email',
 					error: 'You must enter a valid email type.',
@@ -150,7 +113,7 @@ export const ConnectedEditProfile = (props) => {
 				updateLoggedFieldError({ fieldName: 'email', error: '' });
 			}
 			// Job Title
-			const jobTitle = updatedLoggedUser.job_title;
+			const jobTitle = loggedUser.job_title;
 			if (jobTitle) {
 				const jobWords = jobTitle.split(' ');
 				jobWords.forEach((word) => {
@@ -167,7 +130,7 @@ export const ConnectedEditProfile = (props) => {
 				});
 			}
 			// Location
-			const cityName = updatedLoggedUser.city;
+			const cityName = loggedUser.city;
 			if (cityName) {
 				const cityWords = cityName.split(' ');
 				cityWords.forEach((word) => {
@@ -186,7 +149,7 @@ export const ConnectedEditProfile = (props) => {
 			}
 			// Years of activity
 			const pattern = /^(0|([1-9]\d*))$/;
-			if (!pattern.test(updatedLoggedUser.years_of_activity)) {
+			if (!pattern.test(loggedUser.years_of_activity)) {
 				updateLoggedFieldError({
 					fieldName: 'years_of_activity',
 					error: 'You must enter a valid number.',

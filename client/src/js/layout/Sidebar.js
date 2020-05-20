@@ -5,10 +5,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-	faChartPie,
-	faBriefcase,
-} from '@fortawesome/free-solid-svg-icons';
+import { faChartPie, faBriefcase } from '@fortawesome/free-solid-svg-icons';
 
 import Badges from '../components/Badges';
 import Alert from './Alert';
@@ -61,19 +58,11 @@ function ConnectedSidebar({ loggedUser }) {
 						className="Sidebar__avatar"
 					/>
 
-					<h3 className="Sidebar__userName">
-						{loggedUser.full_name.first_name +
-							' ' +
-							loggedUser.full_name.last_name}
-					</h3>
+					<h3 className="Sidebar__userName">{loggedUser.full_name}</h3>
 
 					<p className="Sidebar__userType">
 						<FontAwesomeIcon
-							icon={
-								loggedUser.type === 'candidate'
-									? faBriefcase
-									: faChartPie
-							}
+							icon={loggedUser.type === 'candidate' ? faBriefcase : faChartPie}
 						/>{' '}
 						Candidate
 					</p>
@@ -82,10 +71,7 @@ function ConnectedSidebar({ loggedUser }) {
 					</div>
 					<div className="Sidebar__links">
 						<div>
-							<Link
-								to={`/profile/${loggedUser._id}`}
-								className="Sidebar__links--link"
-							>
+							<Link to={`/profile/${loggedUser._id}`} className="Sidebar__links--link">
 								View your profile
 							</Link>
 							<Link
@@ -98,11 +84,7 @@ function ConnectedSidebar({ loggedUser }) {
 								Search
 							</Link>
 						</div>
-						<Link
-							to="#"
-							className="Sidebar__links--link"
-							onClick={handleLogout}
-						>
+						<Link to="#" className="Sidebar__links--link" onClick={handleLogout}>
 							Logout
 						</Link>
 					</div>
@@ -116,8 +98,5 @@ ConnectedSidebar.propTypes = {
 	loggedUser: PropTypes.object.isRequired,
 };
 
-const Sidebar = connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(ConnectedSidebar);
+const Sidebar = connect(mapStateToProps, mapDispatchToProps)(ConnectedSidebar);
 export default Sidebar;

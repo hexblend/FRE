@@ -8,6 +8,7 @@ import Checkbox from '../elements/Checkbox';
 import { updateLoggedField } from '../../redux/actions/AuthActions';
 
 const mapStateToProps = (state) => ({
+	loggedUser: state.AuthReducer.loggedUser,
 	updatedLoggedUser: state.AuthReducer.updatedLoggedUser,
 });
 
@@ -20,6 +21,7 @@ const mapDispatchToProps = (dispatch) => {
 export const BadgesFields = (props) => {
 	const {
 		// Globals
+		loggedUser,
 		updatedLoggedUser,
 		updateLoggedField,
 		// Passed
@@ -70,7 +72,7 @@ export const BadgesFields = (props) => {
 				label="Desired job title"
 				placeholder="Job Title"
 				minWidth="100%"
-				value={updatedLoggedUser.job_title}
+				value={loggedUser.job_title}
 				handleChange={(jobTitle) => getJobSuggestions(jobTitle)}
 				error={updatedLoggedUser.errors.job_title}
 				icon="suitcase"
@@ -104,7 +106,7 @@ export const BadgesFields = (props) => {
 				label="Your city"
 				placeholder="City name"
 				minWidth="100%"
-				value={updatedLoggedUser.city}
+				value={loggedUser.city}
 				handleChange={(city) => getLocationSuggestions(city)}
 				error={updatedLoggedUser.errors.city}
 				icon="map-marker-alt"
@@ -138,7 +140,7 @@ export const BadgesFields = (props) => {
 				label="Years of activity"
 				placeholder="Career duration"
 				minWidth="100%"
-				value={`${updatedLoggedUser.years_of_activity}`}
+				value={`${loggedUser.years_of_activity}`}
 				handleChange={(years) =>
 					updateLoggedField({
 						fieldName: 'years_of_activity',
@@ -152,7 +154,7 @@ export const BadgesFields = (props) => {
 			{/* Remote Worker */}
 			<Checkbox
 				label="Keen to work remotely?"
-				checked={updatedLoggedUser.remote_worker}
+				checked={loggedUser.remote_worker}
 				setChecked={(checked) =>
 					updateLoggedField({
 						fieldName: 'remote_worker',
@@ -166,7 +168,7 @@ export const BadgesFields = (props) => {
 			{/* Higher education */}
 			<Checkbox
 				label="Higher education?"
-				checked={updatedLoggedUser.higher_education}
+				checked={loggedUser.higher_education}
 				setChecked={(checked) =>
 					updateLoggedField({
 						fieldName: 'higher_education',

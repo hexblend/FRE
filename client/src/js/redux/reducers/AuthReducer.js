@@ -24,6 +24,12 @@ const initialState = {
 		key_abilities: [],
 		experience: [],
 		projects: [],
+		company: {
+			name: '',
+			type: '',
+			website: '',
+		},
+		available_positions: [],
 		social_media: {
 			facebook: '',
 			twitter: '',
@@ -55,6 +61,10 @@ function AuthReducer(state = initialState, action) {
 				...state,
 				updatedLoggedUser: {
 					...state.updatedLoggedUser,
+					[action.payload.fieldName]: action.payload.fieldValue,
+				},
+				loggedUser: {
+					...state.loggedUser,
 					[action.payload.fieldName]: action.payload.fieldValue,
 				},
 			};

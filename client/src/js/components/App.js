@@ -1,9 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -35,7 +31,13 @@ function ConnectedApp({ addLoggedUser }) {
 				})
 				.then((res) => {
 					if (res.status === 200) {
-						addLoggedUser(res.data.user);
+						addLoggedUser({
+							...res.data.user,
+							full_name:
+								res.data.user.full_name.first_name +
+								' ' +
+								res.data.user.full_name.last_name,
+						});
 					}
 				});
 		};
@@ -66,11 +68,7 @@ function ConnectedApp({ addLoggedUser }) {
 				<MainLayout>
 					<Route path="/search" component={Search} />
 					<Route exact path="/profile/:id" component={Profile} />
-					<Route
-						exact
-						path="/profile/:id/edit"
-						component={EditProfile}
-					/>
+					<Route exact path="/profile/:id/edit" component={EditProfile} />
 				</MainLayout>
 			</Switch>
 			<Footer />

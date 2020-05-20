@@ -52,7 +52,7 @@ export const GeneralInformationFields = (props) => {
 				label="Full Name"
 				placeholder="First and last name"
 				minWidth="100%"
-				value={updatedLoggedUser.full_name}
+				value={loggedUser.full_name}
 				handleChange={(fullName) =>
 					updateLoggedField({
 						fieldName: 'full_name',
@@ -68,7 +68,7 @@ export const GeneralInformationFields = (props) => {
 				label="Your email"
 				placeholder="Your email"
 				minWidth="100%"
-				value={updatedLoggedUser.email}
+				value={loggedUser.email}
 				handleChange={(email) =>
 					updateLoggedField({
 						fieldName: 'email',
@@ -80,11 +80,11 @@ export const GeneralInformationFields = (props) => {
 			{/* Status */}
 			<p className="EditProfile__section--label">Status</p>
 			<Dropdown
-				value={updatedLoggedUser.status}
+				value={loggedUser.status}
 				onChange={(option) =>
 					updateLoggedField({
 						fieldName: 'status',
-						fieldValue: option,
+						fieldValue: option.value,
 					})
 				}
 				options={statusOptions}
@@ -101,7 +101,7 @@ export const GeneralInformationFields = (props) => {
 				label="Description"
 				placeholder="Profile description"
 				minWidth="100%"
-				value={updatedLoggedUser.description}
+				value={loggedUser.description}
 				handleChange={(description) =>
 					updateLoggedField({
 						fieldName: 'description',
