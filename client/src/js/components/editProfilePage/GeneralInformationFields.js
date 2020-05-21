@@ -119,6 +119,24 @@ export const GeneralInformationFields = (props) => {
 				arrowClosed={<FontAwesomeIcon icon={faCaretDown} />}
 				arrowOpen={<FontAwesomeIcon icon={faCaretDown} />}
 			/>
+			{/* Company website */}
+			{loggedUser.type === 'employer' && (
+				<Input
+					type="text"
+					id="companyWebsite"
+					label="Company website"
+					placeholder="http://your-company.com"
+					minWidth="100%"
+					value={loggedUser.company.website}
+					handleChange={(companyWebsite) =>
+						updateLoggedKeyinObj({
+							object: 'company',
+							key: 'website',
+							value: companyWebsite,
+						})
+					}
+				/>
+			)}
 			{/* Description */}
 			<Input
 				type="textarea"

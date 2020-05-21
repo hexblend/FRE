@@ -122,6 +122,7 @@ const ConnectedProfile = (props) => {
 					{profile.type === 'candidate' && profile.full_name && (
 						<h1 className="Profile__fullName">{fullName}</h1>
 					)}
+					{/* Company name */}
 					{profile.type === 'employer' && (
 						<h1 className="Profile__fullName">{profile.company.name}</h1>
 					)}
@@ -131,6 +132,7 @@ const ConnectedProfile = (props) => {
 					<div className="Profile__badges">
 						<Badges profile={profile} />
 					</div>
+					{/* Company website */}
 					{profile.type === 'employer' && profile.company.website && (
 						<div className="Profile__links--link">
 							<span>Website -</span>
