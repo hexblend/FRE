@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 import Input from '../elements/Input';
 import Link from '../elements/Link';
@@ -34,11 +35,36 @@ function SingleExperience(props) {
 		position,
 		index,
 	} = props;
+
 	const typeOfWorkerOptions = [
 		{ label: 'Any', value: 'any' },
 		{ label: 'Office worker', value: 'office' },
 		{ label: 'Remote worker', value: 'remote' },
 	];
+
+	const [jobQuery, setJobQuery] = useState('');
+	const [jobsSuggestions, setJobsSuggestions] = useState([]);
+	const [typingTimeout, setTypingTimeout] = useState(0);
+
+	// Jobs
+	const getJobSuggestions = (query) => {
+		updateLoggedObjField({
+			array: 'available_positions',
+			id: position._id,
+			fieldName: 'job_title',
+			fieldValue: query,
+		});
+		if (typingTimeout) clearTimeout(typingTimeout);
+		setTypingTimeout(
+			setTimeout(() => {
+				axios
+					.get(
+						`http://api.dataatwork.org/v1/jobs/autocomplete?contains=${position.job_title}`
+					)
+					.then((res) => setJobsSuggestions(res.data.slice(0, 4).reverse()));
+			}, 500)
+		);
+	};
 
 	return (
 		<>
@@ -58,20 +84,36 @@ function SingleExperience(props) {
 				{/* Position job title */}
 				<Input
 					type="text"
-					id={`position_job_title_${position._id}`}
+					id="positionJobTitle"
 					label="Job title"
 					placeholder="Your position job title"
 					minWidth="100%"
 					value={position.job_title}
-					handleChange={(jobTitle) =>
-						updateLoggedObjField({
-							array: 'available_positions',
-							id: position._id,
-							fieldName: 'job_title',
-							fieldValue: jobTitle,
-						})
-					}
+					handleChange={(jobTitle) => getJobSuggestions(jobTitle)}
 				/>
+				{/* Poistion Jobs Suggestions */}
+				<ul
+					className="Suggestions EditProfile__suggestions mb-4"
+					style={{ width: `100%`, top: '5.85rem' }}
+				>
+					{jobsSuggestions.map((suggestion) => (
+						<li
+							key={suggestion.uuid}
+							onClick={() => {
+								updateLoggedObjField({
+									array: 'available_positions',
+									id: position._id,
+									fieldName: 'job_title',
+									fieldValue: suggestion.suggestion,
+								});
+								setJobsSuggestions([]);
+							}}
+							className="Suggestions__suggestion"
+						>
+							{suggestion.suggestion}
+						</li>
+					))}
+				</ul>
 				{/* Type of worker */}
 				<p className="EditProfile__section--label">Type of worker</p>
 				<Dropdown
