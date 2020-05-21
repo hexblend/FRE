@@ -58,13 +58,17 @@ function ConnectedSidebar({ loggedUser }) {
 						className="Sidebar__avatar"
 					/>
 
-					<h3 className="Sidebar__userName">{loggedUser.full_name}</h3>
+					<h3 className="Sidebar__userName">
+						{loggedUser.type === 'candidate'
+							? loggedUser.full_name
+							: loggedUser.company.name}
+					</h3>
 
 					<p className="Sidebar__userType">
 						<FontAwesomeIcon
 							icon={loggedUser.type === 'candidate' ? faBriefcase : faChartPie}
 						/>{' '}
-						Candidate
+						{loggedUser.type}
 					</p>
 					<div className="Sidebar__badges">
 						<Badges profile={loggedUser} />
