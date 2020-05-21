@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -24,6 +24,9 @@ const mapStateToProps = (state) => {
 function ConnectedSidebar({ loggedUser }) {
 	const API_URL = process.env.REACT_APP_API_URL;
 
+	useEffect(() => {
+		return loggedUser.avatar;
+	}, [loggedUser.avatar]);
 	const handleLogout = () => {
 		axios
 			.get(`${API_URL}/api/logout`, { withCredentials: true })

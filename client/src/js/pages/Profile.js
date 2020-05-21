@@ -116,7 +116,7 @@ const ConnectedProfile = (props) => {
 				/>
 			</ConfirmationModal>
 
-			<div className="Profile__header mb-1">
+			<div className="Profile__header mb-4">
 				<div className="Profile__header--left">
 					{/* Full Name */}
 					{profile.type === 'candidate' && profile.full_name && (

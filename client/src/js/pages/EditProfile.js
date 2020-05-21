@@ -252,7 +252,10 @@ export const ConnectedEditProfile = (props) => {
 				.put(`${API_URL}/api/users/${loggedUser._id}`, updatedFields)
 				.then(() => {
 					setAlert({ type: 'success', text: 'Profile updated.' });
-					setTimeout(() => history.push(`${PUBLIC_URL}/profile/${loggedUser._id}`), 2000);
+					setTimeout(
+						() => (window.location.href = `${PUBLIC_URL}/profile/${loggedUser._id}`),
+						2000
+					);
 				})
 				.catch(() => {
 					setAlert({ type: 'error', text: 'Something went wrong.' });
@@ -292,6 +295,21 @@ export const ConnectedEditProfile = (props) => {
 					text: 'Something went wrong',
 				});
 			});
+	};
+	// Change Avatar
+	const [newAvatar, setNewAvatar] = useState(loggedUser.avatar);
+	const handleChangeAvatar = (e) => {
+		if (e.target.files.length) {
+			const image = e.target.files[0];
+			setNewAvatar(image);
+			const formData = new FormData();
+			formData.append('image', image);
+			axios
+				.patch(`${API_URL}/api/users/changeAvatar/${loggedUser._id}`, formData, {
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				})
+				.then(() => setNewAvatar(loggedUser.avatar));
+		}
 	};
 	return (
 		<>
@@ -344,6 +362,23 @@ export const ConnectedEditProfile = (props) => {
 					</div>
 					{/* Right Side */}
 					<div className="EditProfile__splitView--right">
+						<div className="EditProfile__avatar">
+							<div
+								className="Profile__avatar"
+								style={{
+									backgroundImage: `url(${loggedUser.avatar})`,
+								}}
+							></div>
+							<label className="btn btn-secondary mb-5">
+								<input
+									type="file"
+									id="upload-button"
+									onChange={handleChangeAvatar}
+									style={{ display: 'none' }}
+								/>
+								Change Avatar
+							</label>
+						</div>
 						{loggedUser.type === 'employer' && (
 							<section className="EditProfile__section">
 								<h3 className="EditProfile__sectionTitle">Available positions:</h3>
