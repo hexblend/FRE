@@ -4,6 +4,9 @@ import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBuilding, faGlobe } from '@fortawesome/free-solid-svg-icons';
+
 import Badges from '../components/Badges';
 import Button from '../components/elements/Button';
 import CustomLink from '../components/elements/Link';
@@ -128,6 +131,16 @@ const ConnectedProfile = (props) => {
 					<div className="Profile__badges">
 						<Badges profile={profile} />
 					</div>
+					{profile.type === 'employer' && profile.company.website && (
+						<div className="Profile__links--link">
+							<span>Website -</span>
+							<CustomLink
+								href={profile.company.website}
+								text={profile.company.website}
+								border={true}
+							/>
+						</div>
+					)}
 				</div>
 				<div className="Profile__header--right">
 					<div
@@ -186,6 +199,63 @@ const ConnectedProfile = (props) => {
 							))}
 						</div>
 					)}
+					{/* Available poisitions */}
+					{!isEmpty(profile.available_positions) && profile.type === 'employer' && (
+						<div className="Profile__projects">
+							<h3 className="Profile__sectionTitle">Currently looking for a:</h3>
+
+							{profile.available_positions.map((pos) => (
+								<div className="Profile__projects--single" key={pos._id}>
+									<p className="Profile__projects--projectTitle mt-4">{pos.job_title}</p>
+									<p className="Profile__availablePositions--years">
+										{Number(pos.years_of_experience) +
+											' - ' +
+											Number(pos.years_of_experience + 1)}{' '}
+										Years of Experience
+									</p>
+									{pos.type_of_worker === 'office' && (
+										<p className="Profile__availablePositions--typeOfWorker">
+											<FontAwesomeIcon icon={faBuilding} />
+											Office worker
+										</p>
+									)}
+									{pos.type_of_worker === 'remote' && (
+										<p className="Profile__availablePositions--typeOfWorker">
+											<FontAwesomeIcon icon={faGlobe} />
+											Remote Worker
+										</p>
+									)}
+									{pos.type_of_worker === 'any' && (
+										<p className="Profile__availablePositions--typeOfWorker">
+											<FontAwesomeIcon icon={faBuilding} />
+											<FontAwesomeIcon icon={faGlobe} />
+											Office / Remote Worker
+										</p>
+									)}
+									{pos.skills && (
+										<>
+											<p className="Profile__projects--subsectionTitle mt-5">
+												Abilities:
+											</p>
+											<p className="Profile__projects--projectDescription mt-4">
+												{pos.skills}
+											</p>
+										</>
+									)}
+									{pos.benefits && (
+										<>
+											<p className="Profile__projects--subsectionTitle mt-5">
+												What we offer:
+											</p>
+											<p className="Profile__projects--projectDescription mt-4">
+												{pos.benefits}
+											</p>
+										</>
+									)}
+								</div>
+							))}
+						</div>
+					)}
 				</div>
 				{/* Right side */}
 				<div className="Profile__splitView--right">
@@ -229,7 +299,7 @@ const ConnectedProfile = (props) => {
 					)}
 
 					{/* Useful links */}
-					{!isEmpty(profile.social_media) && (
+					{!isEmpty(profile.social_media) && profile.type === 'candidate' && (
 						<div className="Profile__links">
 							<h3 className="Profile__sectionTitle">Useful Links:</h3>
 							{/* Email */}

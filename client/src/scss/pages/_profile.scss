@@ -33,6 +33,7 @@
 }
 .Profile__badges {
 	.Badges {
+		margin-bottom: 4rem;
 		.Badges__badgeRow {
 			font-size: $p-small-desktop;
 		}
@@ -183,5 +184,17 @@
 	align-items: center;
 	button {
 		font-size: 1.4rem;
+	}
+}
+.Profile__availablePositions--years {
+	font-size: 1.4rem;
+	color: $darkest-gray;
+	margin-top: -0.8rem;
+	margin-bottom: 0.8rem;
+}
+.Profile__availablePositions--typeOfWorker {
+	font-size: 1.4rem;
+	svg {
+		margin-right: 0.5rem;
 	}
 }
