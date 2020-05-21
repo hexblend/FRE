@@ -62,7 +62,7 @@ function SingleExperience(props) {
 					label="Job title"
 					placeholder="Your position job title"
 					minWidth="100%"
-					value={position.title}
+					value={position.job_title}
 					handleChange={(jobTitle) =>
 						updateLoggedObjField({
 							array: 'available_positions',
@@ -90,6 +90,24 @@ function SingleExperience(props) {
 					menuClassName="EditProfile__statusDropdown--menu"
 					arrowClosed={<FontAwesomeIcon icon={faCaretDown} />}
 					arrowOpen={<FontAwesomeIcon icon={faCaretDown} />}
+				/>
+				{/* Years of experience */}
+				<Input
+					type="text"
+					id="positionYearsOfExperience"
+					label="Years of experience"
+					placeholder="Career length"
+					minWidth="100%"
+					value={position.years_of_experience}
+					handleChange={(years) =>
+						updateLoggedObjField({
+							array: 'available_positions',
+							id: position._id,
+							fieldName: 'years_of_experience',
+							fieldValue: years,
+						})
+					}
+					icon="calendar-alt"
 				/>
 				{/* Abilities */}
 				<Input
