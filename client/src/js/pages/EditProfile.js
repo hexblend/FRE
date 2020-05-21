@@ -328,27 +328,35 @@ export const ConnectedEditProfile = (props) => {
 								}
 							/>
 						</section>
-						<section className="EditProfile__section">
-							<h3 className="EditProfile__sectionTitle">Key abilities</h3>
-							<KeyAbilitiesFields />
-						</section>
-						<section className="EditProfile__sction">
-							<h3 className="EditProfile__sectionTitle">Experience</h3>
-							<ExperienceFields />
-						</section>
+						{loggedUser.type === 'candidate' && (
+							<section className="EditProfile__section">
+								<h3 className="EditProfile__sectionTitle">Key abilities</h3>
+								<KeyAbilitiesFields />
+							</section>
+						)}
+						{loggedUser.type === 'candidate' && (
+							<section className="EditProfile__sction">
+								<h3 className="EditProfile__sectionTitle">Experience</h3>
+								<ExperienceFields />
+							</section>
+						)}
 					</div>
 					{/* Right Side */}
 					<div className="EditProfile__splitView--right">
-						<section className="EditProfile__section">
-							<h3 className="EditProfile__sectionTitle">
-								Projects / Achivements / Activities
-							</h3>
-							<ProjectsFields />
-						</section>
-						<section className="EditProfile__section">
-							<h3 className="EditProfile__sectionTitle">Useful links</h3>
-							<UsefulLinksFields />
-						</section>
+						{loggedUser.type === 'candidate' && (
+							<section className="EditProfile__section">
+								<h3 className="EditProfile__sectionTitle">
+									Projects / Achivements / Activities
+								</h3>
+								<ProjectsFields />
+							</section>
+						)}
+						{loggedUser.type === 'candidate' && (
+							<section className="EditProfile__section">
+								<h3 className="EditProfile__sectionTitle">Useful links</h3>
+								<UsefulLinksFields />
+							</section>
+						)}
 					</div>
 				</div>
 

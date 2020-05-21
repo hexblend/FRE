@@ -65,45 +65,49 @@ export const BadgesFields = (props) => {
 
 	return (
 		<>
-			{/* Job Title Input */}
-			<Input
-				type="text"
-				id="jobTitle"
-				label="Desired job title"
-				placeholder="Job Title"
-				minWidth="100%"
-				value={loggedUser.job_title}
-				handleChange={(jobTitle) => getJobSuggestions(jobTitle)}
-				error={updatedLoggedUser.errors.job_title}
-				icon="suitcase"
-			/>
-			{/* Jobs Suggestions */}
-			<ul
-				className="Suggestions EditProfile__suggestions"
-				style={{ width: `100%`, top: '5.85rem' }}
-			>
-				{jobsSuggestions.map((suggestion) => (
-					<li
-						key={suggestion.uuid}
-						onClick={() => {
-							updateLoggedField({
-								fieldName: 'job_title',
-								fieldValue: suggestion.suggestion,
-							});
-							setJobsSuggestions([]);
-						}}
-						className="Suggestions__suggestion"
+			{loggedUser.type === 'candidate' && (
+				<>
+					{/* Job Title Input */}
+					<Input
+						type="text"
+						id="jobTitle"
+						label="Desired job title"
+						placeholder="Job Title"
+						minWidth="100%"
+						value={loggedUser.job_title}
+						handleChange={(jobTitle) => getJobSuggestions(jobTitle)}
+						error={updatedLoggedUser.errors.job_title}
+						icon="suitcase"
+					/>
+					{/* Jobs Suggestions */}
+					<ul
+						className="Suggestions EditProfile__suggestions"
+						style={{ width: `100%`, top: '5.85rem' }}
 					>
-						{suggestion.suggestion}
-					</li>
-				))}
-			</ul>
+						{jobsSuggestions.map((suggestion) => (
+							<li
+								key={suggestion.uuid}
+								onClick={() => {
+									updateLoggedField({
+										fieldName: 'job_title',
+										fieldValue: suggestion.suggestion,
+									});
+									setJobsSuggestions([]);
+								}}
+								className="Suggestions__suggestion"
+							>
+								{suggestion.suggestion}
+							</li>
+						))}
+					</ul>
+				</>
+			)}
 
 			{/* Location Input */}
 			<Input
 				type="text"
 				id="city"
-				label="Your city"
+				label="City"
 				placeholder="City name"
 				minWidth="100%"
 				value={loggedUser.city}
@@ -138,7 +142,7 @@ export const BadgesFields = (props) => {
 				type="text"
 				id="years_of_activity"
 				label="Years of activity"
-				placeholder="Career duration"
+				placeholder="Aproxiamate duration"
 				minWidth="100%"
 				value={`${loggedUser.years_of_activity ? loggedUser.years_of_activity : ''}`}
 				handleChange={(years) =>
@@ -151,33 +155,37 @@ export const BadgesFields = (props) => {
 				icon="calendar-alt"
 			/>
 
-			{/* Remote Worker */}
-			<Checkbox
-				label="Keen to work remotely?"
-				checked={loggedUser.remote_worker}
-				setChecked={(checked) =>
-					updateLoggedField({
-						fieldName: 'remote_worker',
-						fieldValue: checked,
-					})
-				}
-				textChecked="Available to work from home"
-				textUnchecked="Not available to work from home"
-			/>
+			{/* Remote worker */}
+			{loggedUser.type === 'candidate' && (
+				<Checkbox
+					label="Keen to work remotely?"
+					checked={loggedUser.remote_worker}
+					setChecked={(checked) =>
+						updateLoggedField({
+							fieldName: 'remote_worker',
+							fieldValue: checked,
+						})
+					}
+					textChecked="Available to work from home"
+					textUnchecked="Not available to work from home"
+				/>
+			)}
 
 			{/* Higher education */}
-			<Checkbox
-				label="Higher education?"
-				checked={loggedUser.higher_education}
-				setChecked={(checked) =>
-					updateLoggedField({
-						fieldName: 'higher_education',
-						fieldValue: checked,
-					})
-				}
-				textChecked="I do have a higher education"
-				textUnchecked="I do not have a higher education"
-			/>
+			{loggedUser.type === 'candidate' && (
+				<Checkbox
+					label="Higher education?"
+					checked={loggedUser.higher_education}
+					setChecked={(checked) =>
+						updateLoggedField({
+							fieldName: 'higher_education',
+							fieldValue: checked,
+						})
+					}
+					textChecked="I do have a higher education"
+					textUnchecked="I do not have a higher education"
+				/>
+			)}
 		</>
 	);
 };
