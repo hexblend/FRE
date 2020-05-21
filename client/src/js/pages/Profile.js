@@ -116,7 +116,7 @@ const ConnectedProfile = (props) => {
 				/>
 			</ConfirmationModal>
 
-			<div className="Profile__header">
+			<div className="Profile__header mb-1">
 				<div className="Profile__header--left">
 					{/* Full Name */}
 					{profile.type === 'candidate' && profile.full_name && (
@@ -234,10 +234,10 @@ const ConnectedProfile = (props) => {
 									)}
 									{pos.skills && (
 										<>
-											<p className="Profile__projects--subsectionTitle mt-5">
+											<p className="Profile__projects--subsectionTitle mt-4">
 												Abilities:
 											</p>
-											<p className="Profile__projects--projectDescription mt-4">
+											<p className="Profile__projects--projectDescription mt-3">
 												{pos.skills}
 											</p>
 										</>
@@ -247,7 +247,7 @@ const ConnectedProfile = (props) => {
 											<p className="Profile__projects--subsectionTitle mt-5">
 												What we offer:
 											</p>
-											<p className="Profile__projects--projectDescription mt-4">
+											<p className="Profile__projects--projectDescription mt-3">
 												{pos.benefits}
 											</p>
 										</>
