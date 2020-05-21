@@ -86,7 +86,7 @@ function SingleExperience(props) {
 					}
 					options={typeOfWorkerOptions}
 					controlClassName="EditProfile__statusDropdown"
-					placeholderClassName="EditProfile__statusDropdown--placeholder"
+					placeholderClassName="EditProfile__statusDropdown--placeholder EditProfile_typeOfWorkerDropdow--placeholder"
 					menuClassName="EditProfile__statusDropdown--menu"
 					arrowClosed={<FontAwesomeIcon icon={faCaretDown} />}
 					arrowOpen={<FontAwesomeIcon icon={faCaretDown} />}

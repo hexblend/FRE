@@ -65,6 +65,13 @@
 		border-radius: 50%;
 	}
 }
+.EditProfile_typeOfWorkerDropdow--placeholder {
+	color: $dark-blue;
+	padding-left: 0;
+	&::before {
+		position: relative;
+	}
+}
 .EditProfile__statusDropdown--menu {
 	background: $white;
 	border-radius: 0.5rem;
