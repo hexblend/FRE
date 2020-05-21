@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 
 import Input from '../elements/Input';
 import Link from '../elements/Link';
+import Dropdown from 'react-dropdown';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 import {
 	updateLoggedObjField,
@@ -30,6 +34,11 @@ function SingleExperience(props) {
 		position,
 		index,
 	} = props;
+	const typeOfWorkerOptions = [
+		{ label: 'Any', value: 'any' },
+		{ label: 'Office worker', value: 'office' },
+		{ label: 'Remote worker', value: 'remote' },
+	];
 
 	return (
 		<>
@@ -62,6 +71,25 @@ function SingleExperience(props) {
 							fieldValue: jobTitle,
 						})
 					}
+				/>
+				{/* Type of worker */}
+				<p className="EditProfile__section--label">Type of worker</p>
+				<Dropdown
+					value={position.type_of_worker}
+					onChange={(option) =>
+						updateLoggedObjField({
+							array: 'available_positions',
+							id: position._id,
+							fieldName: 'type_of_worker',
+							fieldValue: option.value,
+						})
+					}
+					options={typeOfWorkerOptions}
+					controlClassName="EditProfile__statusDropdown"
+					placeholderClassName="EditProfile__statusDropdown--placeholder"
+					menuClassName="EditProfile__statusDropdown--menu"
+					arrowClosed={<FontAwesomeIcon icon={faCaretDown} />}
+					arrowOpen={<FontAwesomeIcon icon={faCaretDown} />}
 				/>
 				{/* Abilities */}
 				<Input

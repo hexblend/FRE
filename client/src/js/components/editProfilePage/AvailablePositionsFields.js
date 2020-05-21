@@ -24,7 +24,7 @@ function AvailablePositionsFields(props) {
 			array: 'available_positions',
 			object: {
 				job_title: '',
-				type_of_worker: '',
+				type_of_worker: 'any',
 				years_of_experience: '',
 				skills: '',
 				benefits: '',
