@@ -5,7 +5,7 @@ import axios from 'axios';
 import Input from '../elements/Input';
 import Checkbox from '../elements/Checkbox';
 
-import { updateLoggedField } from '../../redux/actions/AuthActions';
+import { updateLoggedField, updateLoggedKeyinObj } from '../../redux/actions/AuthActions';
 
 const mapStateToProps = (state) => ({
 	loggedUser: state.AuthReducer.loggedUser,
@@ -15,6 +15,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
 	return {
 		updateLoggedField: (obj) => dispatch(updateLoggedField(obj)),
+		updateLoggedKeyinObj: (obj) => dispatch(updateLoggedKeyinObj(obj)),
 	};
 };
 
@@ -24,6 +25,7 @@ export const BadgesFields = (props) => {
 		loggedUser,
 		updatedLoggedUser,
 		updateLoggedField,
+		updateLoggedKeyinObj,
 		// Passed
 		jobsSuggestions,
 		setJobsSuggestions,
@@ -103,6 +105,26 @@ export const BadgesFields = (props) => {
 				</>
 			)}
 
+			{/* Company Type*/}
+			{loggedUser.type === 'employer' && (
+				<Input
+					type="text"
+					id="companyType"
+					label="Company type"
+					placeholder="Creative agency"
+					minWidth="100%"
+					value={`${loggedUser.company.type ? loggedUser.company.type : ''}`}
+					handleChange={(companyType) =>
+						updateLoggedKeyinObj({
+							object: 'company',
+							key: 'type',
+							value: companyType,
+						})
+					}
+					error={updatedLoggedUser.errors.years_of_activity}
+					icon="chart-pie"
+				/>
+			)}
 			{/* Location Input */}
 			<Input
 				type="text"
@@ -142,7 +164,7 @@ export const BadgesFields = (props) => {
 				type="text"
 				id="years_of_activity"
 				label="Years of activity"
-				placeholder="Aproxiamate duration"
+				placeholder="Duration"
 				minWidth="100%"
 				value={`${loggedUser.years_of_activity ? loggedUser.years_of_activity : ''}`}
 				handleChange={(years) =>

@@ -71,7 +71,9 @@ function Badges({ profile }) {
 							<FontAwesomeIcon icon={faCalendarAlt} />
 							<span>
 								Years of activity:{' '}
-								{`${profile.years_of_activity} - ${profile.years_of_activity + 1}`}
+								{`${Number(profile.years_of_activity)} - ${
+									Number(profile.years_of_activity) + 1
+								}`}
 							</span>
 						</div>
 					)}
