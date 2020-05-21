@@ -122,7 +122,7 @@ const ConnectedProfile = (props) => {
 					{profile.type === 'candidate' && profile.full_name && (
 						<h1 className="Profile__fullName">{fullName}</h1>
 					)}
-					{profile.type === 'employer' && profile.company.name && (
+					{profile.type === 'employer' && (
 						<h1 className="Profile__fullName">{profile.company.name}</h1>
 					)}
 					{/* Status */}

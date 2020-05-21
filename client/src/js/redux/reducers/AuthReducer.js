@@ -46,6 +46,7 @@ const initialState = {
 			job_title: '',
 			city: '',
 			years_of_activity: '',
+			company_name: '',
 		},
 
 		formSubmitted: false,

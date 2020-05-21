@@ -96,6 +96,19 @@ export const ConnectedEditProfile = (props) => {
 			} else {
 				updateLoggedFieldError({ fieldName: 'full_name', error: '' });
 			}
+
+			// Company name
+			if (loggedUser.type === 'employer' && loggedUser.company.name === '') {
+				updateLoggedFieldError({
+					fieldName: 'company_name',
+					error: 'You must include your company name.',
+				});
+				valid = false;
+			} else {
+				updateLoggedFieldError({ fieldName: 'company_name', error: '' });
+				valid = true;
+			}
+
 			// Email
 			if (loggedUser.email === '') {
 				updateLoggedFieldError({
@@ -169,7 +182,10 @@ export const ConnectedEditProfile = (props) => {
 	// Submit form
 	const handleSubmit = (valid) => {
 		if (valid) {
-			const updatedFields = {};
+			const updatedFields = {
+				social_media: { ...loggedUser.social_media },
+				company: { ...loggedUser.company },
+			};
 
 			const addField = (field) => {
 				if (updatedLoggedUser[field]) {
@@ -181,6 +197,15 @@ export const ConnectedEditProfile = (props) => {
 					first_name: updatedLoggedUser.full_name.split(' ')[0],
 					last_name: updatedLoggedUser.full_name.split(' ')[1],
 				};
+			}
+			if (updatedLoggedUser.company.name) {
+				updatedFields.company.name = updatedLoggedUser.company.name;
+			}
+			if (updatedLoggedUser.company.website) {
+				updatedFields.company.website = updatedLoggedUser.company.website;
+			}
+			if (updatedLoggedUser.company.type) {
+				updatedFields.company.type = updatedLoggedUser.company.type;
 			}
 			addField('email');
 			addField('type');

@@ -8,7 +8,7 @@ import Input from '../elements/Input';
 import Dropdown from 'react-dropdown';
 import isEmpty from '../isEmpty';
 
-import { updateLoggedField } from '../../redux/actions/AuthActions';
+import { updateLoggedField, updateLoggedKeyinObj } from '../../redux/actions/AuthActions';
 
 const mapStateToProps = (state) => ({
 	loggedUser: state.AuthReducer.loggedUser,
@@ -18,11 +18,17 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
 	return {
 		updateLoggedField: (obj) => dispatch(updateLoggedField(obj)),
+		updateLoggedKeyinObj: (obj) => dispatch(updateLoggedKeyinObj(obj)),
 	};
 };
 
 export const GeneralInformationFields = (props) => {
-	const { loggedUser, updatedLoggedUser, updateLoggedField } = props;
+	const {
+		loggedUser,
+		updatedLoggedUser,
+		updateLoggedField,
+		updateLoggedKeyinObj,
+	} = props;
 
 	// Status
 	let statusOptions = [];
@@ -61,6 +67,25 @@ export const GeneralInformationFields = (props) => {
 				}
 				error={updatedLoggedUser.errors.full_name}
 			/>
+			{/* Company name*/}
+			{loggedUser.type === 'employer' && (
+				<Input
+					type="text"
+					id="companyName"
+					label="Company name"
+					placeholder="Your company name"
+					minWidth="100%"
+					value={loggedUser.company.name}
+					handleChange={(companyName) =>
+						updateLoggedKeyinObj({
+							object: 'company',
+							key: 'name',
+							value: companyName,
+						})
+					}
+					error={updatedLoggedUser.errors.company_name}
+				/>
+			)}
 			{/* Email */}
 			<Input
 				type="email"
