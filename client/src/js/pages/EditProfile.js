@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -331,6 +331,7 @@ export const ConnectedEditProfile = (props) => {
 
 				<div className="EditProfile__splitView">
 					{/* Left Side */}
+					<Link to="/">Hello</Link>
 					<div className="EditProfile__splitView--left">
 						<section className="EditProfile__section">
 							<h3 className="EditProfile__sectionTitle">General Information</h3>

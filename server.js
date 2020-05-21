@@ -34,7 +34,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(helmet());
-app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
+app.use(
+	cors({
+		origin: process.env.CORS_ORIGIN,
+		credentials: true,
+	})
+);
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 mins
 	max: 300, // 100 reqs / 15 mins / IP
@@ -50,7 +55,9 @@ app.use(
 		saveUninitialized: false,
 		rolling: true,
 		resave: false,
-		store: new MongoStore({ mongooseConnection: mongoose.connection }),
+		store: new MongoStore({
+			mongooseConnection: mongoose.connection,
+		}),
 		cookie: {
 			sameSite: false,
 			maxAge: 24 * 60 * 60 * 1000,
@@ -86,10 +93,15 @@ if (process.env.ENVIRONMENT === 'development') {
 if (process.env.ENVIRONMENT === 'production') {
 	app.use((error, req, res, next) => {
 		res.status(error.status || 500);
-		res.send({ message: `Error! ${error.message}`, error: {} });
+		res.send({
+			message: `Error! ${error.message}`,
+			error: {},
+		});
 	});
 }
 
 // Run server
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server running on port ${port}.`));
+app.listen(port, () =>
+	console.log(`Server running on port ${port}.`)
+);

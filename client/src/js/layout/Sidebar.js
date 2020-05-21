@@ -23,6 +23,7 @@ const mapStateToProps = (state) => {
 
 function ConnectedSidebar({ loggedUser }) {
 	const API_URL = process.env.REACT_APP_API_URL;
+	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
 	useEffect(() => {
 		return loggedUser.avatar;
@@ -87,7 +88,7 @@ function ConnectedSidebar({ loggedUser }) {
 							>
 								Check your messages
 							</Link>
-							<Link to={`/`} className="Sidebar__links--link">
+							<Link to={'/'} className="Sidebar__links--link">
 								Search
 							</Link>
 						</div>

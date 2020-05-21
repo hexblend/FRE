@@ -47,34 +47,32 @@ function ConnectedApp({ addLoggedUser }) {
 
 	return (
 		<Router>
-			<LastLocationProvider>
-				<Switch>
-					<Route path="/style" component={StyleGuide} />
+			<Switch>
+				<Route path="/style" component={StyleGuide} />
 
-					<Route exact path="/" component={Home} />
+				<Route exact path="/" component={Home} />
 
-					{/* Auth */}
-					<Route path="/candidate/register">
-						<Register type="candidate" />
-					</Route>
-					<Route path="/candidate/login">
-						<Login type="candidate" />
-					</Route>
-					<Route path="/employer/register">
-						<Register type="employer" />
-					</Route>
-					<Route path="/employer/login">
-						<Login type="employer" />
-					</Route>
+				{/* Auth */}
+				<Route path="/candidate/register">
+					<Register type="candidate" />
+				</Route>
+				<Route path="/candidate/login">
+					<Login type="candidate" />
+				</Route>
+				<Route path="/employer/register">
+					<Register type="employer" />
+				</Route>
+				<Route path="/employer/login">
+					<Login type="employer" />
+				</Route>
 
-					<MainLayout>
-						<Route path="/search" component={Search} />
-						<Route exact path="/profile/:id" component={Profile} />
-						<Route exact path="/profile/:id/edit" component={EditProfile} />
-					</MainLayout>
-				</Switch>
-				<Footer />
-			</LastLocationProvider>
+				<MainLayout>
+					<Route path="/search" component={Search} />
+					<Route exact path="/profile/:id" component={Profile} />
+					<Route exact path="/profile/:id/edit" component={EditProfile} />
+				</MainLayout>
+			</Switch>
+			<Footer />
 		</Router>
 	);
 }
