@@ -14,6 +14,7 @@ import KeyAbilitiesFields from '../components/editProfilePage/KeyAbilitiesFields
 import UsefulLinksFields from '../components/editProfilePage/UsefulLinksFields';
 import ExperienceFields from '../components/editProfilePage/ExperienceFields';
 import ProjectsFields from '../components/editProfilePage/ProjectsFields';
+import AvailablePositionsFields from '../components/editProfilePage/AvailablePositionsFields';
 
 import { updateHeaderView } from '../redux/actions/HeaderActions';
 import {
@@ -343,6 +344,12 @@ export const ConnectedEditProfile = (props) => {
 					</div>
 					{/* Right Side */}
 					<div className="EditProfile__splitView--right">
+						{loggedUser.type === 'employer' && (
+							<section className="EditProfile__section">
+								<h3 className="EditProfile__sectionTitle">Available positions:</h3>
+								<AvailablePositionsFields />
+							</section>
+						)}
 						{loggedUser.type === 'candidate' && (
 							<section className="EditProfile__section">
 								<h3 className="EditProfile__sectionTitle">
