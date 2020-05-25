@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -28,6 +29,7 @@ function ConnectedLogin({ type, addLoggedUser }) {
 
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 	const API_URL = process.env.REACT_APP_API_URL;
+	const history = useHistory();
 
 	const [alert, setAlert] = useState({
 		type: '',
@@ -80,7 +82,7 @@ function ConnectedLogin({ type, addLoggedUser }) {
 					});
 
 					setTimeout(() => {
-						window.location.href = '/';
+						history.push('/');
 						setAlert({ type: '', text: '' });
 					}, 1750);
 				})

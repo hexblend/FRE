@@ -137,6 +137,7 @@ const ConnectedProfile = (props) => {
 						<div className="Profile__links--link">
 							<span>Website -</span>
 							<CustomLink
+								to={profile.company.website}
 								href={profile.company.website}
 								text={profile.company.website}
 								border={true}

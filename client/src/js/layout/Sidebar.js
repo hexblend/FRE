@@ -25,9 +25,6 @@ function ConnectedSidebar({ loggedUser }) {
 	const API_URL = process.env.REACT_APP_API_URL;
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
-	useEffect(() => {
-		return loggedUser.avatar;
-	}, [loggedUser.avatar]);
 	const handleLogout = () => {
 		axios
 			.get(`${API_URL}/api/logout`, { withCredentials: true })
@@ -88,7 +85,7 @@ function ConnectedSidebar({ loggedUser }) {
 							>
 								Check your messages
 							</Link>
-							<Link to={'/'} className="Sidebar__links--link">
+							<Link to={`${PUBLIC_URL}`} className="Sidebar__links--link">
 								Search
 							</Link>
 						</div>
