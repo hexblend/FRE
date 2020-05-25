@@ -52,12 +52,14 @@ function ConnectedSearchResult({ profile, loggedUser }) {
 							)}
 						</div>
 						<div>
-							{profile.years_of_activity && !isEmpty(loggedUser) && (
+							{profile.years_of_activity >= 0 && !isEmpty(loggedUser) && (
 								<div className="SearchResult__icons--iconRow">
 									<FontAwesomeIcon icon={faCalendarAlt} />
 									<span>
 										Years of activity:{' '}
-										{`${profile.years_of_activity} - ${profile.years_of_activity + 1}`}
+										{`${Number(profile.years_of_activity)} - ${
+											Number(profile.years_of_activity) + 1
+										}`}
 									</span>
 								</div>
 							)}

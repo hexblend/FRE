@@ -331,7 +331,6 @@ export const ConnectedEditProfile = (props) => {
 
 				<div className="EditProfile__splitView">
 					{/* Left Side */}
-					<Link to="/">Hello</Link>
 					<div className="EditProfile__splitView--left">
 						<section className="EditProfile__section">
 							<h3 className="EditProfile__sectionTitle">General Information</h3>
