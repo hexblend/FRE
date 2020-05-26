@@ -51,6 +51,9 @@ function ConnectedSidebar({ loggedUser, view, getMessages }) {
 			});
 		});
 	}, [IDs]);
+	useEffect(() => {
+		showConversation(IDs[0]);
+	}, [IDs]);
 
 	const showConversation = (to) => {
 		const from = loggedUser._id;

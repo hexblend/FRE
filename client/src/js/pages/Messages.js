@@ -13,18 +13,24 @@ export const Messages = (props) => {
 
 	return (
 		<div className="Messages">
-			{messages.map((message) => (
-				<div
-					className={`SingleMessage ${message.from === loggedUser._id && 'sent'}`}
-					key={message._id}
-				>
-					<p className="SingleMessage__text">{message.body}</p>
+			{messages.length !== 0 ? (
+				<>
+					{messages.map((message) => (
+						<div
+							className={`SingleMessage ${message.from === loggedUser._id && 'sent'}`}
+							key={message._id}
+						>
+							<p className="SingleMessage__text">{message.body}</p>
+						</div>
+					))}
+					<Link to={`/profile/${loggedUser._id}/messages/new`} className="newMessageBtn">
+						<Button type="full-width" text="Write a message" />
+					</Link>
+				</>
+			) : (
+				<div className="InfoBar">
+					<p>No conversations found.</p>
 				</div>
-			))}
-			{messages.length !== 0 && (
-				<Link to={`/profile/${loggedUser._id}/messages/new`} className="newMessageBtn">
-					<Button type="full-width" text="Write a message" />
-				</Link>
 			)}
 		</div>
 	);
