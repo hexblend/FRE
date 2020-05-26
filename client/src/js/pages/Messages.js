@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import Button from '../components/elements/Button';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateHeaderView } from '../redux/actions/HeaderActions';
 
@@ -10,16 +12,20 @@ export const Messages = (props) => {
 	}, [updateHeaderView]);
 
 	return (
-		<div>
+		<div className="Messages">
 			{messages.map((message) => (
 				<div
-					className={`SingleMessage ${
-						message.from === loggedUser._id && 'SingleMessage--sent'
-					}`}
+					className={`SingleMessage ${message.from === loggedUser._id && 'sent'}`}
+					key={message._id}
 				>
 					<p className="SingleMessage__text">{message.body}</p>
 				</div>
 			))}
+			{messages.length !== 0 && (
+				<Link to={`/profile/${loggedUser._id}/messages/new`} className="newMessageBtn">
+					<Button type="full-width" text="Write a message" />
+				</Link>
+			)}
 		</div>
 	);
 };
