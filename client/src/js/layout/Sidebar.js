@@ -12,18 +12,45 @@ import Alert from './Alert';
 import isEmpty from '../components/isEmpty';
 
 import { addLoggedUser } from '../redux/actions/AuthActions';
+import { getMessages } from '../redux/actions/MessagesActions';
 
 const mapDispatchToProps = (dispatch) => ({
 	addLoggedUser: (user) => dispatch(addLoggedUser(user)),
+	getMessages: (obj) => dispatch(getMessages(obj)),
 });
 
 const mapStateToProps = (state) => {
 	return { loggedUser: state.AuthReducer.loggedUser };
 };
 
-function ConnectedSidebar({ loggedUser }) {
+function ConnectedSidebar({ loggedUser, view, getMessages }) {
 	const API_URL = process.env.REACT_APP_API_URL;
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
+
+	// Profiles Convs IDS
+	const [IDs, setIDs] = useState([]);
+	const [convProfiles, setConvProfiles] = useState([]);
+	useEffect(() => {
+		if (!isEmpty(loggedUser)) {
+			loggedUser.sent_messages.forEach((message) => {
+				if (IDs.indexOf(message.to) === -1) {
+					setIDs([...IDs, message.to]);
+				}
+			});
+			loggedUser.received_messages.forEach((message) => {
+				if (IDs.indexOf(message.from) === -1) {
+					setIDs([...IDs, message.from]);
+				}
+			});
+		}
+	}, [loggedUser, IDs, setIDs, convProfiles, setConvProfiles]);
+	useEffect(() => {
+		IDs.forEach((id) => {
+			axios.get(`${API_URL}/api/users/${id}`, { useCredentials: true }).then((res) => {
+				setConvProfiles([...convProfiles, res.data.user]);
+			});
+		});
+	}, [IDs]);
 
 	const handleLogout = () => {
 		axios
@@ -51,7 +78,7 @@ function ConnectedSidebar({ loggedUser }) {
 
 	return (
 		<>
-			{!isEmpty(loggedUser) && (
+			{!isEmpty(loggedUser) && view === 'default' && (
 				<div className="Sidebar">
 					<Alert type={alert.type} text={alert.text} />
 					<div
@@ -93,6 +120,37 @@ function ConnectedSidebar({ loggedUser }) {
 							Logout
 						</Link>
 					</div>
+				</div>
+			)}
+			{!isEmpty(loggedUser) && view === 'messages' && (
+				<div className="Sidebar">
+					<Alert type={alert.type} text={alert.text} />
+					<h3>Messages</h3>
+					{convProfiles.map((profile) => (
+						<div
+							className="MessageProfile"
+							key={profile._id}
+							onClick={() => getMessages({ to: profile._id, from: loggedUser._id })}
+						>
+							{/* Avatar */}
+							<div className="MessageProfile__avatar"></div>
+							{/* Type */}
+							{profile.type === 'candidate' && (
+								<FontAwesomeIcon icon={faBriefcase} className="MessageProfile__type" />
+							)}
+							{profile.type === 'employer' && (
+								<FontAwesomeIcon icon={faChartPie} className="MessageProfile__type" />
+							)}
+							{/* Name */}
+							{profile.company.name ? (
+								<p className="MessageProfile__name">{profile.company.name}</p>
+							) : (
+								<p className="MessageProfile__name">
+									{profile.full_name.first_name + ' ' + profile.full_name.last_name}
+								</p>
+							)}
+						</div>
+					))}
 				</div>
 			)}
 		</>

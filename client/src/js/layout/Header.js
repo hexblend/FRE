@@ -34,8 +34,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	updateSearchResults: (results) => dispatch(updateSearchResults(results)),
 	updateTagsInputError: (error) => dispatch(updateTagsInputError(error)),
-	updateLocationInputError: (error) =>
-		dispatch(updateLocationInputError(error)),
+	updateLocationInputError: (error) => dispatch(updateLocationInputError(error)),
 	updateTagsInputSuggestions: (suggestions) =>
 		dispatch(updateTagsInputSuggestions(suggestions)),
 	updateLocationInputSuggestions: (suggestions) =>
@@ -107,9 +106,8 @@ function ConnectedHeader({
 				{view === 'results' && (
 					<div className="Header__search--content resultsView">
 						<p>
-							{searchResults.length}{' '}
-							{searchResults.length === 1 ? 'Result' : 'Results'} for "
-							{tags.join(', ')}" in {location}
+							{searchResults.length} {searchResults.length === 1 ? 'Result' : 'Results'}{' '}
+							for "{tags.join(', ')}" in {location}
 						</p>
 						<div className="Header__search--buttons">
 							{isEmpty(loggedUser) && (
@@ -136,11 +134,7 @@ function ConnectedHeader({
 							</div>
 							<div className="formGroup">
 								<p>In: </p>
-								<LocationInput
-									id="location"
-									placeholder="London"
-									width="210px"
-								/>
+								<LocationInput id="location" placeholder="London" width="210px" />
 							</div>
 						</div>
 						<div className="Header__search--buttons">
@@ -184,12 +178,15 @@ function ConnectedHeader({
 								icon="check"
 								onClick={() => setUpdateFormSubmitted(true)}
 							/>
-							<Button
-								text="Go back"
-								type="secondary"
-								onClick={history.goBack}
-							/>
+							<Button text="Go back" type="secondary" onClick={history.goBack} />
 						</div>
+					</div>
+				)}
+				{view === 'messages' && (
+					<div className="Header__search--content editProfileView">
+						<div></div>
+						<h3 className="Header__title">Messages page</h3>
+						<Button text="Go back" type="secondary" onClick={history.goBack} />
 					</div>
 				)}
 			</div>

@@ -38,3 +38,6 @@ export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 
 // Header Actions
 export const UPDATE_HEADER_VIEW = 'UPDATE_HEADER_VIEW';
+
+// Messages Actions
+export const GET_MESSAGES = 'GET_MESSAGES';

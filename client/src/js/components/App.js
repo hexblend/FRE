@@ -11,6 +11,7 @@ import Login from '../pages/Login';
 import Search from '../pages/Search';
 import Profile from '../pages/Profile';
 import EditProfile from '../pages/EditProfile';
+import Messages from '../pages/Messages';
 import Footer from '../layout/Footer';
 
 import MainLayout from '../layout/MainLayout';
@@ -70,6 +71,7 @@ function ConnectedApp({ addLoggedUser }) {
 					<Route path="/search" component={Search} />
 					<Route exact path="/profile/:id" component={Profile} />
 					<Route exact path="/profile/:id/edit" component={EditProfile} />
+					<Route exact path="/profile/:id/messages" component={Messages} />
 				</MainLayout>
 			</Switch>
 			<Footer />

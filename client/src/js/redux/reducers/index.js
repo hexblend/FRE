@@ -3,6 +3,7 @@ import AuthReducer from './AuthReducer';
 import SearchReducer from './SearchReducer';
 import ProfileReducer from './ProfileReducer';
 import HeaderReducer from './HeaderReducer';
+import MessagesReducer from './MessagesReducer';
 
 import { UPDATE_LOADING } from '../constants/action-types';
 
@@ -25,4 +26,5 @@ export default combineReducers({
 	SearchReducer,
 	ProfileReducer,
 	HeaderReducer,
+	MessagesReducer,
 });

@@ -352,7 +352,7 @@ const sendMessage = async (req, res, next) => {
 	}
 };
 
-const viewMessages = async (req, res, next) => {
+const viewConversation = async (req, res, next) => {
 	const { id1, id2 } = req.params;
 	try {
 		const user1 = await User.findOne({ _id: id1 });
@@ -387,5 +387,5 @@ module.exports = {
 	makeActive,
 	deleteUser,
 	sendMessage,
-	viewMessages,
+	viewConversation,
 };
