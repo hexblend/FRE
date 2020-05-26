@@ -52,6 +52,15 @@ function ConnectedSidebar({ loggedUser, view, getMessages }) {
 		});
 	}, [IDs]);
 
+	const showConversation = (to) => {
+		const from = loggedUser._id;
+		axios
+			.get(`${API_URL}/api/users/view_conversation/${to}/${from}`, {
+				useCredentials: true,
+			})
+			.then((res) => getMessages(res.data.conversation));
+	};
+
 	const handleLogout = () => {
 		axios
 			.get(`${API_URL}/api/logout`, { withCredentials: true })
@@ -125,30 +134,34 @@ function ConnectedSidebar({ loggedUser, view, getMessages }) {
 			{!isEmpty(loggedUser) && view === 'messages' && (
 				<div className="Sidebar">
 					<Alert type={alert.type} text={alert.text} />
-					<h3>Messages</h3>
 					{convProfiles.map((profile) => (
 						<div
 							className="MessageProfile"
 							key={profile._id}
-							onClick={() => getMessages({ to: profile._id, from: loggedUser._id })}
+							onClick={() => showConversation(profile._id)}
 						>
 							{/* Avatar */}
-							<div className="MessageProfile__avatar"></div>
-							{/* Type */}
-							{profile.type === 'candidate' && (
-								<FontAwesomeIcon icon={faBriefcase} className="MessageProfile__type" />
-							)}
-							{profile.type === 'employer' && (
-								<FontAwesomeIcon icon={faChartPie} className="MessageProfile__type" />
-							)}
-							{/* Name */}
-							{profile.company.name ? (
-								<p className="MessageProfile__name">{profile.company.name}</p>
-							) : (
-								<p className="MessageProfile__name">
-									{profile.full_name.first_name + ' ' + profile.full_name.last_name}
-								</p>
-							)}
+							<div
+								className="MessageProfile__avatar"
+								style={{ backgroundImage: `url(${profile.avatar})` }}
+							></div>
+							<div className="MessageProfile__rightSide">
+								{/* Type */}
+								{profile.type === 'candidate' && (
+									<FontAwesomeIcon icon={faBriefcase} className="MessageProfile__type" />
+								)}
+								{profile.type === 'employer' && (
+									<FontAwesomeIcon icon={faChartPie} className="MessageProfile__type" />
+								)}
+								{/* Name */}
+								{profile.company.name ? (
+									<p className="MessageProfile__name">{profile.company.name}</p>
+								) : (
+									<p className="MessageProfile__name">
+										{profile.full_name.first_name + ' ' + profile.full_name.last_name}
+									</p>
+								)}
+							</div>
 						</div>
 					))}
 				</div>

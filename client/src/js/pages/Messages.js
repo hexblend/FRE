@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { updateHeaderView } from '../redux/actions/HeaderActions';
 
 export const Messages = (props) => {
-	const { updateHeaderView } = props;
+	const { updateHeaderView, messages, loggedUser } = props;
 
 	useEffect(() => {
 		updateHeaderView('messages');
@@ -11,12 +11,23 @@ export const Messages = (props) => {
 
 	return (
 		<div>
-			<h1>Id: {props.match.params.id}</h1>
+			{messages.map((message) => (
+				<div
+					className={`SingleMessage ${
+						message.from === loggedUser._id && 'SingleMessage--sent'
+					}`}
+				>
+					<p className="SingleMessage__text">{message.body}</p>
+				</div>
+			))}
 		</div>
 	);
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+	messages: state.MessagesReducer.messages,
+	loggedUser: state.AuthReducer.loggedUser,
+});
 
 const mapDispatchToProps = (dispatch) => ({
 	updateHeaderView: (str) => dispatch(updateHeaderView(str)),

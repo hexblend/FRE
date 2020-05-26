@@ -52,3 +52,32 @@
 		margin-bottom: 0;
 	}
 }
+.MessageProfile {
+	display: flex;
+	align-items: center;
+	padding: 1.6rem;
+	background: darken($lightest-gray, 3%);
+	color: $darkest-gray;
+	transition: 0.25s ease-in-out;
+	&:hover {
+		background: darken($lightest-gray, 6%);
+		cursor: pointer;
+	}
+}
+.MessageProfile__rightSide {
+	display: flex;
+	align-items: center;
+}
+.MessageProfile__avatar {
+	width: 50px;
+	height: 50px;
+	border-radius: 0.5rem;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	margin-right: 0.8rem;
+}
+.MessageProfile__type {
+	margin-right: 0.4rem;
+	color: $dark-blue;
+}
