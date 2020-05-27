@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {useHistory, Link} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import axios from 'axios';
 
-import isEmpty from '../components/isEmpty';
 import Input from '../components/elements/Input';
 import Button from '../components/elements/Button';
 import Alert from '../layout/Alert';
@@ -10,9 +9,17 @@ import Alert from '../layout/Alert';
 import {connect} from 'react-redux';
 import {updateHeaderView} from '../redux/actions/HeaderActions';
 import {updateProfile} from '../redux/actions/ProfileActions';
+import {addMessage} from '../redux/actions/MessagesActions';
 
 const SendMessage = props => {
-    const {updateHeaderView, loggedUser, profile, updateProfile} = props;
+    const {
+        updateHeaderView,
+        loggedUser,
+        profile,
+        updateProfile,
+        addMessage,
+    } = props;
+
     const [newMessage, setNewMessage] = useState('');
     const [messageError, setMessageError] = useState('');
     const [alert, setAlert] = useState({type: '', text: ''});
@@ -41,21 +48,19 @@ const SendMessage = props => {
         } else {
             setMessageError('');
 
-            const newText = {
-                from: loggedUser._id,
-                message: newMessage,
-            };
             axios
                 .post(
                     `${API_URL}/api/users/send_message/${profile._id}`,
-                    newText,
+                    {from: loggedUser._id, message: newMessage},
                     {useCredentials: true},
                 )
                 .then(() => {
                     setAlert({type: 'success', text: 'Message sent.'});
-                    const profileID = props.match.params.id;
+                    addMessage({from: loggedUser._id, body: newMessage});
                     setTimeout(() => {
-                        history.goBack();
+                        history.push(
+                            `${PUBLIC_URL}/profile/${loggedUser._id}/messages`,
+                        );
                     }, 1500);
                 });
         }
@@ -85,6 +90,7 @@ const SendMessage = props => {
 const mapDispatchToProps = dispatch => ({
     updateHeaderView: str => dispatch(updateHeaderView(str)),
     updateProfile: obj => dispatch(updateProfile(obj)),
+    addMessage: obj => dispatch(addMessage(obj)),
 });
 
 const mapStateToProps = state => ({

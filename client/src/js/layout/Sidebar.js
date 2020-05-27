@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {Link, useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import axios from 'axios';
 
@@ -28,7 +28,6 @@ const mapStateToProps = state => ({
 });
 
 function ConnectedSidebar({loggedUser, view, getMessages, updateMessagesFrom}) {
-    const history = useHistory();
     const API_URL = process.env.REACT_APP_API_URL;
     const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
@@ -57,15 +56,25 @@ function ConnectedSidebar({loggedUser, view, getMessages, updateMessagesFrom}) {
                     setConvProfiles([...convProfiles, res.data.user]);
                 });
         });
-    }, [IDs]);
+    }, [IDs, API_URL]);
 
-    const viewMessagesFrom = id => {
-        updateMessagesFrom(id);
+    const recMessages = to => {
+        axios
+            .get(
+                `${API_URL}/api/users/view_conversation/${to}/${loggedUser._id}`,
+                {
+                    useCredentials: true,
+                },
+            )
+            .then(res => {
+                getMessages(res.data.conversation);
+            });
     };
 
     useEffect(() => {
-        viewMessagesFrom(IDs[0]);
-    }, [IDs]);
+        updateMessagesFrom(IDs[0]);
+        recMessages(IDs[0]);
+    }, [IDs, updateMessagesFrom, recMessages]);
 
     const handleLogout = () => {
         axios
@@ -154,7 +163,7 @@ function ConnectedSidebar({loggedUser, view, getMessages, updateMessagesFrom}) {
                         <div
                             className="MessageProfile"
                             key={profile._id}
-                            onClick={() => viewMessagesFrom(profile._id)}>
+                            onClick={() => recMessages(profile._id)}>
                             {/* Avatar */}
                             <div
                                 className="MessageProfile__avatar"

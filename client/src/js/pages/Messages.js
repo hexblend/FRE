@@ -1,39 +1,19 @@
-import React, {useEffect} from 'react';
-import axios from 'axios';
+import React, {useEffect, createRef} from 'react';
 import Button from '../components/elements/Button';
 import {Link} from 'react-router-dom';
 
 import {connect} from 'react-redux';
 import {updateHeaderView} from '../redux/actions/HeaderActions';
-import {getMessages} from '../redux/actions/MessagesActions';
 
 export const Messages = props => {
-    const {
-        updateHeaderView,
-        messages,
-        getMessages,
-        viewMessagesFrom,
-        loggedUser,
-    } = props;
+    const {updateHeaderView, messages, viewMessagesFrom, loggedUser} = props;
 
-    const API_URL = process.env.REACT_APP_API_URL;
+    const lastItemRef = createRef();
 
     useEffect(() => {
         updateHeaderView('messages');
-    }, [updateHeaderView]);
-
-    useEffect(() => {
-        axios
-            .get(
-                `${API_URL}/api/users/view_conversation/${viewMessagesFrom}/${loggedUser._id}`,
-                {
-                    useCredentials: true,
-                },
-            )
-            .then(res => {
-                getMessages(res.data.conversation);
-            });
-    }, [messages, viewMessagesFrom]);
+        lastItemRef.current && lastItemRef.current.scrollIntoView();
+    }, [updateHeaderView, lastItemRef]);
 
     return (
         <div className="Messages">
@@ -49,6 +29,7 @@ export const Messages = props => {
                             </p>
                         </div>
                     ))}
+                    <div ref={lastItemRef}></div>
                     <Link
                         to={`/profile/${viewMessagesFrom}/messages/new`}
                         className="newMessageBtn">
@@ -72,7 +53,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     updateHeaderView: str => dispatch(updateHeaderView(str)),
-    getMessages: array => dispatch(getMessages(array)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Messages);
