@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {updateHeaderView} from '../redux/actions/HeaderActions';
 
 export const Messages = props => {
-    const {updateHeaderView, messages, loggedUser} = props;
+    const {updateHeaderView, messages, viewMessagesFrom, loggedUser} = props;
 
     useEffect(() => {
         updateHeaderView('messages');
@@ -26,7 +26,7 @@ export const Messages = props => {
                         </div>
                     ))}
                     <Link
-                        to={`/profile/${loggedUser._id}/messages/new`}
+                        to={`/profile/${viewMessagesFrom}/messages/new`}
                         className="newMessageBtn">
                         <Button type="full-width" text="Write a message" />
                     </Link>
@@ -43,6 +43,7 @@ export const Messages = props => {
 const mapStateToProps = state => ({
     messages: state.MessagesReducer.messages,
     loggedUser: state.AuthReducer.loggedUser,
+    viewMessagesFrom: state.MessagesReducer.viewMessagesFrom,
 });
 
 const mapDispatchToProps = dispatch => ({
