@@ -36,10 +36,10 @@ function ConnectedHome({ loggedUser }) {
 					<div className="text-side">
 						<h3>Looking for a job?</h3>
 						<p>
-							It’s that easy. Just create a profile as Candidate, upload all
-							your information that is needed for an employer to make a good
-							idea about you and sit tight! At any moment, somebody may pick
-							your details and get in touch with you.
+							It’s that easy. Just create a profile as Candidate, upload all your
+							information that is needed for an employer to make a good idea about you and
+							sit tight! At any moment, somebody may pick your details and get in touch
+							with you.
 						</p>
 						{isEmpty(loggedUser) && (
 							<Link to={`${PUBLIC_URL}/candidate/register`}>
@@ -53,11 +53,11 @@ function ConnectedHome({ loggedUser }) {
 					<div className="text-side">
 						<h3>Looking for a staff?</h3>
 						<p>
-							If you are an employer, you have the possibility to search through
-							a list of candidates and pick the right one for your needs. It’s
-							so simple that you don’t even need an account to do all this. It’s
-							all right here, just search by job title and location. Oh, and you
-							can even look for multiple job titles at the same time.
+							If you are an employer, you have the possibility to search through a list of
+							candidates and pick the right one for your needs. It’s so simple that you
+							don’t even need an account to do all this. It’s all right here, just search
+							by job title and location. Oh, and you can even look for multiple job titles
+							at the same time.
 						</p>
 						{isEmpty(loggedUser) && (
 							<Link to={`${PUBLIC_URL}/employer/register`}>

@@ -1,0 +1,38 @@
+.Checkbox {
+	margin-bottom: 3.2rem;
+}
+.Checkbox__label {
+	font-size: 1.4rem;
+	margin-bottom: 1.6rem;
+}
+.Checkbox__container {
+	display: block;
+	position: relative;
+	cursor: pointer;
+	font-size: 1.4rem;
+	user-select: none;
+	padding-left: 3.5rem;
+	padding-top: 0.5rem;
+}
+.Checkbox__input {
+	cursor: pointer;
+	position: absolute;
+	visibility: hidden;
+}
+.Checkbox__mark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 25px;
+	width: 25px;
+	background: $white;
+	color: $dark-blue;
+	border: 1px solid $gray;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	@include text-trans;
+}
+.Checkbox__container:hover input ~ .Checkbox__mark {
+	background-color: $lightest-gray;
+}

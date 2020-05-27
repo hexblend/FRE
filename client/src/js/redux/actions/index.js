@@ -1,4 +1,8 @@
-import { ADD_ARTICLE, DATA_LOADED } from '../constants/action-types';
+import {
+	ADD_ARTICLE,
+	DATA_LOADED,
+	UPDATE_LOADING,
+} from '../constants/action-types';
 
 export function addArticle(payload) {
 	return { type: ADD_ARTICLE, payload };
@@ -12,4 +16,8 @@ export function getData() {
 				dispatch({ type: DATA_LOADED, payload });
 			});
 	};
+}
+
+export function updateLoading(payload) {
+	return { type: UPDATE_LOADING, payload };
 }

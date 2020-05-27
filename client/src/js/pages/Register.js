@@ -46,9 +46,7 @@ function Register({ type }) {
 			setFullNameError('You must add your full name');
 			activeErrors = true;
 		} else if (fullName.split(' ').length === 1) {
-			setFullNameError(
-				'Your Full name must contain your First name + Last name'
-			);
+			setFullNameError('Your Full name must contain your First name + Last name');
 			activeErrors = true;
 		} else {
 			setFullNameError('');
@@ -100,7 +98,6 @@ function Register({ type }) {
 				first_name: fullName.split(' ')[0],
 				last_name: fullName.split(' ')[1],
 			};
-			const company_name = companyName;
 
 			if (type === 'candidate') {
 				const newCandidate = {
@@ -133,12 +130,31 @@ function Register({ type }) {
 					full_name,
 					email,
 					password,
-					company_name,
+					company: {
+						name: companyName,
+					},
 					type: 'employer',
 				};
 
 				// Register employer request
-				console.log(newEmployer);
+				axios
+					.post(`${API_URL}/api/users/register`, newEmployer)
+					.then(() => {
+						setAlert({
+							type: 'success',
+							text: 'Your account has been created! Please log in.',
+						});
+						setTimeout(() => {
+							history.push(`${PUBLIC_URL}/${type}/login`);
+							setAlert({ type: '', text: '' });
+						}, 2900);
+					})
+					.catch(() => {
+						setAlert({ type: 'error', text: 'Something went wrong!' });
+						setTimeout(() => {
+							setAlert({ type: '', text: '' });
+						}, 2900);
+					});
 			}
 		}
 	};
@@ -207,20 +223,14 @@ function Register({ type }) {
 						error={rePasswordError}
 					/>
 					<Button
-						text={`Register as ${
-							type === 'employer' ? 'Employer' : 'Candidate'
-						}`}
+						text={`Register as ${type === 'employer' ? 'Employer' : 'Candidate'}`}
 						btnType="submit"
 					/>
 				</form>
 				<div className="Register__loginLink">
 					<>
 						...or{' '}
-						<CustomLink
-							to={`${PUBLIC_URL}/${type}/login`}
-							text="log in"
-							border={true}
-						/>
+						<CustomLink to={`${PUBLIC_URL}/${type}/login`} text="log in" border={true} />
 					</>
 				</div>
 			</div>

@@ -28,9 +28,7 @@ const getUsersByType = async (req, res, next) => {
 			users,
 		});
 	} catch (err) {
-		const error = new Error(
-			`'${req.params.type}' user type could not be found.`
-		);
+		const error = new Error(`'${req.params.type}' user type could not be found.`);
 		error.status = 404;
 		next(error);
 	}
@@ -42,7 +40,7 @@ const search = async (req, res, next) => {
 	const job3 = req.params.job3;
 	const city = req.params.location;
 	try {
-		const users = await User.find({ type: ['candidate'] });
+		const users = await User.find({ type: ['candidate'], inactiveAccount: false });
 
 		const matchUsers = [];
 		users.forEach((user) => {
@@ -73,9 +71,7 @@ const search = async (req, res, next) => {
 			users: matchUsers,
 		});
 	} catch (err) {
-		const error = new Error(
-			'There are no users in the database with that job title'
-		);
+		const error = new Error('There are no users in the database with that job title');
 		error.status = 404;
 		error.error = err;
 		return next(error);
@@ -99,15 +95,15 @@ const getSingleUser = async (req, res, next) => {
 };
 
 const createUser = async (req, res, next) => {
-	const { full_name, email, password, type } = req.body;
+	const { full_name, email, password, type, company } = req.body;
 	try {
 		const hashedPassword = await bcrypt.hash(password, 10);
-		const user = new User({
-			full_name,
-			email,
-			password: hashedPassword,
-			type,
-		});
+
+		let user;
+		if (company)
+			user = new User({ full_name, email, password: hashedPassword, type, company });
+		else user = new User({ full_name, email, password: hashedPassword, type });
+
 		const savedUser = await user.save();
 		return res.json({
 			message: 'Success! User added successfully',
@@ -145,8 +141,7 @@ const addToFavourites = async (req, res, next) => {
 		const currUser = await User.findById(req.params.id);
 		const userToBeAdded = await User.findById(req.body.profileID);
 
-		if (!currUser || !userToBeAdded)
-			throw 'One of the IDs is not in the datbase.';
+		if (!currUser || !userToBeAdded) throw 'One of the IDs is not in the datbase.';
 		if (currUser.favourites.includes(req.body.profileID))
 			throw 'User already at favourites';
 
@@ -173,8 +168,7 @@ const makeInactive = async (req, res, next) => {
 		await user.save();
 
 		return res.json({
-			message:
-				'Success! User is now inactive and will not appear in the search results',
+			message: 'Success! User is now inactive and will not appear in the search results',
 			user,
 		});
 	} catch (err) {
@@ -191,8 +185,7 @@ const makeActive = async (req, res, next) => {
 		await user.save();
 
 		return res.json({
-			message:
-				'Success! User is now active and will appear in the search results',
+			message: 'Success! User is now active and will appear in the search results',
 			updatedUser,
 		});
 	} catch (err) {
@@ -208,7 +201,7 @@ const updateUser = async (req, res, next) => {
 
 		const updateStringField = (field, specialValue = null) => {
 			const reqValue = req['body'][field];
-			if (reqValue.length !== 0) {
+			if (reqValue !== '') {
 				if (specialValue) {
 					user[field] = specialValue;
 				} else {
@@ -219,138 +212,85 @@ const updateUser = async (req, res, next) => {
 			}
 		};
 
-		const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
 		// Single Object Fields
-		updateStringField('email');
-		updateStringField('password', hashedPassword);
-		updateStringField('type');
-		updateStringField('inactiveAccount');
-		updateStringField('status');
-		updateStringField('job_title');
-		updateStringField('city');
-		updateStringField('remote_worker');
-		updateStringField('years_of_activity');
-		updateStringField('higher_education');
-		updateStringField('description');
+		req.body.email && updateStringField('email');
+		if (req.body.password) {
+			const hashedPassword = await bcrypt.hash(req.body.password, 10);
+			updateStringField('password', hashedPassword);
+		}
+		req.body.type && updateStringField('type');
+		req.body.inactiveAccount && updateStringField('inactiveAccount');
+		req.body.status && updateStringField('status');
+		req.body.job_title && updateStringField('job_title');
+		req.body.city && updateStringField('city');
+		req.body.remote_worker && updateStringField('remote_worker');
+		req.body.years_of_activity && updateStringField('years_of_activity');
+		req.body.higher_education && updateStringField('higher_education');
+		req.body.description && updateStringField('description');
 
 		// Nested Objects Fields
-		updateStringField('full_name');
+		if (req.body.full_name) {
+			updateStringField('full_name');
+		}
 
 		// Location
-		const coordinates = req.body.location.coordinates;
-		if (coordinates && coordinates.length !== 0) {
-			user.location.coordinates = coordinates;
-		} else {
-			throw 'Your coordinates must not be empty';
+		if (req.body.location) {
+			const coordinates = req.body.location.coordinates;
+			if (coordinates.length !== 0) {
+				user.location.coordinates = coordinates;
+			} else {
+				throw 'Your coordinates must not be empty';
+			}
 		}
 
 		// Key abilities
-		const new_abilities = req.body.key_abilities;
-		const old_abilities = user.key_abilities;
-		if (new_abilities.length !== 0) {
-			const final_abilities = [
-				...new Set([...old_abilities, ...new_abilities]), // New array without duplicates
-			];
-			user.key_abilities = final_abilities;
-		} else {
-			throw 'Abilities array must not be empty';
+		if (req.body.key_abilities) {
+			user.key_abilities = req.body.key_abilities;
 		}
 
-		// Company - BAD CODE
-		// const company = req.body.company;
-		// const { name, type, website } = company;
-		// name && (user.company.name = name);
-		// type && (user.company.type = type);
-		// website && (user.company.website = website);
+		// Company
+		if (req.body.company) {
+			updateStringField('company');
+		}
 
 		// Social Media
-		const socialMediaObj = req.body.social_media;
-		const { facebook, twitter, instagram, linkedin, github } = socialMediaObj;
-		facebook && (user.social_media.facebook = facebook);
-		twitter && (user.social_media.twitter = twitter);
-		instagram && (user.social_media.instagram = instagram);
-		linkedin && (user.social_media.linkedin = linkedin);
-		github && (user.social_media.github = github);
+		if (req.body.social_media) {
+			const socialMediaObj = req.body.social_media;
+			user.social_media.facebook = socialMediaObj.facebook
+				? socialMediaObj.facebook
+				: user.social_media.facebook;
+			user.social_media.twitter = socialMediaObj.twitter
+				? socialMediaObj.twitter
+				: user.social_media.twitter;
+			user.social_media.instagram = socialMediaObj.instagram
+				? socialMediaObj.instagram
+				: user.social_media.instagram;
+			user.social_media.linkedin = socialMediaObj.linkedin
+				? socialMediaObj.linkedin
+				: user.social_media.linkedin;
+			user.social_media.github = socialMediaObj.github
+				? socialMediaObj.github
+				: user.social_media.github;
+			user.social_media.personal_website = socialMediaObj.personal_website
+				? socialMediaObj.personal_website
+				: user.social_media.personal_website;
+		}
 
 		// Fields with Subdocuments
-
 		// Experiences
-		const new_experience = req.body.experience;
-		if (new_experience.length !== 0) {
-			new_experience.forEach((exp) => {
-				if (!exp.id) {
-					// Add new experiences
-					user.experience.unshift(exp);
-				} else {
-					// Update an existing one
-					const singleExp = user.experience.id(exp.id);
-					const {
-						company_name,
-						job_title,
-						starting_date,
-						ending_date,
-						long_description,
-					} = exp;
-					company_name && (singleExp.company_name = company_name);
-					job_title && (singleExp.job_title = job_title);
-					starting_date && (singleExp.starting_date = starting_date);
-					ending_date && (singleExp.ending_date = ending_date);
-					long_description && (singleExp.long_description = long_description);
-				}
-			});
-		} else {
-			throw 'Experience array must not be empty';
+		if (req.body.experience) {
+			user.experience = req.body.experience;
 		}
 
 		// Projects
-		const new_projects = req.body.projects;
-		if (new_projects.length !== 0) {
-			new_projects.forEach((proj) => {
-				if (!proj.id) {
-					// Add new experiences
-					user.projects.unshift(proj);
-				} else {
-					// Update an existing one
-					const singleProj = user.projects.id(proj.id);
-					const { title, description, accomplishments, link } = proj;
-					title && (singleProj.title = title);
-					description && (singleProj.description = description);
-					accomplishments && (singleProj.accomplishments = accomplishments);
-					link && (singleProj.link = link);
-				}
-			});
-		} else {
-			throw 'Projects array must not be empty';
+		if (req.body.projects) {
+			user.projects = req.body.projects;
 		}
 
-		// Available Positions - BAD CODE
-		// const availPos = req.body.available_positions;
-		// if (availPos.length !== 0) {
-		// 	availPos.forEach((pos) => {
-		// 		if (!pos.id) {
-		// 			user.available_positions.unshift(pos);
-		// 		} else {
-		// 			const singlePos = user.available_positions.id(pos.id);
-		// 			const {
-		// 				job_title,
-		// 				type_of_worker,
-		// 				years_of_experience,
-		// 				skills,
-		// 				benefits,
-		// 			} = pos;
-
-		// 			job_title && (singlePos.job_title = job_title);
-		// 			type_of_worker && (singlePos.type_of_worker = type_of_worker);
-		// 			years_of_experience &&
-		// 				(singlePos.years_of_experience = years_of_experience);
-		// 			skills && (singlePos.skills = skills);
-		// 			benefits && (singlePos.benefits = benefits);
-		// 		}
-		// 	});
-		// } else {
-		// 	throw 'Available Positions array must not be empty';
-		// }
+		// Available positions
+		if (req.body.available_positions) {
+			user.available_positions = req.body.available_positions;
+		}
 
 		// Save
 		await user.save();
@@ -412,18 +352,14 @@ const sendMessage = async (req, res, next) => {
 	}
 };
 
-const viewMessages = async (req, res, next) => {
+const viewConversation = async (req, res, next) => {
 	const { id1, id2 } = req.params;
 	try {
 		const user1 = await User.findOne({ _id: id1 });
 		const user2 = await User.findOne({ _id: id2 });
 
-		const sentMess = user1.sent_messages.filter(
-			(message) => message.to === id2
-		);
-		const recMess = user1.received_messages.filter(
-			(message) => message.from === id2
-		);
+		const sentMess = user1.sent_messages.filter((message) => message.to === id2);
+		const recMess = user1.received_messages.filter((message) => message.from === id2);
 		const allMess = [...sentMess, ...recMess];
 		const sortedMessages = allMess.sort((a, b) => a.createdAt - b.createdAt);
 		return res.json({
@@ -451,5 +387,5 @@ module.exports = {
 	makeActive,
 	deleteUser,
 	sendMessage,
-	viewMessages,
+	viewConversation,
 };

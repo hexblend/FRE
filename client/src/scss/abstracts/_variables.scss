@@ -7,8 +7,8 @@ $headings-font-stack: 'PT Sans', sans-serif;
 $paragraphs-font-stack: 'Lato', sans-serif;
 
 /// Code (monospace) font family
-$code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono',
-	'Monaco', monospace !default;
+$code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Monaco',
+	monospace !default;
 
 /// Font Sizes
 $h1-desktop: 4rem;
@@ -35,7 +35,7 @@ $darkest-gray: #414141;
 // Blues
 $dark-blue: #124b6b;
 $blue: #17597e;
-$light-blue: #26b6bd;
+$light-blue: #2686bd;
 $dark-light-blue-gradient: linear-gradient(45deg, #16587d 0%, #2686bd 100%);
 
 // Greens

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
@@ -28,13 +29,12 @@ function ConnectedLogin({ type, addLoggedUser }) {
 
 	const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 	const API_URL = process.env.REACT_APP_API_URL;
+	const history = useHistory();
 
 	const [alert, setAlert] = useState({
 		type: '',
 		text: '',
 	});
-
-	let history = useHistory();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -82,7 +82,7 @@ function ConnectedLogin({ type, addLoggedUser }) {
 					});
 
 					setTimeout(() => {
-						history.goBack();
+						history.push('/');
 						setAlert({ type: '', text: '' });
 					}, 1750);
 				})

@@ -45,6 +45,13 @@
 		opacity: 1;
 	}
 }
+.customInput__icon {
+	position: absolute;
+	top: 3.7rem;
+	left: 2rem;
+	font-size: 1.4rem;
+	color: $darkest-gray;
+}
 .customLabel {
 	font-size: 1.4rem;
 	&.whiteLabel {
@@ -59,7 +66,7 @@
 	display: block;
 	border: 0;
 	border-radius: 0.5rem;
-	padding: 1.6rem;
+	padding: 1.5rem 2rem;
 	font-size: $p-small-desktop;
 	font-weight: 300;
 	margin-top: 0.8rem;

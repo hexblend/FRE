@@ -34,11 +34,6 @@ const projectsSchema = mongoose.Schema({
 	},
 	link: {
 		type: String,
-		trim: true,
-		validate: validate({
-			validator: 'isURL',
-			message: 'Link must be a valid URL',
-		}),
 	},
 });
 
@@ -219,36 +214,28 @@ const userSchema = mongoose.Schema(
 			facebook: {
 				type: String,
 				trim: true,
-				validate: validate({
-					validator: 'isURL',
-					message: 'URL is not valid',
-				}),
 			},
 			twitter: {
 				type: String,
 				trim: true,
-				validate: validate({
-					validator: 'isURL',
-					message: 'URL is not valid',
-				}),
 			},
 			instagram: {
 				type: String,
 				trim: true,
-				validate: validate({
-					validator: 'isURL',
-					message: 'URL is not valid',
-				}),
 			},
 			linkedin: {
 				type: String,
 				trim: true,
-				validate: validate({
-					validator: 'isURL',
-					message: 'URL is not valid',
-				}),
 			},
 			github: {
+				type: String,
+				trim: true,
+			},
+			behance: {
+				type: String,
+				trim: true,
+			},
+			personal_website: {
 				type: String,
 				trim: true,
 			},

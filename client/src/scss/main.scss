@@ -36,9 +36,13 @@
 @import 'components/elements/input';
 @import 'components/elements/tag';
 @import 'components/elements/tagsInput';
+@import 'components/elements/checkbox';
 
 // 6. Page-specific styles
 @import 'pages/home';
 @import 'pages/register';
 @import 'pages/search';
 @import 'pages/profile';
+@import 'pages/editProfile';
+@import 'pages/messages';
+@import 'pages/sendMessage';

@@ -33,15 +33,11 @@ router.get('/job/:job1/:job2?/:job3?/location/:location', controller.search);
 
 router.post('/register', controller.createUser);
 
-router.patch(
-	'/changeAvatar/:id',
-	parser.single('image'),
-	controller.changeAvatar
-);
+router.patch('/changeAvatar/:id', parser.single('image'), controller.changeAvatar);
 router.patch('/addToFavs/:id', controller.addToFavourites);
 router.patch('/makeInactive/:id', controller.makeInactive);
 router.patch('/makeActive/:id', controller.makeActive);
 
 router.post('/send_message/:id', controller.sendMessage);
-router.get('/view_messages/:id1/:id2', controller.viewMessages);
+router.get('/view_conversation/:id1/:id2', controller.viewConversation);
 module.exports = router;

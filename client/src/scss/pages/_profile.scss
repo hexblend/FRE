@@ -33,6 +33,7 @@
 }
 .Profile__badges {
 	.Badges {
+		margin-bottom: 4rem;
 		.Badges__badgeRow {
 			font-size: $p-small-desktop;
 		}
@@ -47,7 +48,7 @@
 }
 .Profile__avatar {
 	background-position: center center;
-	background-size: contain;
+	background-size: cover;
 	background-repeat: no-repeat;
 	width: 200px;
 	height: 200px;
@@ -102,7 +103,7 @@
 }
 .Profile__experience--single,
 .Profile__projects--single {
-	margin-bottom: 1.6rem;
+	margin-bottom: 2.4rem;
 	&:last-child {
 		margin-bottom: 0;
 	}
@@ -120,7 +121,7 @@
 }
 .Profile__experience--date {
 	display: flex;
-	margin-bottom: 1.6rem;
+	margin-bottom: 0.8rem;
 }
 .Profile__experience--startingDate,
 .Profile__experience--endingDate,
@@ -131,7 +132,7 @@
 }
 .Profile__experinece--longDesc {
 	color: $darkest-gray;
-	font-size: $p-small-desktop;
+	font-size: 1.4rem;
 }
 // Content - right
 .Profile__projects {
@@ -183,5 +184,17 @@
 	align-items: center;
 	button {
 		font-size: 1.4rem;
+	}
+}
+.Profile__availablePositions--years {
+	font-size: 1.4rem;
+	color: $darkest-gray;
+	margin-top: -0.8rem;
+	margin-bottom: 0.8rem;
+}
+.Profile__availablePositions--typeOfWorker {
+	font-size: 1.4rem;
+	svg {
+		margin-right: 0.5rem;
 	}
 }

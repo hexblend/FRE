@@ -12,16 +12,7 @@ const iconList = Object.keys(Icons)
 	.map((icon) => Icons[icon]);
 library.add(...iconList);
 
-function CustomLink({
-	to,
-	href,
-	text,
-	type,
-	border,
-	icon,
-	iconSide,
-	onClick,
-}) {
+function CustomLink({ to, href, text, type, border, icon, iconSide, onClick }) {
 	return (
 		<Link
 			className={`link 

@@ -1,0 +1,161 @@
+.EditProfile__content {
+	margin: 4rem 0 4rem 4rem;
+}
+.EditProfile__splitView {
+	display: flex;
+	justify-content: space-between;
+}
+.EditProfile__splitView--left,
+.EditProfile__splitView--right {
+	width: 40%;
+}
+
+.EditProfile__section {
+	margin-bottom: 3.2rem;
+	input {
+		margin-bottom: 3.2rem;
+	}
+}
+.EditProfile__sectionTitle {
+	margin-bottom: 3.2rem;
+}
+
+.EditProfile__buttons {
+	margin-top: 4rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.EditProfile__section--label {
+	font-size: 1.4rem;
+	margin-bottom: 0.8rem;
+}
+
+.EditProfile__statusDropdown {
+	background: $white;
+	margin-bottom: 3.2rem;
+	width: 100%;
+	border: 0;
+	font-size: $p-small-desktop;
+	color: $darkest-gray;
+	padding: 1.2rem 2rem;
+	border-radius: 0.5rem;
+	margin-top: 0.8rem;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
+	display: flex;
+	justify-content: space-between;
+	cursor: pointer;
+	.Dropdown-arrow-wrapper {
+		color: $dark-gray;
+	}
+}
+.EditProfile__statusDropdown--placeholder {
+	color: $green;
+	position: relative;
+	padding-left: 1.6rem;
+	text-transform: capitalize;
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0.6rem;
+		left: 0;
+		width: 0.6rem;
+		height: 0.6rem;
+		background: $green;
+		border-radius: 50%;
+	}
+}
+.EditProfile_typeOfWorkerDropdow--placeholder {
+	color: $darkest-gray;
+	padding-left: 0;
+	&::before {
+		position: relative;
+	}
+}
+.EditProfile__statusDropdown--menu {
+	background: $white;
+	border-radius: 0.5rem;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+	margin-top: -1.6rem;
+	margin-bottom: 3.2rem;
+	.Dropdown-option {
+		color: $darkest-gray;
+		border-bottom: 1px solid $gray;
+		padding: 1.6rem 0 1.6rem 1.6rem;
+		font-size: $p-small-desktop;
+		&:hover {
+			cursor: pointer;
+			background: $lightest-gray;
+		}
+		&:first-child {
+			border-top-left-radius: 0.5rem;
+			border-top-right-radius: 0.5rem;
+		}
+		&:last-child {
+			border-bottom: 0;
+			border-bottom-left-radius: 0.5rem;
+			border-bottom-right-radius: 0.5rem;
+		}
+	}
+}
+.EditProfile__suggestions {
+	position: relative;
+	top: -1.6rem !important;
+	z-index: 2;
+	margin-bottom: 3.2rem;
+}
+.EditProfile__skillsTags {
+	position: relative;
+	top: 0;
+	left: 0;
+	margin-left: 1.6rem;
+	margin-top: -0.8rem;
+	max-width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	.tag {
+		margin-right: 3.2rem;
+		margin-bottom: 0.8rem;
+	}
+}
+.EditProfile__experience {
+	margin: 4rem 0;
+	width: 100%;
+	&:hover {
+		.EditProfile__experience--header a {
+			display: block;
+		}
+	}
+	input,
+	textarea {
+		margin-bottom: 3.2rem;
+	}
+}
+.EditProfile__experience--header {
+	margin: 3.2rem 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	p {
+		font-size: $h3-desktop;
+	}
+	a {
+		display: none;
+	}
+}
+.EditProfile__experience--date {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	.react-datepicker__tab-loop,
+	.react-datepicker-popper {
+		display: none;
+	}
+}
+.EditProfile__avatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
