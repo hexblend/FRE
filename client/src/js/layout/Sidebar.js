@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {connect} from 'react-redux';
 import axios from 'axios';
 
@@ -12,18 +12,30 @@ import Alert from './Alert';
 import isEmpty from '../components/isEmpty';
 
 import {addLoggedUser} from '../redux/actions/AuthActions';
-import {getMessages} from '../redux/actions/MessagesActions';
+import {
+    getMessages,
+    updateMessagesFrom,
+} from '../redux/actions/MessagesActions';
 
 const mapDispatchToProps = dispatch => ({
     addLoggedUser: user => dispatch(addLoggedUser(user)),
     getMessages: obj => dispatch(getMessages(obj)),
+    updateMessagesFrom: str => dispatch(updateMessagesFrom(str)),
 });
 
-const mapStateToProps = state => {
-    return {loggedUser: state.AuthReducer.loggedUser};
-};
+const mapStateToProps = state => ({
+    loggedUser: state.AuthReducer.loggedUser,
+    viewMessagesFrom: state.MessagesReducer.viewMessagesFrom,
+});
 
-function ConnectedSidebar({loggedUser, view, getMessages}) {
+function ConnectedSidebar({
+    loggedUser,
+    view,
+    getMessages,
+    viewMessagesFrom,
+    updateMessagesFrom,
+}) {
+    const history = useHistory();
     const API_URL = process.env.REACT_APP_API_URL;
     const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
@@ -55,6 +67,7 @@ function ConnectedSidebar({loggedUser, view, getMessages}) {
     }, [IDs]);
     useEffect(() => {
         showConversation(IDs[0]);
+        updateMessagesFrom(IDs[0]);
     }, [IDs]);
 
     const showConversation = to => {
@@ -63,7 +76,10 @@ function ConnectedSidebar({loggedUser, view, getMessages}) {
             .get(`${API_URL}/api/users/view_conversation/${to}/${from}`, {
                 useCredentials: true,
             })
-            .then(res => getMessages(res.data.conversation));
+            .then(res => {
+                updateMessagesFrom(to);
+                getMessages(res.data.conversation);
+            });
     };
 
     const handleLogout = () => {
