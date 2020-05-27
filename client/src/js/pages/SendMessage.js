@@ -40,21 +40,23 @@ const SendMessage = props => {
         }
     };
     return (
-        <div className="SendMessage">
-            <Input
-                id="newMessage"
-                type="textarea"
-                placeholder="Your new message"
-                minWidth="100%"
-                label="Wrie a new message:"
-                value={newMessage}
-                handleChange={setNewMessage}
-                error={messageError}
-            />
+        <>
+            <div className="SendMessage">
+                <Input
+                    id="newMessage"
+                    type="textarea"
+                    placeholder="Your new message"
+                    minWidth="100%"
+                    label="Write a new message:"
+                    value={newMessage}
+                    handleChange={setNewMessage}
+                    error={messageError}
+                />
+            </div>
             <div className="newMessageBtn" onClick={handleMessageSend}>
                 <Button type="full-width" text="Send message" />
             </div>
-        </div>
+        </>
     );
 };
 
