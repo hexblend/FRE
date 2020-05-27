@@ -59,7 +59,9 @@ const SendMessage = props => {
                     setAlert({type: 'success', text: 'Message sent.'});
                     addMessage({from: loggedUser._id, body: newMessage});
                     setTimeout(() => {
-                        history.goBack();
+                        history.push(
+                            `${PUBLIC_URL}/profile/${loggedUser._id}/messages`,
+                        );
                     }, 1500);
                 });
         }
