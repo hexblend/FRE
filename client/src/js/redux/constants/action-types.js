@@ -43,3 +43,4 @@ export const UPDATE_HEADER_VIEW = 'UPDATE_HEADER_VIEW';
 // Messages Actions
 export const GET_MESSAGES = 'GET_MESSAGES';
 export const UPDATE_MESSAGES_FROM = 'UPDATE_MESSAGES_FROM';
+export const ADD_MESSAGE = 'ADD_MESSAGE';

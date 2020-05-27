@@ -1,4 +1,8 @@
-import {GET_MESSAGES, UPDATE_MESSAGES_FROM} from '../constants/action-types';
+import {
+    GET_MESSAGES,
+    ADD_MESSAGE,
+    UPDATE_MESSAGES_FROM,
+} from '../constants/action-types';
 
 const initialState = {
     messages: [],
@@ -11,6 +15,8 @@ const MessagesReducer = (state = initialState, action) => {
             return {...state, messages: action.payload};
         case UPDATE_MESSAGES_FROM:
             return {...state, viewMessagesFrom: action.payload};
+        case ADD_MESSAGE:
+            return {...state, messages: [...state.messages, action.payload]};
         default:
             return state;
     }

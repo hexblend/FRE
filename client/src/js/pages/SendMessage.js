@@ -10,9 +10,17 @@ import Alert from '../layout/Alert';
 import {connect} from 'react-redux';
 import {updateHeaderView} from '../redux/actions/HeaderActions';
 import {updateProfile} from '../redux/actions/ProfileActions';
+import {addMessage} from '../redux/actions/MessagesActions';
 
 const SendMessage = props => {
-    const {updateHeaderView, loggedUser, profile, updateProfile} = props;
+    const {
+        updateHeaderView,
+        loggedUser,
+        profile,
+        updateProfile,
+        addMessage,
+    } = props;
+
     const [newMessage, setNewMessage] = useState('');
     const [messageError, setMessageError] = useState('');
     const [alert, setAlert] = useState({type: '', text: ''});
@@ -41,19 +49,15 @@ const SendMessage = props => {
         } else {
             setMessageError('');
 
-            const newText = {
-                from: loggedUser._id,
-                message: newMessage,
-            };
             axios
                 .post(
                     `${API_URL}/api/users/send_message/${profile._id}`,
-                    newText,
+                    {from: loggedUser._id, message: newMessage},
                     {useCredentials: true},
                 )
                 .then(() => {
                     setAlert({type: 'success', text: 'Message sent.'});
-                    const profileID = props.match.params.id;
+                    addMessage({from: loggedUser._id, body: newMessage});
                     setTimeout(() => {
                         history.goBack();
                     }, 1500);
@@ -85,6 +89,7 @@ const SendMessage = props => {
 const mapDispatchToProps = dispatch => ({
     updateHeaderView: str => dispatch(updateHeaderView(str)),
     updateProfile: obj => dispatch(updateProfile(obj)),
+    addMessage: obj => dispatch(addMessage(obj)),
 });
 
 const mapStateToProps = state => ({

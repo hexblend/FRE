@@ -21,6 +21,9 @@ export const Messages = props => {
     useEffect(() => {
         updateHeaderView('messages');
     }, [updateHeaderView]);
+    useEffect(() => {
+        console.log(messages);
+    }, [messages]);
 
     return (
         <div className="Messages">
