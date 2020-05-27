@@ -27,7 +27,7 @@ const SendMessage = props => {
         axios
             .get(`${API_URL}/api/users/${profileID}`, {useCredentials: true})
             .then(res => updateProfile(res.data.user))
-            .catch(() => history.send(`${PUBLIC_URL}`));
+            .catch(() => history.push(`${PUBLIC_URL}`));
     }, []);
 
     // Update header title

@@ -25,16 +25,9 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
     loggedUser: state.AuthReducer.loggedUser,
-    viewMessagesFrom: state.MessagesReducer.viewMessagesFrom,
 });
 
-function ConnectedSidebar({
-    loggedUser,
-    view,
-    getMessages,
-    viewMessagesFrom,
-    updateMessagesFrom,
-}) {
+function ConnectedSidebar({loggedUser, view, getMessages, updateMessagesFrom}) {
     const history = useHistory();
     const API_URL = process.env.REACT_APP_API_URL;
     const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
@@ -65,22 +58,14 @@ function ConnectedSidebar({
                 });
         });
     }, [IDs]);
-    useEffect(() => {
-        showConversation(IDs[0]);
-        updateMessagesFrom(IDs[0]);
-    }, [IDs]);
 
-    const showConversation = to => {
-        const from = loggedUser._id;
-        axios
-            .get(`${API_URL}/api/users/view_conversation/${to}/${from}`, {
-                useCredentials: true,
-            })
-            .then(res => {
-                updateMessagesFrom(to);
-                getMessages(res.data.conversation);
-            });
+    const viewMessagesFrom = id => {
+        updateMessagesFrom(id);
     };
+
+    useEffect(() => {
+        viewMessagesFrom(IDs[0]);
+    }, [IDs]);
 
     const handleLogout = () => {
         axios
@@ -169,7 +154,7 @@ function ConnectedSidebar({
                         <div
                             className="MessageProfile"
                             key={profile._id}
-                            onClick={() => showConversation(profile._id)}>
+                            onClick={() => viewMessagesFrom(profile._id)}>
                             {/* Avatar */}
                             <div
                                 className="MessageProfile__avatar"

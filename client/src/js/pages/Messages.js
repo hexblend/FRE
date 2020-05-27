@@ -5,7 +5,10 @@ import {Link} from 'react-router-dom';
 
 import {connect} from 'react-redux';
 import {updateHeaderView} from '../redux/actions/HeaderActions';
-import {getMessages} from '../redux/actions/MessagesActions';
+import {
+    getMessages,
+    updateMessagesFrom,
+} from '../redux/actions/MessagesActions';
 
 export const Messages = props => {
     const {
@@ -13,6 +16,7 @@ export const Messages = props => {
         messages,
         getMessages,
         viewMessagesFrom,
+        updateMessagesFrom,
         loggedUser,
     } = props;
 
@@ -73,6 +77,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     updateHeaderView: str => dispatch(updateHeaderView(str)),
     getMessages: array => dispatch(getMessages(array)),
+    updateMessagesFrom: str => dispatch(updateMessagesFrom(str)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Messages);
