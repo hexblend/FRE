@@ -1,11 +1,19 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {useHistory} from 'react-router-dom';
-import {updateHeaderView} from '../redux/actions/HeaderActions';
+import React, {useState, useEffect} from 'react';
+import {useHistory, Link} from 'react-router-dom';
+import axios from 'axios';
+
 import isEmpty from '../components/isEmpty';
+import Input from '../components/elements/Input';
+import Button from '../components/elements/Button';
+
+import {connect} from 'react-redux';
+import {updateHeaderView} from '../redux/actions/HeaderActions';
 
 const SendMessage = props => {
     const {updateHeaderView, loggedUser, profile} = props;
+    const [newMessage, setNewMessage] = useState('');
+    const [messageError, setMessageError] = useState('');
+
     const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
     const history = useHistory();
 
@@ -23,9 +31,29 @@ const SendMessage = props => {
         updateHeaderView('sendMessage');
     }, [updateHeaderView]);
 
+    const handleMessageSend = () => {
+        if (newMessage === '') {
+            setMessageError("You can't send and empty message");
+        } else {
+            setMessageError('');
+            console.log(newMessage);
+        }
+    };
     return (
         <div className="SendMessage">
-            <h1>Send messages page</h1>
+            <Input
+                id="newMessage"
+                type="textarea"
+                placeholder="Your new message"
+                minWidth="100%"
+                label="Wrie a new message:"
+                value={newMessage}
+                handleChange={setNewMessage}
+                error={messageError}
+            />
+            <div className="newMessageBtn" onClick={handleMessageSend}>
+                <Button type="full-width" text="Send message" />
+            </div>
         </div>
     );
 };
