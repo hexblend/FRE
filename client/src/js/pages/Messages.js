@@ -22,19 +22,6 @@ export const Messages = props => {
         updateHeaderView('messages');
     }, [updateHeaderView]);
 
-    useEffect(() => {
-        axios
-            .get(
-                `${API_URL}/api/users/view_conversation/${viewMessagesFrom}/${loggedUser._id}`,
-                {
-                    useCredentials: true,
-                },
-            )
-            .then(res => {
-                getMessages(res.data.conversation);
-            });
-    }, [messages, viewMessagesFrom]);
-
     return (
         <div className="Messages">
             {messages.length !== 0 ? (

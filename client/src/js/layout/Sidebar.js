@@ -59,12 +59,22 @@ function ConnectedSidebar({loggedUser, view, getMessages, updateMessagesFrom}) {
         });
     }, [IDs]);
 
-    const viewMessagesFrom = id => {
-        updateMessagesFrom(id);
+    const recMessages = to => {
+        axios
+            .get(
+                `${API_URL}/api/users/view_conversation/${to}/${loggedUser._id}`,
+                {
+                    useCredentials: true,
+                },
+            )
+            .then(res => {
+                getMessages(res.data.conversation);
+            });
     };
 
     useEffect(() => {
-        viewMessagesFrom(IDs[0]);
+        updateMessagesFrom(IDs[0]);
+        recMessages(IDs[0]);
     }, [IDs]);
 
     const handleLogout = () => {
@@ -154,7 +164,7 @@ function ConnectedSidebar({loggedUser, view, getMessages, updateMessagesFrom}) {
                         <div
                             className="MessageProfile"
                             key={profile._id}
-                            onClick={() => viewMessagesFrom(profile._id)}>
+                            onClick={() => recMessages(profile._id)}>
                             {/* Avatar */}
                             <div
                                 className="MessageProfile__avatar"
