@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {useHistory, Link} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import axios from 'axios';
 
-import isEmpty from '../components/isEmpty';
 import Input from '../components/elements/Input';
 import Button from '../components/elements/Button';
 import Alert from '../layout/Alert';

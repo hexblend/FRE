@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import axios from 'axios';
-import {LastLocationProvider} from 'react-router-last-location';
 
 import StyleGuide from '../pages/StyleGuide';
 import Home from '../pages/Home';
