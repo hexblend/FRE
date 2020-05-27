@@ -9,6 +9,9 @@ import TagsInput from '../components/elements/TagsInput';
 import LocationInput from '../components/elements/LocationInput';
 import isEmpty from '../components/isEmpty';
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChartPie, faBriefcase} from '@fortawesome/free-solid-svg-icons';
+
 import {
     updateTagsInputError,
     updateLocationInputError,
@@ -222,9 +225,24 @@ function ConnectedHeader({
                         <div></div>
                         <h3 className="Header__title">
                             New message to{' '}
-                            {profile.type === 'candidate'
-                                ? profile.full_name.first_name
-                                : profile.company.name}
+                            {profile.type === 'candidate' && (
+                                <span>
+                                    <FontAwesomeIcon
+                                        icon={faBriefcase}
+                                        className="MessageProfile__type"
+                                    />
+                                    {profile.full_name.first_name}
+                                </span>
+                            )}
+                            {profile.type === 'employer' && (
+                                <span>
+                                    <FontAwesomeIcon
+                                        icon={faChartPie}
+                                        className="MessageProfile__type"
+                                    />
+                                    {profile.company.name}
+                                </span>
+                            )}
                         </h3>
                         <Button
                             text="Go back"
