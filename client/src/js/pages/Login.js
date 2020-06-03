@@ -85,6 +85,7 @@ function ConnectedLogin({ type, addLoggedUser }) {
 
 					setTimeout(() => {
 						window.location.href = '/';
+						// history.push('/');
 						setAlert({ type: '', text: '' });
 					}, 1750);
 				})
