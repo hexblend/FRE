@@ -57,7 +57,9 @@ function ConnectedLogin({ type, addLoggedUser }) {
 			setPasswordError('You must add a password');
 			activeErrors = true;
 		} else if (password.length < 6) {
-			setPasswordError('Your password must have at least 6 characters');
+			setPasswordError(
+				'Your password must have at least 6 characters'
+			);
 			activeErrors = true;
 		} else {
 			setPasswordError('');
@@ -82,7 +84,7 @@ function ConnectedLogin({ type, addLoggedUser }) {
 					});
 
 					setTimeout(() => {
-						history.push('/');
+						window.location.href = '/';
 						setAlert({ type: '', text: '' });
 					}, 1750);
 				})
@@ -112,7 +114,11 @@ function ConnectedLogin({ type, addLoggedUser }) {
 				<div className="Register__form">
 					<h2 className="Register__form--title">
 						{`Login as 
-                          ${type === 'employer' ? 'Employer' : 'Candidate'}`}
+                          ${
+														type === 'employer'
+															? 'Employer'
+															: 'Candidate'
+													}`}
 					</h2>
 					<Input
 						type="email"
@@ -161,5 +167,8 @@ ConnectedLogin.propTypes = {
 	type: PropTypes.string.isRequired,
 };
 
-const Login = connect(null, mapDispatchToProps)(ConnectedLogin);
+const Login = connect(
+	null,
+	mapDispatchToProps
+)(ConnectedLogin);
 export default Login;
