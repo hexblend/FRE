@@ -83,7 +83,7 @@ function ConnectedTagsInput({
 			setTimeout(() => {
 				axios
 					.get(
-						`http://api.dataatwork.org/v1/jobs/autocomplete?contains=${tagsInput}`
+						`https://api.dataatwork.org/v1/jobs/autocomplete?contains=${tagsInput}`
 					)
 					.then((res) =>
 						updateTagsInputSuggestions(res.data.slice(0, 4).reverse())

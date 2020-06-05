@@ -16,6 +16,9 @@ const authConfig = require('./auth-config');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
+const fs = require('fs');
+const https = require('https');
+
 const app = express();
 
 // DB Connection
@@ -84,13 +87,13 @@ app.use((req, res, next) => {
 });
 
 // Error handling
-if (process.env.ENVIRONMENT === 'development') {
+if (process.env.NODE_ENV === 'development') {
 	app.use((error, req, res, next) => {
 		res.status(error.status || 500);
 		res.send({ message: `Error! ${error.message}`, error });
 	});
 }
-if (process.env.ENVIRONMENT === 'production') {
+if (process.env.NODE_ENV === 'production') {
 	app.use((error, req, res, next) => {
 		res.status(error.status || 500);
 		res.send({
@@ -102,6 +105,20 @@ if (process.env.ENVIRONMENT === 'production') {
 
 // Run server
 const port = process.env.PORT || 5000;
-app.listen(port, () =>
-	console.log(`Server running on port ${port}.`)
-);
+
+// Force HTTPS with Let's encrypt
+const server = https.createServer({
+  key: fs.readFileSync('/etc/letsencrypt/live/fre.vladb.uk/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/fre.vladb.uk/fullchain.pem')
+}, app);
+
+if(process.env.NODE_ENV === 'development'){
+    app.listen(port, () =>
+        console.log(`Server running on port ${port}.`)
+    );
+}
+if(process.env.NODE_ENV === 'production'){
+    server.listen(port, () =>
+        console.log(`Server running on port ${port}.`)
+    );
+}
