@@ -106,19 +106,26 @@ if (process.env.NODE_ENV === 'production') {
 // Run server
 const port = process.env.PORT || 5000;
 
-// Force HTTPS with Let's encrypt
-const server = https.createServer({
-  key: fs.readFileSync('/etc/letsencrypt/live/fre.vladb.uk/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/fre.vladb.uk/fullchain.pem')
-}, app);
-
-if(process.env.NODE_ENV === 'development'){
-    app.listen(port, () =>
-        console.log(`Server running on port ${port}.`)
-    );
+if (process.env.NODE_ENV === 'production') {
+	// Force API HTTPS Reqs with Let's encrypt
+	const server = https.createServer(
+		{
+			key: fs.readFileSync(
+				'/etc/letsencrypt/live/fre.vladb.uk/privkey.pem'
+			),
+			cert: fs.readFileSync(
+				'/etc/letsencrypt/live/fre.vladb.uk/fullchain.pem'
+			),
+		},
+		app
+	);
+	server.listen(port, () =>
+		console.log(`Server running on port ${port}.`)
+	);
 }
-if(process.env.NODE_ENV === 'production'){
-    server.listen(port, () =>
-        console.log(`Server running on port ${port}.`)
-    );
+
+if (process.env.NODE_ENV === 'development') {
+	app.listen(port, () =>
+		console.log(`Server running on port ${port}.`)
+	);
 }
