@@ -38,6 +38,8 @@ export const BadgesFields = (props) => {
 		setLocationSuggestions,
 	} = props;
 
+	const API_URL = process.env.REACT_APP_API_URL;
+
 	// Jobs
 	const [typingTimeout, setTypingTimeout] = useState(0);
 	const getJobSuggestions = (query) => {
@@ -52,7 +54,7 @@ export const BadgesFields = (props) => {
 					.post(
 						`${API_URL}/api/by-pass-api`,
 						{
-							url: `http://api.dataatwork.org/v1/jobs/autocomplete?contains=${tagsInput}`,
+							url: `http://api.dataatwork.org/v1/jobs/autocomplete?contains=${updatedLoggedUser.job_title}`,
 						},
 						{ withCredentials: true }
 					)

@@ -36,6 +36,8 @@ function SingleExperience(props) {
 		index,
 	} = props;
 
+	const API_URL = process.env.REACT_APP_API_URL;
+
 	const typeOfWorkerOptions = [
 		{ label: 'Any', value: 'any' },
 		{ label: 'Office worker', value: 'office' },
@@ -62,7 +64,7 @@ function SingleExperience(props) {
 					.post(
 						`${API_URL}/api/by-pass-api`,
 						{
-							url: `http://api.dataatwork.org/v1/jobs/autocomplete?contains=${tagsInput}`,
+							url: `http://api.dataatwork.org/v1/jobs/autocomplete?contains=${position.job_title}`,
 						},
 						{ withCredentials: true }
 					)
