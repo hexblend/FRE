@@ -20,15 +20,19 @@ const mapStateToProps = (state) => ({
 	tags: state.SearchReducer.searchTags,
 	tagsLeft: state.SearchReducer.tagsLeft,
 	tagsInputError: state.SearchReducer.tagsInputError,
-	tagsInputSuggestions: state.SearchReducer.tagsInputSuggestions,
+	tagsInputSuggestions:
+		state.SearchReducer.tagsInputSuggestions,
 });
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		updateTagsInput: (value) => dispatch(updateTagsInput(value)),
+		updateTagsInput: (value) =>
+			dispatch(updateTagsInput(value)),
 		addSearchTag: (tag) => dispatch(addSearchTag(tag)),
-		removeSearchTag: (tag) => dispatch(removeSearchTag(tag)),
-		updateTagsInputError: (error) => dispatch(updateTagsInputError(error)),
+		removeSearchTag: (tag) =>
+			dispatch(removeSearchTag(tag)),
+		updateTagsInputError: (error) =>
+			dispatch(updateTagsInputError(error)),
 		updateTagsInputSuggestions: (suggestions) =>
 			dispatch(updateTagsInputSuggestions(suggestions)),
 		updateLocationInputSuggestions: (suggestions) =>
@@ -83,10 +87,12 @@ function ConnectedTagsInput({
 			setTimeout(() => {
 				axios
 					.get(
-						`https://api.dataatwork.org/v1/jobs/autocomplete?contains=${tagsInput}`
+						`http://api.dataatwork.org/v1/jobs/autocomplete?contains=${tagsInput}`
 					)
 					.then((res) =>
-						updateTagsInputSuggestions(res.data.slice(0, 4).reverse())
+						updateTagsInputSuggestions(
+							res.data.slice(0, 4).reverse()
+						)
 					);
 			}, 500)
 		);
@@ -94,7 +100,9 @@ function ConnectedTagsInput({
 
 	const refCallback = (element) => {
 		if (element) {
-			setTagsWidth(element.getBoundingClientRect().width + 16 + 'px');
+			setTagsWidth(
+				element.getBoundingClientRect().width + 16 + 'px'
+			);
 		}
 	};
 	return (
@@ -102,7 +110,9 @@ function ConnectedTagsInput({
 			{/* Label */}
 			<label
 				htmlFor={id}
-				className={`customLabel ${whiteLabel && 'whiteLabel'}`}
+				className={`customLabel ${
+					whiteLabel && 'whiteLabel'
+				}`}
 			>
 				{label}
 			</label>
@@ -115,7 +125,10 @@ function ConnectedTagsInput({
 				{tags.map((tag, index) => (
 					<li className="tag" key={index}>
 						<span className="tag__text">{tag}</span>
-						<span className="tag__icon" onClick={() => removeTag(index)}>
+						<span
+							className="tag__icon"
+							onClick={() => removeTag(index)}
+						>
 							<FontAwesomeIcon icon={faTimes} />
 						</span>
 					</li>
@@ -128,7 +141,9 @@ function ConnectedTagsInput({
 				name={id}
 				autoComplete="off"
 				placeholder={tags.length > 0 ? '' : placeholder}
-				className={`customInput ${noBG && 'noBG'} ${noShadow && 'noShadow'}`}
+				className={`customInput ${noBG && 'noBG'} ${
+					noShadow && 'noShadow'
+				}`}
 				style={{
 					minWidth: `${tagsWidth + minWidth}`,
 					paddingLeft: `${tagsWidth}`,
@@ -142,7 +157,9 @@ function ConnectedTagsInput({
 			/>
 			{/* Errors / Info Messages */}
 			{tagsInputError ? (
-				<p className="customInput__error">{tagsInputError}</p>
+				<p className="customInput__error">
+					{tagsInputError}
+				</p>
 			) : (
 				<p
 					className="customInput__info"
@@ -156,11 +173,16 @@ function ConnectedTagsInput({
 				</p>
 			)}
 			{/* Suggestions */}
-			<ul className="Suggestions" style={{ top: `${!label && '5.85rem'}` }}>
+			<ul
+				className="Suggestions"
+				style={{ top: `${!label && '5.85rem'}` }}
+			>
 				{tagsInputSuggestions.map((suggestion) => (
 					<li
 						key={suggestion.uuid}
-						onClick={() => addSuggestedTag(suggestion.suggestion)}
+						onClick={() =>
+							addSuggestedTag(suggestion.suggestion)
+						}
 						className="Suggestions__suggestion"
 					>
 						{suggestion.suggestion}

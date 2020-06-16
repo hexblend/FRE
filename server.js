@@ -18,6 +18,7 @@ const MongoStore = require('connect-mongo')(session);
 
 const fs = require('fs');
 const https = require('https');
+const unirest = require('unirest');
 
 const app = express();
 
@@ -78,6 +79,20 @@ const auth = require('./routes/auth');
 const users = require('./routes/users');
 app.use('/api/', auth);
 app.use('/api/users/', users);
+
+// By Pass HTTPS
+app.post('/api/by-pass-api', (req, res) => {
+	const url = req.body.url;
+	unirest.get(url).end(function (response) {
+		if (response.error) {
+			const error = new Error(response.error);
+			error.error = err;
+			return next(error);
+		} else {
+			return res.json(response.body);
+		}
+	});
+});
 
 // 404 Catcher
 app.use((req, res, next) => {
