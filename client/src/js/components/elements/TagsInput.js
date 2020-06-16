@@ -61,6 +61,8 @@ function ConnectedTagsInput({
 	updateTagsInputSuggestions,
 	updateLocationInputSuggestions,
 }) {
+	const API_URL = process.env.REACT_APP_API_URL;
+
 	const [typingTimeout, setTypingTimeout] = useState(0);
 	const [tagsWidth, setTagsWidth] = useState('');
 
@@ -86,8 +88,12 @@ function ConnectedTagsInput({
 		setTypingTimeout(
 			setTimeout(() => {
 				axios
-					.get(
-						`http://api.dataatwork.org/v1/jobs/autocomplete?contains=${tagsInput}`
+					.post(
+						`${API_URL}/api/by-pass-api`,
+						{
+							url: `http://api.dataatwork.org/v1/jobs/autocomplete?contains=${tagsInput}`,
+						},
+						{ withCredentials: true }
 					)
 					.then((res) =>
 						updateTagsInputSuggestions(

@@ -5,7 +5,10 @@ import axios from 'axios';
 import Input from '../elements/Input';
 import Checkbox from '../elements/Checkbox';
 
-import { updateLoggedField, updateLoggedKeyinObj } from '../../redux/actions/AuthActions';
+import {
+	updateLoggedField,
+	updateLoggedKeyinObj,
+} from '../../redux/actions/AuthActions';
 
 const mapStateToProps = (state) => ({
 	loggedUser: state.AuthReducer.loggedUser,
@@ -14,8 +17,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		updateLoggedField: (obj) => dispatch(updateLoggedField(obj)),
-		updateLoggedKeyinObj: (obj) => dispatch(updateLoggedKeyinObj(obj)),
+		updateLoggedField: (obj) =>
+			dispatch(updateLoggedField(obj)),
+		updateLoggedKeyinObj: (obj) =>
+			dispatch(updateLoggedKeyinObj(obj)),
 	};
 };
 
@@ -44,23 +49,40 @@ export const BadgesFields = (props) => {
 		setTypingTimeout(
 			setTimeout(() => {
 				axios
-					.get(
-						`http://api.dataatwork.org/v1/jobs/autocomplete?contains=${updatedLoggedUser.job_title}`
+					.post(
+						`${API_URL}/api/by-pass-api`,
+						{
+							url: `http://api.dataatwork.org/v1/jobs/autocomplete?contains=${tagsInput}`,
+						},
+						{ withCredentials: true }
 					)
-					.then((res) => setJobsSuggestions(res.data.slice(0, 4).reverse()));
+					.then((res) =>
+						setJobsSuggestions(
+							res.data.slice(0, 4).reverse()
+						)
+					);
 			}, 500)
 		);
 	};
 
 	// Locations
 	const getLocationSuggestions = (query) => {
-		updateLoggedField({ fieldName: 'city', fieldValue: query });
+		updateLoggedField({
+			fieldName: 'city',
+			fieldValue: query,
+		});
 		if (typingTimeout) clearTimeout(typingTimeout);
 		setTypingTimeout(
 			setTimeout(() => {
 				axios
-					.get(`https://api.postcodes.io/places?q=${updatedLoggedUser.city}`)
-					.then((res) => setLocationSuggestions(res.data.result.slice(0, 4)));
+					.get(
+						`https://api.postcodes.io/places?q=${updatedLoggedUser.city}`
+					)
+					.then((res) =>
+						setLocationSuggestions(
+							res.data.result.slice(0, 4)
+						)
+					);
 			}, 500)
 		);
 	};
@@ -77,7 +99,9 @@ export const BadgesFields = (props) => {
 						placeholder="Job Title"
 						minWidth="100%"
 						value={loggedUser.job_title}
-						handleChange={(jobTitle) => getJobSuggestions(jobTitle)}
+						handleChange={(jobTitle) =>
+							getJobSuggestions(jobTitle)
+						}
 						error={updatedLoggedUser.errors.job_title}
 						icon="suitcase"
 					/>
@@ -113,7 +137,11 @@ export const BadgesFields = (props) => {
 					label="Company type"
 					placeholder="Creative agency"
 					minWidth="100%"
-					value={`${loggedUser.company.type ? loggedUser.company.type : ''}`}
+					value={`${
+						loggedUser.company.type
+							? loggedUser.company.type
+							: ''
+					}`}
 					handleChange={(companyType) =>
 						updateLoggedKeyinObj({
 							object: 'company',
@@ -133,7 +161,9 @@ export const BadgesFields = (props) => {
 				placeholder="City name"
 				minWidth="100%"
 				value={loggedUser.city}
-				handleChange={(city) => getLocationSuggestions(city)}
+				handleChange={(city) =>
+					getLocationSuggestions(city)
+				}
 				error={updatedLoggedUser.errors.city}
 				icon="map-marker-alt"
 			/>
@@ -166,7 +196,11 @@ export const BadgesFields = (props) => {
 				label="Years of activity"
 				placeholder="Duration"
 				minWidth="100%"
-				value={`${loggedUser.years_of_activity ? loggedUser.years_of_activity : ''}`}
+				value={`${
+					loggedUser.years_of_activity
+						? loggedUser.years_of_activity
+						: ''
+				}`}
 				handleChange={(years) =>
 					updateLoggedField({
 						fieldName: 'years_of_activity',
@@ -212,4 +246,7 @@ export const BadgesFields = (props) => {
 	);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BadgesFields);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(BadgesFields);
