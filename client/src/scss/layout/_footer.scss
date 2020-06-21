@@ -2,14 +2,16 @@
 // This file contains all styles related to the footer of the site/application.
 // -----------------------------------------------------------------------------
 .footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 	height: 4.8rem;
+	margin-top: 10rem;
 	background: $white;
 	border-top: 0.1rem solid $gray;
 	@include flex-center;
 	justify-content: space-between;
 	padding: 0 4rem;
-	width: 100%;
-	margin-top: 10rem;
 	@include mq(large) {
 		margin-top: 5.6rem;
 		flex-direction: column;
