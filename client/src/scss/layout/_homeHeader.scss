@@ -16,8 +16,10 @@
 		display: flex;
 		justify-content: center;
 		align-items: flex-end;
-		@include mq(small) {
+		@include mq(large) {
 			margin-top: 5.6rem;
+		}
+		@include mq(small) {
 			width: 100%;
 			padding: 0 1.6rem;
 		}

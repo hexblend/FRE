@@ -21,14 +21,16 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	updateTagsInputError: (error) => dispatch(updateTagsInputError(error)),
+	updateTagsInputError: (error) =>
+		dispatch(updateTagsInputError(error)),
 	updateLocationInputError: (error) =>
 		dispatch(updateLocationInputError(error)),
 	updateTagsInputSuggestions: (suggestions) =>
 		dispatch(updateTagsInputSuggestions(suggestions)),
 	updateLocationInputSuggestions: (suggestions) =>
 		dispatch(updateLocationInputSuggestions(suggestions)),
-	updateSearchResults: (results) => dispatch(updateSearchResults(results)),
+	updateSearchResults: (results) =>
+		dispatch(updateSearchResults(results)),
 });
 
 function ConnectedSearchBar({
@@ -49,13 +51,20 @@ function ConnectedSearchBar({
 			e.preventDefault();
 			updateTagsInputSuggestions([]);
 			updateLocationInputSuggestions([]);
-			if (tagsLeft === 3) updateTagsInputError('Please enter a job title');
-			if (location === '') updateLocationInputError('Please enter a location');
-		} else if (location !== '' && location[0] !== location[0].toUpperCase()) {
+			if (tagsLeft === 3)
+				updateTagsInputError('Please enter a job title');
+			if (location === '')
+				updateLocationInputError('Please enter a location');
+		} else if (
+			location !== '' &&
+			location[0] !== location[0].toUpperCase()
+		) {
 			e.preventDefault();
 			updateTagsInputSuggestions([]);
 			updateLocationInputSuggestions([]);
-			updateLocationInputError('Please select a location from the list');
+			updateLocationInputError(
+				'Please select a location from the list'
+			);
 		} else {
 			updateSearchResults([]);
 		}
@@ -83,14 +92,14 @@ function ConnectedSearchBar({
 		<div className="homeHeader__search">
 			<TagsInput
 				id="jobTitle"
-				placeholder="Developer, Designer"
+				placeholder="Web Developer"
 				label="I'm looking for:"
 				whiteLabel={true}
 				minWidth="350px"
 			/>
 			<LocationInput
 				id="location"
-				placeholder="London"
+				placeholder="Southampton"
 				label="In:"
 				whiteLabel={true}
 				width="210px"
