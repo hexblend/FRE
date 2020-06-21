@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, useHistory } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import {
 	faChartPie,
 	faBriefcase,
 	faArrowLeft,
+	faAngleDown,
 } from '@fortawesome/free-solid-svg-icons';
 
 function AuthNavbar({ bg, authPage }) {
@@ -23,11 +24,25 @@ function AuthNavbar({ bg, authPage }) {
 
 	const history = useHistory();
 
+	const [activeNav, setActiveNav] = useState(false);
+
 	return (
-		<div className={`authNavbar ${!bg && 'noBG'}`}>
+		<div
+			className={`authNavbar ${!bg && 'noBG'} ${
+				activeNav && 'active'
+			}`}
+		>
 			{!authPage && (
 				<>
-					<p className="authNavbar__description small">Not a memeber yet?</p>
+					<p className="authNavbar__description small">
+						Not a memeber yet?
+					</p>
+					<button
+						onClick={() => setActiveNav(!activeNav)}
+						className="authNavbar__dropdownButton"
+					>
+						<FontAwesomeIcon icon={faAngleDown} />
+					</button>
 					<div className="authNavbar__rightLinks">
 						<NavLink
 							to={`${PUBLIC_URL}/candidate/register`}
@@ -46,7 +61,10 @@ function AuthNavbar({ bg, authPage }) {
 			)}
 			{authPage && (
 				<>
-					<div className="authNavbar__goBackLink" onClick={history.goBack}>
+					<div
+						className="authNavbar__goBackLink"
+						onClick={history.goBack}
+					>
 						<FontAwesomeIcon icon={faArrowLeft} /> Go Back
 					</div>
 
@@ -56,7 +74,10 @@ function AuthNavbar({ bg, authPage }) {
 							className={`authNavbar__middleLinks--link 
 								   ${userType === 'candidate' && 'active'}`}
 						>
-							<FontAwesomeIcon icon={faBriefcase} className="icon" />
+							<FontAwesomeIcon
+								icon={faBriefcase}
+								className="icon"
+							/>
 							Candidate
 						</NavLink>
 
@@ -65,7 +86,10 @@ function AuthNavbar({ bg, authPage }) {
 							className={`authNavbar__middleLinks--link 
 								    ${userType === 'employer' && 'active'}`}
 						>
-							<FontAwesomeIcon icon={faChartPie} className="icon" />
+							<FontAwesomeIcon
+								icon={faChartPie}
+								className="icon"
+							/>
 							Employer
 						</NavLink>
 					</div>

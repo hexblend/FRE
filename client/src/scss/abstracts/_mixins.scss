@@ -7,8 +7,26 @@
 @mixin trans {
 	transition: 0.175s ease-in-out all;
 }
+@mixin longer-trans {
+	transition: 0.2s ease-in-out all;
+}
 @mixin flex-center {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+// Responsive mixins
+@mixin mq($mq-breakpoint, $mq-breakpoints: $breakpoints) {
+	// If $mq-breakpoint is a key that exists in
+	// $mq-breakpoints, get and use the value
+	@if map-has-key($mq-breakpoints, $mq-breakpoint) {
+		$mq-breakpoint: map-get(
+			$mq-breakpoints,
+			$mq-breakpoint
+		);
+	}
+
+	@media screen and (max-width: #{$mq-breakpoint}) {
+		@content;
+	}
 }

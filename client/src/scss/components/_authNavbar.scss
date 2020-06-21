@@ -9,12 +9,34 @@
 	font-weight: 300;
 	border-bottom: 0.1rem solid $gray;
 	position: relative;
+	@include longer-trans;
+	@include mq(small) {
+		padding: 1.6rem 1.6rem;
+	}
+}
+
+.authNavbar__dropdownButton {
+	border: 0;
+	color: $white;
+	background: rgba(0, 0, 0, 0);
+	font-size: $p-desktop;
+	display: none;
+	@include trans;
+	@include mq(small) {
+		display: block;
+	}
+}
+.authNavbar__rightLinks {
+	@include mq(small) {
+		display: none;
+	}
 }
 .authNavbar__rightLinks--link {
 	border-bottom: 0;
 	color: $dark-gray;
 	padding: 0 3.2rem;
 	position: relative;
+	left: 0;
 	@include trans;
 	&:hover {
 		color: $darkest-gray;
@@ -30,13 +52,25 @@
 		top: 50%;
 		right: 0;
 		transform: translateY(-50%);
+		@include mq(small) {
+			display: none;
+		}
 	}
 	&:first-child:before {
 		left: 0;
 	}
+	@include mq(small) {
+		display: block;
+		padding: 1.6rem 0;
+		color: $dark-blue !important;
+		&:hover {
+			background: #f1f1f1;
+			text-transform: none;
+		}
+	}
 }
 .noBG {
-	background: $transparent;
+	background: rgba(0, 0, 0, 0);
 	color: $gray;
 	border: 0;
 	.authNavbar__rightLinks--link {
@@ -65,6 +99,37 @@
 	}
 	.authNavbar__description {
 		font-size: 1.4rem;
+	}
+}
+
+// Mobile Active navbar
+.authNavbar.noBG.active {
+	@include mq(small) {
+		background: rgba(255, 255, 255, 1);
+		color: $dark-blue;
+		border-bottom: 2px solid $gray;
+		z-index: 10;
+		.authNavbar__dropdownButton {
+			transform: rotate(180deg);
+			color: $dark-blue;
+		}
+		.authNavbar__rightLinks {
+			display: block;
+			position: absolute;
+			top: 5.8em;
+			left: 0;
+			right: 0;
+			z-index: 9;
+			animation: fadeIn 0.2s ease-in-out forwards;
+		}
+		@keyframes fadeIn {
+			from {
+				background: rgba(255, 255, 255, 0);
+			}
+			to {
+				background: rgba(255, 255, 255, 1);
+			}
+		}
 	}
 }
 
