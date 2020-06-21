@@ -61,4 +61,13 @@
 .LocationInput {
 	text-align: left;
 	position: relative;
+	@include mq(large) {
+		width: 100%;
+		label {
+			margin-top: 4rem;
+		}
+		input {
+			margin-bottom: 2.4rem;
+		}
+	}
 }

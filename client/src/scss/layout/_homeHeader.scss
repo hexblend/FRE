@@ -1,7 +1,8 @@
 .homeHeader {
 	height: 60rem;
 	width: 100%;
-	background: image('home_header.jpg') no-repeat center center / cover;
+	background: image('home_header.jpg') no-repeat center
+		center / cover;
 }
 .homeHeader__midElems {
 	height: calc(100% - 5rem);
@@ -16,6 +17,18 @@
 		align-items: flex-end;
 		.customInput {
 			margin-right: 3.2rem;
+			@include mq(large) {
+				margin-right: 0;
+				width: 100%;
+			}
+		}
+		@include mq(large) {
+			flex-direction: column;
+			align-items: end;
+			a {
+				margin: 0 auto;
+				margin-bottom: 4rem;
+			}
 		}
 	}
 	&.h-100 {
