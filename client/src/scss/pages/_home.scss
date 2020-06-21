@@ -14,6 +14,9 @@
 .Home__alreadyMember--buttons {
 	@include flex-center;
 	margin-top: 2.4rem;
+	@include mq(small) {
+		padding: 0 1.6rem;
+	}
 	.btn:first-child {
 		margin-right: 2.4rem;
 		@include mq(large) {
