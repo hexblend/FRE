@@ -15,6 +15,9 @@
 		display: flex;
 		justify-content: center;
 		align-items: flex-end;
+		@include mq(large) {
+			margin-top: 5.6rem;
+		}
 		.customInput {
 			margin-right: 3.2rem;
 			@include mq(large) {
@@ -27,7 +30,6 @@
 			align-items: end;
 			a {
 				margin: 0 auto;
-				margin-bottom: 4rem;
 			}
 		}
 	}

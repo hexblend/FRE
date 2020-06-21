@@ -4,12 +4,18 @@
 	width: 19rem;
 	height: auto;
 	margin: 0 auto;
+	@include mq(large) {
+		width: 15rem;
+	}
 }
 .logo_text {
 	font-family: $paragraphs-font-stack;
 	font-weight: 300;
 	margin-top: 2.4rem;
 	font-size: $h4-desktop;
+	@include mq(large) {
+		font-size: $p-desktop;
+	}
 }
 .small {
 	.logo_symbol {
