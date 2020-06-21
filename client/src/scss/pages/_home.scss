@@ -86,6 +86,9 @@
 		}
 	}
 	&.staff {
+		@include mq(large) {
+			flex-direction: column-reverse;
+		}
 		.btn {
 			left: 3.2rem;
 			@include mq(large) {
