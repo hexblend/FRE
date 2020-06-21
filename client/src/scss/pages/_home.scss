@@ -26,17 +26,37 @@
 	display: flex;
 	position: relative;
 	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
-	img {
+	@include mq(extra-large) {
+		height: 30rem;
+	}
+	@include mq(large) {
+		flex-direction: column;
+		height: auto;
+	}
+	.image-side {
+		width: 100%;
 		height: 100%;
-		width: auto;
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-size: cover;
+		@include mq(large) {
+			width: 100%;
+			height: 35rem;
+			border-radius: 0;
+		}
 	}
 	.text-side {
 		padding: 0 3.2rem;
 		text-align: left;
+		width: 100%;
 		h3 {
 			font-size: $h2-desktop;
 			margin-top: 7.2rem;
 			margin-bottom: 4.8rem;
+			@include mq(extra-large) {
+				margin-top: 3.2rem;
+				margin-bottom: 3.2rem;
+			}
 		}
 		p {
 			line-height: 2.4rem;
@@ -44,6 +64,11 @@
 		.btn {
 			position: absolute;
 			bottom: 2.4rem;
+			@include mq(large) {
+				position: relative;
+				bottom: auto;
+				margin: 3.2rem 0 3.2rem 3.2rem;
+			}
 		}
 	}
 	&.job {
@@ -52,10 +77,28 @@
 		.btn {
 			right: 3.2rem;
 		}
+		.image-side {
+			border-top-left-radius: 0.8rem;
+			border-bottom-left-radius: 0.8rem;
+			@include mq(large) {
+				border-radius: 0;
+			}
+		}
 	}
 	&.staff {
 		.btn {
 			left: 3.2rem;
+			@include mq(large) {
+				left: 0;
+				margin-left: 0;
+			}
+		}
+		.image-side {
+			border-top-right-radius: 0.8rem;
+			border-bottom-right-radius: 0.8rem;
+			@include mq(large) {
+				border-radius: 0;
+			}
 		}
 	}
 }
