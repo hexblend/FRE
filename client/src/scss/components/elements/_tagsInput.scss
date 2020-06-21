@@ -2,9 +2,15 @@
 	text-align: left;
 	position: relative;
 	border-radius: 0.5rem;
+	@include mq(small) {
+		width: 100%;
+	}
 	input {
 		&::placeholder {
 			overflow: visible;
+		}
+		@include mq(small) {
+			min-width: auto;
 		}
 	}
 	.customInput__info {

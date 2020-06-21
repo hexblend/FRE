@@ -21,6 +21,11 @@
 	&.noShadow {
 		box-shadow: none;
 	}
+	@include mq(small) {
+		min-width: 100% !important;
+		max-width: 100% !important;
+		width: 100%;
+	}
 }
 .customInput__error {
 	position: absolute;

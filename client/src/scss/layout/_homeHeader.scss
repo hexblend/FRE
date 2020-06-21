@@ -1,6 +1,7 @@
 .homeHeader {
 	height: 60rem;
 	width: 100%;
+	max-width: 100%;
 	background: image('home_header.jpg') no-repeat center
 		center / cover;
 }
@@ -17,6 +18,8 @@
 		align-items: flex-end;
 		@include mq(large) {
 			margin-top: 5.6rem;
+			width: 100%;
+			padding: 0 1.6rem;
 		}
 		.customInput {
 			margin-right: 3.2rem;
