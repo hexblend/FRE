@@ -8,11 +8,14 @@
 	@include flex-center;
 	justify-content: space-between;
 	padding: 0 4rem;
-	position: absolute;
-	bottom: 0;
 	width: 100%;
-	position: fixed;
-	bottom: 0;
+	margin-top: 10rem;
+	@include mq(large) {
+		margin-top: 5.6rem;
+		flex-direction: column;
+		padding: 1.6rem 0 0.8rem 0;
+		height: auto;
+	}
 	p {
 		color: $dark-gray;
 		font-size: 1.4rem;
@@ -23,10 +26,19 @@
 		&:last-child {
 			margin-right: 0;
 		}
+		@include mq(large) {
+			margin-right: 0;
+			display: block;
+			text-align: center;
+			line-height: 2.4rem;
+			&:first-child {
+				margin-top: 1.6rem;
+			}
+		}
 	}
 }
 
-%message-shared {
+#message-shared {
 	border: 1px solid #ccc;
 	padding: 10px;
 	color: #333;
