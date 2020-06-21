@@ -16,6 +16,16 @@
 	margin-top: 2.4rem;
 	.btn:first-child {
 		margin-right: 2.4rem;
+		@include mq(large) {
+			margin-right: 0;
+		}
+	}
+	a {
+		&:first-child {
+			@include mq(large) {
+				margin-right: 1.6rem;
+			}
+		}
 	}
 }
 .Home__bigCard {
