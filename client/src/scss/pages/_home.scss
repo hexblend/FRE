@@ -15,7 +15,7 @@
 	@include flex-center;
 	margin-top: 2.4rem;
 	@include mq(small) {
-		padding: 0 1.6rem;
+		flex-direction: column;
 	}
 	.btn:first-child {
 		margin-right: 2.4rem;
@@ -25,8 +25,10 @@
 	}
 	a {
 		&:first-child {
-			@include mq(large) {
-				margin-right: 1.6rem;
+			margin-right: 1.6rem;
+			@include mq(small) {
+				margin-right: 0;
+				margin-bottom: 1.6rem;
 			}
 		}
 	}
@@ -62,6 +64,9 @@
 		padding: 0 3.2rem;
 		text-align: left;
 		width: 100%;
+		@include mq(small) {
+			text-align: center;
+		}
 		h3 {
 			font-size: $h2-desktop;
 			margin-top: 7.2rem;
@@ -82,6 +87,9 @@
 				bottom: auto;
 				margin: 3.2rem 0 3.2rem 3.2rem;
 			}
+			@include mq(small) {
+				margin: 3.2rem 0;
+			}
 		}
 	}
 	&.job {
@@ -89,6 +97,9 @@
 		margin-bottom: 4.8rem;
 		.btn {
 			right: 3.2rem;
+			@include mq(small) {
+				right: 0;
+			}
 		}
 		.image-side {
 			border-top-left-radius: 0.8rem;

@@ -14,8 +14,8 @@
 	padding: 0 4rem;
 	@include mq(large) {
 		margin-top: 5.6rem;
-		flex-direction: column;
-		padding: 1.6rem 0 0.8rem 0;
+		flex-direction: column-reverse;
+		padding: 1.6rem 0;
 		height: auto;
 	}
 	p {
@@ -33,8 +33,8 @@
 			display: block;
 			text-align: center;
 			line-height: 2.4rem;
-			&:first-child {
-				margin-top: 1.6rem;
+			&:last-child {
+				margin-bottom: 0.8rem;
 			}
 		}
 	}

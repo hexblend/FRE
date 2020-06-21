@@ -9,7 +9,6 @@
 	font-weight: 300;
 	border-bottom: 0.1rem solid $gray;
 	position: relative;
-	@include longer-trans;
 	@include mq(small) {
 		padding: 1.6rem 1.6rem;
 	}
@@ -37,7 +36,7 @@
 	padding: 0 3.2rem;
 	position: relative;
 	left: 0;
-	@include trans;
+	@include longer-trans;
 	&:hover {
 		color: $darkest-gray;
 	}
@@ -107,28 +106,19 @@
 	@include mq(small) {
 		background: rgba(255, 255, 255, 1);
 		color: $dark-blue;
-		border-bottom: 2px solid $gray;
 		z-index: 10;
 		.authNavbar__dropdownButton {
 			transform: rotate(180deg);
 			color: $dark-blue;
 		}
 		.authNavbar__rightLinks {
+			background: rgba(255, 255, 255, 1);
 			display: block;
 			position: absolute;
-			top: 5.8em;
+			top: 5.7em;
 			left: 0;
 			right: 0;
 			z-index: 9;
-			animation: fadeIn 0.2s ease-in-out forwards;
-		}
-		@keyframes fadeIn {
-			from {
-				background: rgba(255, 255, 255, 0);
-			}
-			to {
-				background: rgba(255, 255, 255, 1);
-			}
 		}
 	}
 }

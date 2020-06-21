@@ -4,6 +4,7 @@
 	border-radius: 0.5rem;
 	@include mq(small) {
 		width: 100%;
+		text-align: center;
 	}
 	input {
 		&::placeholder {
@@ -75,5 +76,8 @@
 		input {
 			margin-bottom: 2.4rem;
 		}
+	}
+	@include mq(small) {
+		text-align: center;
 	}
 }

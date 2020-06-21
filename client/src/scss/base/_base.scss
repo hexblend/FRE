@@ -12,7 +12,10 @@ body {
 	background: $lightest-gray;
 	min-height: 100vh;
 	position: relative;
-	padding-bottom: 10rem;
+	padding-bottom: 12rem;
+	@include mq(large) {
+		padding-bottom: 16rem;
+	}
 }
 
 /**
